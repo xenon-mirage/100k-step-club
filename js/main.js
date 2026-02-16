@@ -300,7 +300,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     try {
       var result = await supabase
         .from('signups')
-        .insert([{ first_name: firstName, email: email, tier: tier, city: city }]);
+        .insert([{ name: firstName, email: email, tier: tier, city: city }]);
 
       if (result.error) {
         if (result.error.code === '23505') {
