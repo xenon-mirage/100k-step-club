@@ -77,7 +77,7 @@ document.querySelectorAll([
   '.mi-title', '.mi-sub',
   '.mi-close-num', '.mi-pills', '.mi-close-body',
   '.tier-card',
-  '.about-name', '.about-body', '.about-stats',
+  '.about-name', '.about-body', '.about-stats', '.about-cities',
   '.step-card',
   '.event-date', '.event-year', '.event-desc', '.countdown-row',
   '.form'
@@ -136,8 +136,11 @@ document.querySelectorAll([
   var ph = document.getElementById('sjPhase');
   var co = document.getElementById('sjCo');
   var cn = document.getElementById('sjNum');
+  var meCity = document.getElementById('meCity');
   var me0 = document.getElementById('me0');
   var me1 = document.getElementById('me1');
+  var me2 = document.getElementById('me2');
+  var finale = document.getElementById('sjFinale');
   var ms = [];
   for (var i = 0; i < 6; i++) ms.push(document.getElementById('ms' + i));
 
@@ -152,13 +155,17 @@ document.querySelectorAll([
   }
 
   var spaceMS = [
-    { idx: 0, trigger: .12, pos: .10, above: true },
-    { idx: 1, trigger: .18, pos: .15, above: false, obj: moonO, objSize: 16 },
+    { idx: 0, trigger: .14, pos: .10, above: true },
+    { idx: 1, trigger: .20, pos: .16, above: false, obj: moonO, objSize: 16 },
     { idx: 2, trigger: .32, pos: .32, above: true },
     { idx: 3, trigger: .44, pos: .46, above: false, obj: venusO, objSize: 11 },
-    { idx: 4, trigger: .56, pos: .60, above: true, obj: marsO, objSize: 10 },
-    { idx: 5, trigger: .75, pos: .88, above: false }
+    { idx: 4, trigger: .55, pos: .58, above: true, obj: marsO, objSize: 10 },
+    { idx: 5, trigger: .68, pos: .78, above: false }
   ];
+
+  // Sun position - constant so path can reference it
+  var sunXRatio_mob = .88;
+  var sunXRatio_desk = .90;
 
   function update() {
     var rect = sec.getBoundingClientRect();
@@ -167,6 +174,8 @@ document.querySelectorAll([
     var vw = innerWidth;
     var vh = innerHeight;
     var mob = vw < 640;
+
+    var sunX = mob ? vw * sunXRatio_mob : vw * sunXRatio_desk;
 
     // Earth zoom-out
     var zoomOut = ease(cl((p - .04) / .12, 0, 1));
@@ -184,33 +193,52 @@ document.querySelectorAll([
     var orbSize = earthSize * 1.3;
     orb.style.cssText = 'width:' + orbSize + 'px;height:' + orbSize + 'px;left:' + earthCX + 'px;top:' + earthCY + 'px;transform:translate(-50%,-50%);opacity:' + (orbShow * orbFade * .4);
 
-    // Earth-surface milestones
-    var meShow0 = p >= .02 && p < .16;
-    var meShow1 = p >= .05 && p < .16;
+    // Toronto city marker (shows during close-up)
+    var cityShow = p >= .005 && p < .10;
+    meCity.classList.toggle('on', cityShow);
+    // Position on the North America part of the globe
+    var cityAngle = -20 * Math.PI / 180;
+    var cityDist = earthSize * .32;
+    meCity.style.left = (earthCX + Math.cos(cityAngle) * cityDist) + 'px';
+    meCity.style.top = (earthCY + Math.sin(cityAngle) * cityDist) + 'px';
+
+    // Earth-surface milestones (zoom-out phase)
+    var meShow0 = p >= .03 && p < .14;
+    var meShow1 = p >= .05 && p < .14;
+    var meShow2 = p >= .07 && p < .16;
     me0.classList.toggle('on', meShow0);
     me1.classList.toggle('on', meShow1);
+    me2.classList.toggle('on', meShow2);
     var dist0 = earthSize * .55 + 10;
-    var rad0 = -35 * Math.PI / 180;
+    var rad0 = -40 * Math.PI / 180;
     me0.style.left = (earthCX + Math.cos(rad0) * dist0) + 'px';
     me0.style.top = (earthCY + Math.sin(rad0) * dist0) + 'px';
-    var rad1 = 25 * Math.PI / 180;
+    var rad1 = 15 * Math.PI / 180;
     me1.style.left = (earthCX + Math.cos(rad1) * dist0) + 'px';
     me1.style.top = (earthCY + Math.sin(rad1) * dist0) + 'px';
+    var rad2 = 50 * Math.PI / 180;
+    me2.style.left = (earthCX + Math.cos(rad2) * dist0) + 'px';
+    me2.style.top = (earthCY + Math.sin(rad2) * dist0) + 'px';
 
-    // Path line
+    // Path line - stops at the sun, not past it
     var pathShow = cl((p - .1) * 5, 0, 1);
-    var pathScale = cl((p - .1) / .8, 0, 1);
+    var earthEdge = earthCX + earthSize / 2;
+    // Path should only extend from earth to sun, clamp scaleX
+    var maxPathTarget = sunX;
+    var fullPageWidth = vw;
+    // The path element spans 0 to vw. We want it to scale to reach sunX at most.
+    var maxScale = maxPathTarget / fullPageWidth;
+    var pathProgress = cl((p - .1) / .65, 0, 1);
+    var pathScale = pathProgress * maxScale;
     pa.style.opacity = pathShow;
     pa.style.transform = 'scaleX(' + pathScale + ')';
 
-    // Sun
-    var sunPhase = ease(cl((p - .5) / .4, 0, 1));
-    var sunSize = lr(3, mob ? 60 : 110, sunPhase);
-    var sunX = mob ? vw * .9 : vw * .92;
+    // Sun - grows bigger, more intense
+    var sunPhase = ease(cl((p - .45) / .35, 0, 1));
+    var sunSize = lr(3, mob ? 70 : 130, sunPhase);
     sunV.style.cssText = 'width:' + sunSize + 'px;height:' + sunSize + 'px;left:' + sunX + 'px;top:' + (vh / 2) + 'px;transform:translate(-50%,-50%);opacity:' + cl(sunPhase * 1.5, 0, 1);
 
     // Milestones along path
-    var earthEdge = earthCX + earthSize / 2;
     var sunEdge = sunX - sunSize / 2;
     var trackW = Math.max(sunEdge - earthEdge, 80);
 
@@ -230,19 +258,27 @@ document.querySelectorAll([
 
     // Phase label
     var phaseText = '';
-    if (p < .1) phaseText = 'Earth Surface';
-    else if (p < .25) phaseText = 'Near Space';
+    if (p < .1) phaseText = 'Toronto, Canada';
+    else if (p < .18) phaseText = 'Earth Surface';
+    else if (p < .30) phaseText = 'Near Space';
     else if (p < .55) phaseText = 'Inner Solar System';
-    else phaseText = 'Journey to the Sun';
+    else if (p < .85) phaseText = 'Journey to the Sun';
+    else phaseText = '';
     ph.textContent = phaseText;
-    ph.classList.toggle('on', p > .005 && p < .97);
+    ph.classList.toggle('on', p > .005 && p < .85);
 
-    // Step counter
-    co.classList.toggle('on', p > .01);
+    // Step counter - visible during journey, hidden during finale
+    var showCounter = p > .01 && p < .85;
+    co.classList.toggle('on', showCounter);
     var currentSteps;
     if (p < .1) currentSteps = lr(0, 100e6, ease(p / .1));
-    else currentSteps = lr(100e6, 187e9, ease((p - .1) / .9));
+    else currentSteps = lr(100e6, 187e9, ease(cl((p - .1) / .7, 0, 1)));
     cn.textContent = fmt(Math.floor(currentSteps)) + ' steps';
+
+    // 187B Finale - magnifies at end of scroll
+    var finalePhase = cl((p - .82) / .15, 0, 1);
+    var showFinale = finalePhase > 0;
+    finale.classList.toggle('on', showFinale);
 
     requestAnimationFrame(update);
   }
