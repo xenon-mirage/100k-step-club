@@ -335,7 +335,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
 
     try {
       var result = await supabase
-        .from('signups')
+        .from('landingpage_signups')
         .insert([{ name: firstName, email: email, tier: tier, city: city }]);
 
       if (result.error) {
