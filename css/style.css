@@ -1410,6 +1410,26 @@ a { color: inherit; }
   text-align: center;
 }
 
+.form-group--checkbox { margin-top: -.25rem; }
+
+.form-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: .625rem;
+  font-family: var(--sans);
+  font-size: .875rem;
+  color: var(--sand);
+  cursor: pointer;
+}
+
+.form-checkbox {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: #F97316;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
 .form-success {
   max-width: 440px;
   margin: 0 auto;

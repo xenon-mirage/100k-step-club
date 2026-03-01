@@ -325,6 +325,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     var email = form.email.value.trim();
     var tier = form.tier.value;
     var city = form.city.value.trim();
+    var newsletter = document.getElementById('newsletter').checked;
 
     if (!firstName) return showError('Name is missing.');
     if (!email || !email.includes('@')) return showError("That email didn't work. Try again?");
@@ -336,7 +337,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     try {
       var result = await supabase
         .from('landingpage_signups')
-        .insert([{ name: firstName, email: email, tier: tier, city: city }]);
+        .insert([{ name: firstName, email: email, tier: tier, city: city, newsletter_opt_in: newsletter }]);
 
       if (result.error) {
         if (result.error.code === '23505') {
