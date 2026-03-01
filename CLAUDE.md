@@ -4,13 +4,12 @@
 The landing page for 100K Step Club — a global community around walking
 100,000 steps in a single day. First global event: May 2, 2026.
 
-## Context Files
-Read these before doing anything:
-- `.claude/context/2026-02-05_context.md` — Full project context
-- `.claude/context/2026-02-06_100K_Step_Club_Mission_Brief.md` — Mission brief
+## Reference
+The following reference files are in `ReferenceFiles/` and must be consulted:
 
-## Skills
-- `.claude/skills/100k-brand-voice/SKILL.md` — Brand voice and anti-AI writing patterns. Follow this for ALL copy.
+- **Brand Voice** (`march-1_graeme-voice-file.md`) — The canonical voice guide. Use for ALL content: website copy, social media, email, and any other communications. No exceptions.
+- **Design System** (`100K-Design-System-v1.html`) — Fonts, colours, hex codes, and visual direction. Reference for all digital asset creation: website, email, social assets, and future mobile app.
+- **Asset Specifications** (`100K-Asset-Specifications.html`) — Reference file for required assets and their specifications.
 
 ## Tech Stack
 - Plain HTML / CSS / JavaScript (no frameworks, no build tools)
@@ -19,8 +18,7 @@ Read these before doing anything:
 - Mobile-first design
 
 ## Rules
-1. Every piece of copy must follow the brand voice skill. No AI slop.
+1. Every piece of copy must follow the brand voice in ReferenceFiles. No AI slop.
 2. The landing page must work perfectly on mobile.
 3. No unnecessary dependencies. Keep it simple.
 4. Supabase config lives in js/config.js (credentials already set up).
-```
