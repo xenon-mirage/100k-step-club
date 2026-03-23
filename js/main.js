@@ -134,36 +134,7 @@
 })();
 
 
-/* ========== AMBIENT GLOW ZONES ========== */
-
-(function () {
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var sections = document.querySelectorAll('.section--tiers, .section--how, .section--event, .section--signup');
-  var mob = innerWidth < 640;
-
-  sections.forEach(function (sec) {
-    var count = mob ? 1 : 2 + Math.floor(Math.random() * 2);
-    for (var i = 0; i < count; i++) {
-      var glow = document.createElement('div');
-      glow.className = 'glow-zone';
-      var size = 300 + Math.random() * 200;
-      glow.style.cssText = 'width:' + size + 'px;height:' + size + 'px;left:' + (Math.random() * 70 + 15) + '%;top:' + (Math.random() * 60 + 20) + '%;animation-delay:' + (Math.random() * -5) + 's';
-      sec.appendChild(glow);
-    }
-  });
-
-  function check() {
-    var glows = document.querySelectorAll('.glow-zone');
-    for (var i = 0; i < glows.length; i++) {
-      var rect = glows[i].parentElement.getBoundingClientRect();
-      var visible = rect.top < innerHeight * 0.8 && rect.bottom > innerHeight * 0.2;
-      glows[i].classList.toggle('active', visible);
-    }
-    requestAnimationFrame(check);
-  }
-  check();
-})();
+/* Ambient glow zones removed — lava shader provides warmth */
 
 
 /* ========== INTERSECTION OBSERVER — SCROLL REVEALS ========== */
@@ -185,10 +156,37 @@ document.querySelectorAll([
   '.mi-close-num', '.mi-pills', '.mi-close-body',
   '.tier-card',
   '.about-name', '.about-body', '.about-stats', '.about-cities',
-  '.step-card',
+  '.founder-photo', '.founder-text',
   '.event-date', '.event-year', '.event-desc', '.countdown-row',
   '.form'
 ].join(',')).forEach(function (el) { obs.observe(el); });
+
+
+/* ========== TIER STAT BAR ANIMATION ========== */
+(function () {
+  var cards = document.querySelectorAll('.tier-card');
+  cards.forEach(function (card) {
+    var fill = card.querySelector('.tier-bar-fill');
+    if (!fill) return;
+    var targetWidth = parseFloat(fill.dataset.width) || 0;
+    var visualWidth;
+    if (targetWidth >= 10) visualWidth = targetWidth;
+    else if (targetWidth >= 1) visualWidth = 8 + (targetWidth / 10) * 20;
+    else if (targetWidth >= 0.01) visualWidth = 3 + (targetWidth / 1) * 5;
+    else visualWidth = 1.5;
+
+    var animated = false;
+    var barObs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting && !animated) {
+        animated = true;
+        setTimeout(function () {
+          fill.style.width = visualWidth + '%';
+        }, 300);
+      }
+    }, { threshold: 0.3 });
+    barObs.observe(card);
+  });
+})();
 
 
 /* ========== SCROLL CUE HIDE ========== */

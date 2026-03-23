@@ -84,20 +84,6 @@ a { color: inherit; }
   pointer-events: none;
 }
 
-/* ----- Ambient glow zones ----- */
-
-.glow-zone {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,107,0,.08) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity .8s ease;
-  animation: glowBreathe 5s ease-in-out infinite;
-}
-
-.glow-zone.active { opacity: 1; }
 
 /* ----- Grain overlay ----- */
 
@@ -121,7 +107,6 @@ a { color: inherit; }
 .section {
   padding: clamp(5rem, 12vw, 8rem) 1.5rem;
   position: relative;
-  overflow: hidden;
 }
 
 .eyebrow {
@@ -142,7 +127,7 @@ a { color: inherit; }
 .section-title {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
   letter-spacing: -.01em;
   margin-bottom: 2rem;
   opacity: 0;
@@ -185,38 +170,7 @@ a { color: inherit; }
 
 .dim { color: var(--text-dim); }
 
-/* Section dividers — subtle ember line */
-.section--what::before,
-.section--tiers::before,
-.section--about::before,
-.section--how::before,
-.section--event::before,
-.section--signup::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(200px, 30%);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,107,0,.2), transparent);
-}
-
-/* Section floor glow — warm ambient light at bottom of key sections */
-.section--what::after,
-.section--tiers::after,
-.section--how::after,
-.section--signup::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 30%;
-  background: linear-gradient(to top, rgba(255,107,0,.025), transparent);
-  pointer-events: none;
-  z-index: -1;
-}
+/* Section dividers and floor glows removed — lava background provides warmth */
 
 
 /* ========================================================
@@ -414,8 +368,8 @@ a { color: inherit; }
 .hero-beat {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(4rem, 14vw, 9rem);
-  line-height: .9;
+  font-size: clamp(3.5rem, 16vw, 9rem);
+  line-height: .95;
   letter-spacing: -.03em;
   background: linear-gradient(135deg, #ff6b00, #ff3d00, #ffab40, #ff6b00);
   background-size: 300% 300%;
@@ -450,6 +404,10 @@ a { color: inherit; }
   font-style: normal;
   color: var(--ember);
   font-weight: 600;
+}
+
+.hero-hook .gr {
+  font-style: italic;
 }
 
 .hero-cta-row {
@@ -598,10 +556,7 @@ a { color: inherit; }
 }
 
 .tier-card {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1.2rem;
-  align-items: start;
+  display: block;
   padding: 1.4rem;
   border-radius: 14px;
   background: rgba(255,255,255,.012);
@@ -676,6 +631,60 @@ a { color: inherit; }
   font-size: .92rem;
   color: var(--text-mid);
   line-height: 1.5;
+}
+
+.tier-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tier-dist {
+  font-family: var(--mono);
+  font-size: .75rem;
+  color: var(--text-dim);
+  margin-top: .25rem;
+}
+
+.tier-stat {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.tier-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, .04);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: .5rem;
+}
+
+.tier-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  width: 0;
+  transition: width 1.2s var(--ease-out);
+}
+
+[data-t="g"] .tier-bar-fill { background: var(--tier-g); }
+[data-t="b"] .tier-bar-fill { background: var(--tier-b); }
+[data-t="o"] .tier-bar-fill { background: var(--tier-o); }
+[data-t="p"] .tier-bar-fill { background: var(--tier-p); }
+[data-t="w"] .tier-bar-fill { background: var(--tier-w); }
+
+.tier-stat-text {
+  font-size: .8rem;
+  color: var(--text-dim);
+  display: flex;
+  justify-content: space-between;
+}
+
+.tier-pct, .tier-num {
+  font-family: var(--mono);
+  font-weight: 500;
+  color: var(--text-mid);
 }
 
 
@@ -1255,6 +1264,39 @@ a { color: inherit; }
   line-height: 1.6;
 }
 
+.founder-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.founder-photo {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.founder-now {
+  color: var(--text) !important;
+  font-weight: 500;
+  margin-top: .5rem !important;
+}
+
+@media (min-width: 768px) {
+  .founder-layout {
+    flex-direction: row;
+    align-items: center;
+    gap: 3rem;
+  }
+  .founder-photo {
+    width: 280px;
+    flex-shrink: 0;
+    aspect-ratio: 3 / 4;
+  }
+}
+
 
 /* ========================================================
    HOW IT WORKS
@@ -1331,18 +1373,9 @@ a { color: inherit; }
   align-items: center;
   justify-content: center;
   text-align: center;
-  overflow: hidden;
 }
 
-.event-glow {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 40%;
-  background: linear-gradient(to top, rgba(255,107,0,.025), transparent);
-  pointer-events: none;
-}
+/* event-glow removed — lava provides warmth */
 
 .event-inner {
   max-width: 520px;
@@ -1671,11 +1704,6 @@ a { color: inherit; }
 @keyframes pathShimmer {
   0%   { left: -80px; }
   100% { left: 100%; }
-}
-
-@keyframes glowBreathe {
-  0%, 100% { transform: scale(1); opacity: .6; }
-  50%      { transform: scale(1.08); opacity: 1; }
 }
 
 
