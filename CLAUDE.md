@@ -21,6 +21,7 @@ Full project brief, brand voice, tier system, and design references live in the 
 index.html        ← Single-page site
 css/style.css     ← All styles
 js/main.js        ← Stars, scroll reveals, space journey, countdown, signup form
+js/lava.js        ← WebGL lava metaball shader (scroll-reactive background)
 js/config.js      ← Supabase public keys (safe for frontend, RLS protects data)
 favicon.svg       ← Site icon
 ```

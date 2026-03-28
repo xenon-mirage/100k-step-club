@@ -446,7 +446,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
 
       if (result.error) {
         if (result.error.code === '23505') {
-          showError("You're already signed up. We've got you.");
+          showError("You're already in. Check your inbox.");
         } else {
           showError('Something went wrong. Try again?');
           console.error('Supabase error:', result.error);
