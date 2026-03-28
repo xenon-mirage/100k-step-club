@@ -12,7 +12,7 @@ Full project brief, brand voice, tier system, and design references live in the 
 ## Tech Stack
 - Plain HTML / CSS / JavaScript — no frameworks, no build tools
 - Supabase for database (`landingpage_signups` table with RLS)
-- Supabase Edge Function for welcome email (via Resend)
+- Supabase Edge Function `loops-signup` sends new signups to Loops for email drip
 - Hosted on Vercel — auto-deploys from GitHub on push to `main`
 - Mobile-first design
 
@@ -27,6 +27,10 @@ js/three.min.js        ← Three.js library (r152)
 js/config.js           ← Supabase public keys (safe for frontend, RLS protects data)
 textures/              ← Earth day + cloud textures (1k mobile, 2k desktop)
 favicon.svg            ← Site icon
+supabase/
+  functions/
+    loops-signup/
+      index.ts         ← Edge Function: sends new signups to Loops API
 ```
 
 ## Deploy Process
