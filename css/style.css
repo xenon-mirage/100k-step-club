@@ -328,7 +328,7 @@ a { color: inherit; }
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem 1.5rem;
+  padding: 5rem 1.5rem 2rem;
   position: relative;
   overflow: hidden;
 }
@@ -368,7 +368,7 @@ a { color: inherit; }
 .hero-beat {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(3.5rem, 16vw, 9rem);
+  font-size: clamp(2.8rem, 10vw, 7rem);
   line-height: .95;
   letter-spacing: -.03em;
   background: linear-gradient(135deg, #ff6b00, #ff3d00, #ffab40, #ff6b00);
@@ -426,14 +426,12 @@ a { color: inherit; }
 
 /* Scroll cue */
 .scroll-cue {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: .5rem;
+  margin-top: auto;
+  padding-bottom: 1.5rem;
   opacity: 0;
   animation: fadeUp .8s var(--ease-out) forwards 1.4s;
   transition: opacity .5s;
@@ -1782,6 +1780,7 @@ a { color: inherit; }
 }
 
 @media (max-width: 640px) {
+  .hero-beat { font-size: clamp(2.8rem, 11vw, 4.5rem); }
   .nav { padding: 1rem 1.2rem; }
 
   .tier-card {
@@ -1812,7 +1811,7 @@ a { color: inherit; }
 }
 
 @media (max-width: 380px) {
-  .hero-beat { font-size: 3.5rem; }
+  .hero-beat { font-size: 2.5rem; }
 }
 
 
