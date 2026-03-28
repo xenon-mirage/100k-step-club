@@ -179,89 +179,102 @@
   <!-- ===== SPACE JOURNEY VISUALIZER ===== -->
   <section class="space-journey" id="sj">
     <div class="sj-sticky">
-      <div class="sj-canvas">
-        <div class="sj-path" id="sjPath"></div>
-        <div class="earth-wrap" id="ew"><div class="earth-sphere"></div></div>
-        <div class="orbit-ring" id="orbitRing"></div>
-        <div class="moon-obj" id="moonObj"></div>
-        <div class="venus-obj" id="venusObj"></div>
-        <div class="mars-obj" id="marsObj"></div>
-        <div class="sun-vis" id="sunVis"></div>
-
-        <div class="ms-earth" id="meCity">
-          <div class="ms-earth-dot"></div>
-          <div class="ms-earth-text">
-            <div class="ms-earth-name">Toronto</div>
-            <div class="ms-earth-steps">You are here</div>
-          </div>
-        </div>
-        <div class="ms-earth" id="me0">
-          <div class="ms-earth-dot"></div>
-          <div class="ms-earth-text">
-            <div class="ms-earth-name">The Camino</div>
-            <div class="ms-earth-steps">500K steps</div>
-          </div>
-        </div>
-        <div class="ms-earth" id="me1">
-          <div class="ms-earth-dot"></div>
-          <div class="ms-earth-text">
-            <div class="ms-earth-name">Route 66</div>
-            <div class="ms-earth-steps">5M steps</div>
-          </div>
-        </div>
-        <div class="ms-earth" id="me2">
-          <div class="ms-earth-dot"></div>
-          <div class="ms-earth-text">
-            <div class="ms-earth-name">Around the World</div>
-            <div class="ms-earth-steps">50M steps</div>
-          </div>
-        </div>
-
-        <!-- 187B finale -->
-        <div class="sj-finale" id="sjFinale">
-          <div class="sj-finale-num">187,000,000,000</div>
-          <div class="sj-finale-label">steps to the sun</div>
-        </div>
-
-        <div class="ms" id="ms0" style="color:#88ccff">
-          <div class="ms-pulse"></div>
-          <div class="ms-name">1 Light-Second</div>
-          <div class="ms-steps">375M steps</div>
-          <div class="ms-dist">300,000 km (186,000 mi)</div>
-        </div>
-        <div class="ms" id="ms1" style="color:#d4d0c8">
-          <div class="ms-dot" style="background:#d4d0c8"></div>
-          <div class="ms-name">The Moon</div>
-          <div class="ms-steps">500M steps</div>
-          <div class="ms-dist">384,000 km (239,000 mi)</div>
-        </div>
-        <div class="ms" id="ms2" style="color:#88ccff">
-          <div class="ms-pulse"></div>
-          <div class="ms-name">1 Light-Minute</div>
-          <div class="ms-steps">22B steps</div>
-          <div class="ms-dist">18M km (11M mi)</div>
-        </div>
-        <div class="ms" id="ms3" style="color:var(--tier-g)">
-          <div class="ms-dot" style="background:var(--tier-g)"></div>
-          <div class="ms-name">Venus</div>
-          <div class="ms-steps">50B steps</div>
-          <div class="ms-dist">40M km (25M mi)</div>
-        </div>
-        <div class="ms" id="ms4" style="color:var(--tier-o)">
-          <div class="ms-dot" style="background:var(--tier-o)"></div>
-          <div class="ms-name">Mars</div>
-          <div class="ms-steps">100B steps</div>
-          <div class="ms-dist">77M km (48M mi)</div>
-        </div>
-        <div class="ms" id="ms5" style="color:var(--warm)">
-          <div class="ms-dot" style="background:var(--warm)"></div>
-          <div class="ms-name">The Sun</div>
-          <div class="ms-steps">187B steps</div>
-          <div class="ms-dist">150M km (93M mi)</div>
-        </div>
-      </div>
+      <canvas id="sjCanvas"></canvas>
 
       <div class="sj-phase" id="sjPhase"></div>
+
+      <!-- Milestones: Earth close-up -->
+      <div class="sj-ms" data-trigger="0.015" data-fade="0.025">
+        <div class="sj-ms-name">First Steps</div>
+        <div class="sj-ms-steps">10K steps</div>
+      </div>
+      <div class="sj-ms sj-ms--alt" data-trigger="0.04" data-fade="0.025">
+        <div class="sj-ms-name">The Marathon</div>
+        <div class="sj-ms-steps">50K steps</div>
+      </div>
+      <div class="sj-ms" data-trigger="0.06" data-fade="0.025">
+        <div class="sj-ms-name">The Camino</div>
+        <div class="sj-ms-steps">500K steps</div>
+      </div>
+      <div class="sj-ms sj-ms--alt" data-trigger="0.075" data-fade="0.025">
+        <div class="sj-ms-name">Route 66</div>
+        <div class="sj-ms-steps">5M steps</div>
+      </div>
+
+      <!-- Milestones: Earth full view -->
+      <div class="sj-ms" data-trigger="0.10" data-fade="0.03">
+        <div class="sj-ms-name">Around the World</div>
+        <div class="sj-ms-steps">50M steps</div>
+      </div>
+      <div class="sj-ms sj-ms--alt" data-trigger="0.13" data-fade="0.03">
+        <div class="sj-ms-name">Twice Around</div>
+        <div class="sj-ms-steps">100M steps</div>
+      </div>
+
+      <!-- Milestones: Leaving Earth -->
+      <div class="sj-ms" data-trigger="0.18" data-fade="0.04">
+        <div class="sj-ms-name">Satellite Belt</div>
+        <div class="sj-ms-steps">225M steps</div>
+      </div>
+      <div class="sj-ms sj-ms--alt" data-trigger="0.215" data-fade="0.04">
+        <div class="sj-ms-name">One Light-Second</div>
+        <div class="sj-ms-steps">375M steps</div>
+      </div>
+      <div class="sj-ms sj-ms--planet" data-trigger="0.25" data-fade="0.04">
+        <div class="sj-ms-name">The Moon</div>
+        <div class="sj-ms-steps">480M steps</div>
+      </div>
+
+      <!-- Milestones: Deep space -->
+      <div class="sj-ms" data-trigger="0.32" data-fade="0.05">
+        <div class="sj-ms-name">Deep Space</div>
+        <div class="sj-ms-steps">1B steps</div>
+      </div>
+      <div class="sj-ms sj-ms--alt" data-trigger="0.39" data-fade="0.05">
+        <div class="sj-ms-name">The James Webb</div>
+        <div class="sj-ms-steps">1.9B steps</div>
+      </div>
+
+      <!-- Milestones: Inner planets -->
+      <div class="sj-ms" data-trigger="0.47" data-fade="0.05">
+        <div class="sj-ms-name">One Light-Minute</div>
+        <div class="sj-ms-steps">22.5B steps</div>
+      </div>
+      <div class="sj-ms sj-ms--planet" data-trigger="0.53" data-fade="0.05">
+        <div class="sj-ms-name">Venus</div>
+        <div class="sj-ms-steps">48.75B steps</div>
+      </div>
+      <div class="sj-ms sj-ms--planet" data-trigger="0.59" data-fade="0.05">
+        <div class="sj-ms-name">Mars</div>
+        <div class="sj-ms-steps">68.75B steps</div>
+      </div>
+
+      <!-- Milestones: Into the fire -->
+      <div class="sj-ms" data-trigger="0.66" data-fade="0.05">
+        <div class="sj-ms-name">Mercury's Orbit</div>
+        <div class="sj-ms-steps">82.5B steps</div>
+      </div>
+      <div class="sj-ms sj-ms--alt" data-trigger="0.72" data-fade="0.05">
+        <div class="sj-ms-name">Halfway to the Sun</div>
+        <div class="sj-ms-steps">93.5B steps</div>
+      </div>
+
+      <!-- Milestones: Final approach -->
+      <div class="sj-ms" data-trigger="0.80" data-fade="0.05">
+        <div class="sj-ms-name">The Sunlight Mark</div>
+        <div class="sj-ms-steps">150B steps</div>
+      </div>
+      <div class="sj-ms sj-ms--alt" data-trigger="0.85" data-fade="0.04">
+        <div class="sj-ms-name">The Final Billion</div>
+        <div class="sj-ms-steps">186B steps</div>
+      </div>
+
+      <!-- Finale -->
+      <div class="sj-finale" id="sjFinale">
+        <div class="sj-finale-num">187 Billion</div>
+        <div class="sj-finale-label">steps to the sun</div>
+      </div>
+
       <div class="sj-counter" id="sjCo">
         <div class="sj-counter-num" id="sjNum">0 steps</div>
         <div class="sj-counter-label">Collective Journey</div>
@@ -416,8 +429,10 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/three.min.js"></script>
 <script src="js/config.js"></script>
 <script src="js/lava.js"></script>
 <script src="js/main.js"></script>
+<script src="js/space-journey.js"></script>
 </body>
 </html>

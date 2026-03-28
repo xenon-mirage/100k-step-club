@@ -53,7 +53,7 @@
     '  blobs += 0.07 / (length((uv - b6) * aspect) + 0.01);',
     '  blobs += 0.05 / (length((uv - b7) * aspect) + 0.01);',
     // Higher intensity than original but not overwhelming
-    '  float intensity = f * 0.65 + blobs * 0.07;',
+    '  float intensity = f * 0.45 + blobs * 0.07;',
     // Neon-hot color ramp: deep black → deep ember → electric orange → hot amber → bright core
     '  vec3 c1 = vec3(0.02, 0.01, 0.04);',
     '  vec3 c2 = vec3(0.45, 0.08, 0.02);',
@@ -133,9 +133,9 @@
       raf = requestAnimationFrame(render);
       if (isMobile) { frameCount++; if (frameCount % 2 !== 0) return; }
 
-      // Fade out lava as user scrolls down — stars take over
+      // Fade out lava gradually — persists behind space journey before fully fading
       var fadeStart = 0.35;
-      var fadeEnd = 0.7;
+      var fadeEnd = 0.85;
       var opacity = scrollProgress <= fadeStart ? 1 : scrollProgress >= fadeEnd ? 0 : 1 - (scrollProgress - fadeStart) / (fadeEnd - fadeStart);
       canvas.style.opacity = opacity;
 

@@ -32,6 +32,27 @@ favicon.svg       ← Site icon
 3. No build step — Vercel serves static files directly
 4. Domain: 100kstepclub.com (DNS A → 76.76.21.21, CNAME www → cname.vercel-dns.com)
 
+## Dev Server & Preview
+
+The website repo lives at `~/Desktop/100k-step-club/` but Claude sessions typically start from `~/Desktop/Graude/100K-Step-Club/` for context stacking. This causes preview/server tools to fail because they inherit the wrong working directory.
+
+**What works:**
+```bash
+cd /Users/graemenixon/Desktop/100k-step-club && python3 -m http.server 8080
+```
+Run this via Bash (with `run_in_background: true`). The `cd` is mandatory — the server must start from the website repo root so it can serve `index.html` and all assets.
+
+**What doesn't work:**
+- `preview_start` / launch.json — fails with `getcwd` permission errors when the session CWD is the Graude folder, not the website repo. The Python http.server module calls `os.getcwd()` before parsing the `-d` flag, so even an explicit directory arg won't help.
+- Starting the server without `cd` — serves files from the wrong directory.
+
+**Port conflicts:** If port 8080 is already in use, kill it first:
+```bash
+lsof -ti:8080 | xargs kill -9 2>/dev/null
+```
+
+**Access:** `http://localhost:8080` in the browser.
+
 ## Rules
 1. All copy follows the brand voice guide. No exceptions.
 2. Must work perfectly on mobile.

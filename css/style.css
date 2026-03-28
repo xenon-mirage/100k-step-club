@@ -840,277 +840,60 @@ a { color: inherit; }
    SPACE JOURNEY VISUALIZER
    ======================================================== */
 
-.space-journey { height: 400vh; position: relative; }
-.sj-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; }
-.sj-canvas { position: absolute; inset: 0; }
+/* ── Space Journey Visualizer ── */
+.space-journey { height: 700vh; position: relative; }
+.sj-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; background: transparent; }
 
-.sj-path {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 3px;
-  z-index: 1;
-  background: linear-gradient(90deg,
-    transparent 2%,
-    rgba(255,107,0,.12) 8%,
-    rgba(255,107,0,.35) 50%,
-    rgba(255,107,0,.55) 90%,
-    rgba(255,107,0,.7) 98%
-  );
-  box-shadow: 0 0 12px rgba(255,107,0,.15), 0 0 30px rgba(255,107,0,.06);
-  transform-origin: left center;
-  transform: scaleX(0);
-  opacity: 0;
-  overflow: hidden;
-}
-
-.sj-path::after {
-  content: '';
-  position: absolute;
-  top: -1px;
-  width: 80px;
-  height: 5px;
-  background: linear-gradient(90deg, transparent, rgba(255,171,64,.6), transparent);
-  border-radius: 3px;
-  animation: pathShimmer 3s ease-in-out infinite;
-}
-
-.earth-wrap { position: absolute; z-index: 5; }
-
-.earth-wrap::after {
-  content: '';
-  position: absolute;
-  inset: -20%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(74,158,255,.08) 0%, transparent 60%);
-  animation: earthBreath 4s ease-in-out infinite;
-  pointer-events: none;
-}
-
-.earth-sphere {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  position: relative;
-  background:
-    /* Ice caps */
-    radial-gradient(ellipse 50% 12% at 50% 6%, rgba(220,235,255,.35) 0%, transparent 80%),
-    radial-gradient(ellipse 40% 10% at 50% 96%, rgba(220,235,255,.25) 0%, transparent 80%),
-    /* North America - Great Lakes / Toronto area */
-    radial-gradient(ellipse 22% 18% at 32% 32%, #2d8a4e 0%, #1f6b3a 60%, transparent 100%),
-    /* South America */
-    radial-gradient(ellipse 14% 28% at 38% 62%, #1f7a3a 0%, #166b2e 70%, transparent 100%),
-    /* Europe / Africa */
-    radial-gradient(ellipse 12% 14% at 54% 30%, #2d8a4e 0%, transparent 100%),
-    radial-gradient(ellipse 16% 30% at 55% 52%, #3a7a3a 0%, #2a6a2a 50%, transparent 100%),
-    /* Asia */
-    radial-gradient(ellipse 28% 22% at 72% 34%, #2d7a42 0%, #1f6b3a 70%, transparent 100%),
-    /* Australia */
-    radial-gradient(ellipse 10% 8% at 78% 62%, #8a6b3a 0%, #6a5a30 60%, transparent 100%),
-    /* Ocean base */
-    radial-gradient(circle at 30% 35%, #4a9dff 0%, #2a7bd5 25%, #1a5fb4 45%, #0d4b8e 65%, #06203d 90%);
-  box-shadow:
-    inset -18px -10px 45px rgba(0,0,0,.5),
-    inset 8px 8px 25px rgba(100,180,255,.08),
-    0 0 40px rgba(74,158,255,.12),
-    0 0 100px rgba(74,158,255,.05);
-  overflow: hidden;
-}
-
-.earth-sphere::before {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(100,180,255,.1);
-}
-
-.earth-sphere::after {
-  content: '';
+#sjCanvas {
   position: absolute;
   inset: 0;
-  border-radius: 50%;
-  background:
-    radial-gradient(ellipse at 25% 35%, rgba(255,255,255,.1) 0%, transparent 28%),
-    radial-gradient(ellipse at 55% 25%, rgba(255,255,255,.06) 0%, transparent 22%);
-  animation: cloudDrift 35s linear infinite;
-}
-
-.orbit-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(255,107,0,.1);
-  z-index: 4;
-  opacity: 0;
-  box-shadow: 0 0 6px rgba(255,107,0,.04);
-}
-
-.moon-obj, .venus-obj, .mars-obj {
-  position: absolute;
-  z-index: 4;
-  border-radius: 50%;
-  opacity: 0;
-  transition: opacity .5s;
-}
-
-.moon-obj {
-  background: radial-gradient(circle at 35% 30%, #d4d0c8 0%, #b8b4aa 30%, #8a8680 60%, #6a6660 85%);
-  box-shadow: inset -3px -2px 6px rgba(0,0,0,.4), 0 0 12px rgba(180,176,170,.08);
-}
-
-.venus-obj {
-  background: radial-gradient(circle at 35% 30%, #ffeebb 0%, #e8c87a 40%, #c9a24d 70%, #a07830 90%);
-  box-shadow: inset -2px -2px 5px rgba(0,0,0,.3), 0 0 10px rgba(232,200,122,.08);
-}
-
-.mars-obj {
-  background: radial-gradient(circle at 35% 30%, #e8a070 0%, #c0603a 40%, #983828 70%, #6a2018 90%);
-  box-shadow: inset -2px -2px 5px rgba(0,0,0,.4), 0 0 10px rgba(192,96,58,.08);
-}
-
-.sun-vis {
-  position: absolute;
-  z-index: 2;
-  border-radius: 50%;
-  background: radial-gradient(circle,
-    #fffde8 0%, #fff8c4 8%, #ffcc02 18%, #ffab40 32%, #ff6b00 50%, #ff3d00 70%, rgba(255,61,0,.4) 85%, transparent 100%
-  );
-  box-shadow:
-    0 0 40px rgba(255,200,0,.4),
-    0 0 80px rgba(255,107,0,.3),
-    0 0 160px rgba(255,107,0,.15),
-    0 0 320px rgba(255,61,0,.06);
-  opacity: 0;
-}
-
-.sun-vis::before {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,170,0,.08) 0%, rgba(255,107,0,.03) 40%, transparent 65%);
-}
-
-.sun-vis::after {
-  content: '';
-  position: absolute;
-  inset: -35%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,200,0,.06) 0%, transparent 60%);
-  animation: sunPulse 4s ease-in-out infinite;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
 /* Milestone labels */
-.ms {
+.sj-ms {
   position: absolute;
   z-index: 6;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  left: 50%;
+  top: 14%;
+  transform: translateX(-50%);
+  text-align: center;
   opacity: 0;
-  transform: translateY(6px);
-  transition: opacity .5s ease, transform .5s ease;
   pointer-events: none;
+  transition: none;
 }
 
-.ms.on { opacity: 1; transform: translateY(0); }
+.sj-ms--alt { top: 72%; }
 
-.ms-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  margin-bottom: .4rem;
-  box-shadow: 0 0 8px currentColor;
-  animation: msDotTwinkle 3s ease-in-out infinite;
-}
+.sj-ms--planet .sj-ms-name { color: var(--warm); }
 
-.ms-pulse {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  margin-bottom: .4rem;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ms-pulse::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  animation: lightPulse 2s ease-in-out infinite;
-}
-
-.ms-pulse::after {
-  content: '';
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 6px currentColor;
-}
-
-.ms-name {
+.sj-ms-name {
   font-family: var(--sans);
-  font-size: .6rem;
-  letter-spacing: .1em;
+  font-size: clamp(.85rem, 1.8vw, 1.1rem);
+  font-weight: 500;
+  letter-spacing: .22em;
   text-transform: uppercase;
   white-space: nowrap;
-  margin-bottom: .1rem;
+  color: rgba(255,255,255,.55);
+  margin-bottom: .3rem;
+  text-shadow: 0 0 20px rgba(0,0,0,.9), 0 0 40px rgba(0,0,0,.6);
 }
 
-.ms-steps { font-weight: 700; font-size: .85rem; white-space: nowrap; }
-.ms-dist { font-size: .65rem; color: var(--text-dim); white-space: nowrap; }
-
-/* Earth-surface milestones */
-.ms-earth {
-  position: absolute;
-  z-index: 6;
-  display: flex;
-  align-items: center;
-  gap: .4rem;
-  opacity: 0;
-  transform: scale(.9);
-  transition: opacity .5s ease, transform .5s ease;
-  pointer-events: none;
+.sj-ms-steps {
+  font-family: var(--display);
+  font-weight: 700;
+  text-shadow: 0 0 20px rgba(0,0,0,.9), 0 0 40px rgba(0,0,0,.6);
+  font-size: clamp(1.2rem, 2.8vw, 1.8rem);
   white-space: nowrap;
+  color: rgba(255,255,255,.8);
 }
 
-.ms-earth.on { opacity: 1; transform: scale(1); }
-
-.ms-earth-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--ember);
-  box-shadow: 0 0 6px rgba(232,93,4,.35);
-  flex-shrink: 0;
-}
-
-.ms-earth-text { display: flex; flex-direction: column; }
-
-.ms-earth-name {
-  font-family: var(--sans);
-  font-size: .58rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--ember);
-}
-
-.ms-earth-steps {
-  font-weight: 600;
-  font-size: .78rem;
-  color: var(--text);
-}
-
-/* Counter + phase */
+/* Counter */
 .sj-counter {
   position: absolute;
-  bottom: 18%;
+  bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -1124,23 +907,42 @@ a { color: inherit; }
 .sj-counter-num {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 7vw, 4.5rem);
   letter-spacing: -.02em;
   font-variant-numeric: tabular-nums;
   background: linear-gradient(135deg, var(--fire), var(--warm));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  transition: all .6s ease;
+}
+
+.sj-counter.sun-mode .sj-counter-num {
+  background: none;
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: #0a0a0a;
+  color: #0a0a0a;
+  -webkit-text-stroke: 1.5px transparent;
+  paint-order: stroke fill;
+  text-shadow: none;
+  filter: drop-shadow(0 0 8px rgba(255,107,0,.4));
 }
 
 .sj-counter-label {
   font-family: var(--sans);
-  font-size: .72rem;
+  font-size: .68rem;
   letter-spacing: .18em;
   text-transform: uppercase;
   color: var(--text-dim);
+  transition: color .6s ease;
 }
 
+.sj-counter.sun-mode .sj-counter-label {
+  color: #1a1a1a;
+}
+
+/* Phase label */
 .sj-phase {
   position: absolute;
   top: 7%;
@@ -1149,12 +951,15 @@ a { color: inherit; }
   text-align: center;
   z-index: 7;
   font-family: var(--sans);
-  font-size: .68rem;
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  font-weight: 700;
   letter-spacing: .22em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: #fff;
   opacity: 0;
   transition: opacity .4s ease;
+  white-space: nowrap;
+  text-shadow: 0 0 30px rgba(0,0,0,.95), 0 0 60px rgba(0,0,0,.7);
 }
 
 .sj-phase.on { opacity: 1; }
@@ -1180,26 +985,36 @@ a { color: inherit; }
 .sj-finale-num {
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(2.5rem, 8vw, 5.5rem);
+  font-size: clamp(3rem, 10vw, 7rem);
   letter-spacing: -.02em;
   line-height: 1;
-  background: linear-gradient(135deg, var(--fire), var(--warm), #fff8e1);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: gradShift 4s ease-in-out infinite;
-  filter: drop-shadow(0 0 40px rgba(255,107,0,.2));
+  color: #0a0a0a;
+  -webkit-text-fill-color: #0a0a0a;
+  -webkit-text-stroke: 2px;
+  -webkit-text-stroke-color: var(--fire);
+  paint-order: stroke fill;
+  filter: drop-shadow(0 0 20px rgba(255,107,0,.3)) drop-shadow(0 0 60px rgba(255,107,0,.15));
 }
 
 .sj-finale-label {
   font-family: var(--sans);
-  font-size: clamp(.75rem, 1.5vw, .9rem);
+  font-size: clamp(1rem, 2vw, 1.4rem);
   letter-spacing: .25em;
   text-transform: uppercase;
-  color: var(--text-mid);
-  margin-top: .6rem;
+  color: #1a1a1a;
+  -webkit-text-stroke: 1px var(--warm);
+  paint-order: stroke fill;
+  margin-top: .8rem;
 }
+
+/* Fallback: if WebGL fails, show a simple gradient earth */
+.sj-fallback .sj-sticky {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sj-fallback #sjCanvas { display: none; }
 
 
 /* ========================================================
@@ -1761,40 +1576,12 @@ a { color: inherit; }
   100% { top: 36px; }
 }
 
-@keyframes cloudDrift {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes lightPulse {
-  0%, 100% { transform: scale(1); opacity: .6; }
-  50%      { transform: scale(1.8); opacity: 0; }
-}
-
-@keyframes sunPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50%      { transform: scale(1.06); opacity: .7; }
-}
 
 @keyframes btnGlow {
   0%, 100% { box-shadow: 0 6px 24px rgba(255,107,0,.45), 0 16px 56px rgba(255,107,0,.25); }
   50%      { box-shadow: 0 6px 28px rgba(255,107,0,.55), 0 16px 64px rgba(255,107,0,.3); }
 }
 
-@keyframes earthBreath {
-  0%, 100% { transform: scale(1); opacity: .5; }
-  50%      { transform: scale(1.15); opacity: 1; }
-}
-
-@keyframes msDotTwinkle {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px currentColor; }
-  50%      { opacity: .6; box-shadow: 0 0 14px currentColor; }
-}
-
-@keyframes pathShimmer {
-  0%   { left: -80px; }
-  100% { left: 100%; }
-}
 
 
 /* ========================================================
@@ -1836,9 +1623,8 @@ a { color: inherit; }
     padding: .9rem 1.5rem;
   }
 
-  .ms-name { font-size: .55rem; }
-  .ms-steps { font-size: .78rem; }
-  .ms-dist { font-size: .6rem; }
+  .sj-ms-name { font-size: .75rem; }
+  .sj-ms-steps { font-size: 1rem; }
 }
 
 @media (max-width: 380px) {
