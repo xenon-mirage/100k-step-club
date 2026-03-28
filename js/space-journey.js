@@ -89,10 +89,17 @@
     function () { checkTexturesLoaded(); }
   );
 
+  var moonTex = textureLoader.load(
+    'textures/moon-' + (isMobile ? '1k' : '2k') + '.jpg',
+    function () { checkTexturesLoaded(); }
+  );
+  if (moonTex.colorSpace !== undefined) moonTex.colorSpace = THREE.SRGBColorSpace;
+  else moonTex.encoding = THREE.sRGBEncoding;
+
   var loadedCount = 0;
   function checkTexturesLoaded() {
     loadedCount++;
-    if (loadedCount >= 2) {
+    if (loadedCount >= 3) {
       texturesLoaded = true;
       sec.classList.add('sj-loaded');
     }
@@ -220,56 +227,12 @@
     '}'
   ].join('\n');
 
-  /* ── Moon — craters + highland texture ── */
-  var moonFrag = [
-    'precision mediump float;',
-    'varying vec2 vUv;',
-    'varying vec3 vNormal;',
-    'varying vec3 vPosition;',
-    '',
-    'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
-    'float noise(vec2 p) {',
-    '  vec2 i = floor(p); vec2 f = fract(p);',
-    '  f = f * f * (3.0 - 2.0 * f);',
-    '  return mix(mix(hash(i), hash(i + vec2(1,0)), f.x),',
-    '             mix(hash(i + vec2(0,1)), hash(i + vec2(1,1)), f.x), f.y);',
-    '}',
-    'float fbm(vec2 p) {',
-    '  float v = 0.0; float a = 0.5;',
-    '  for (int i = 0; i < 5; i++) { v += a * noise(p); p *= 2.1; a *= 0.5; }',
-    '  return v;',
-    '}',
-    '',
-    'void main() {',
-    '  vec2 uv = vUv * 8.0;',
-    '  float terrain = fbm(uv);',
-    '  // Craters — dark circular depressions',
-    '  float craters = 0.0;',
-    '  for (int i = 0; i < 12; i++) {',
-    '    vec2 center = vec2(hash(vec2(float(i), 0.0)) * 8.0, hash(vec2(0.0, float(i))) * 8.0);',
-    '    float r = hash(vec2(float(i), float(i))) * 0.6 + 0.15;',
-    '    float d = length(mod(uv, 8.0) - center);',
-    '    float rim = smoothstep(r, r - 0.05, d) * (1.0 - smoothstep(r - 0.05, r - r * 0.7, d));',
-    '    float floor2 = smoothstep(r * 0.7, r * 0.3, d) * 0.3;',
-    '    craters += rim * 0.15 - floor2;',
-    '  }',
-    '  float base = mix(0.55, 0.75, terrain) + craters;',
-    '  // Highland variation',
-    '  float highland = fbm(uv * 0.5 + 3.0) * 0.15;',
-    '  base += highland;',
-    '  vec3 col = vec3(base * 0.82, base * 0.80, base * 0.76);',
-    '  // Lighting',
-    '  float diffuse = max(dot(vNormal, normalize(vec3(5.0, 2.0, 5.0))), 0.0);',
-    '  col *= 0.15 + diffuse * 0.85;',
-    '  gl_FragColor = vec4(col, 1.0);',
-    '}'
-  ].join('\n');
-
+  /* ── Moon — real texture ── */
   var moonGeo = new THREE.SphereGeometry(0.18, 48, 48);
-  var moonMat = new THREE.ShaderMaterial({
-    vertexShader: planetVert,
-    fragmentShader: moonFrag,
-    transparent: true
+  var moonMat = new THREE.MeshPhongMaterial({
+    map: moonTex,
+    shininess: 2,
+    specular: new THREE.Color(0x111111)
   });
   var moon = new THREE.Mesh(moonGeo, moonMat);
   moon.visible = false;
@@ -684,14 +647,18 @@
       var fadeIn = smoothstep(trigger - fadeW * 0.5, trigger - fadeW * 0.1, p);
       var fadeOut = 1 - smoothstep(trigger + fadeW * 0.3, trigger + fadeW * 1.2, p);
       var msOpacity = fadeIn * fadeOut;
-      var msY = (1 - msOpacity) * 12;
       ms.style.opacity = msOpacity;
-      ms.style.transform = 'translateX(-50%) translateY(' + msY + 'px)';
+      ms.style.transform = 'translate(-50%, -50%)';
     }
 
-    // Finale
-    var finalePhase = smoothstep(0.88, 0.94, p);
-    sjFinale.classList.toggle('on', finalePhase > 0);
+    // Finale — scroll-driven zoom that swallows the screen
+    // Phase 1 (0.86-0.91): fade in at readable size
+    // Phase 2 (0.91-0.99): exponential zoom — text fills and darkens the screen
+    var finaleAppear = smoothstep(0.86, 0.89, p);
+    var finaleZoom = smoothstep(0.91, 0.99, p);
+    var finaleScale = lr(0.8, 150, Math.pow(finaleZoom, 3));
+    sjFinale.style.opacity = finaleAppear;
+    sjFinale.style.transform = 'translate(-50%, -50%) scale(' + finaleScale + ')';
 
     // Prev check (for potential optimizations later)
     prevP = p;

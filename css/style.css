@@ -857,26 +857,24 @@ a { color: inherit; }
   position: absolute;
   z-index: 6;
   left: 50%;
-  top: 14%;
-  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
   opacity: 0;
   pointer-events: none;
   transition: none;
 }
 
-.sj-ms--alt { top: 72%; }
-
 .sj-ms--planet .sj-ms-name { color: var(--warm); }
 
 .sj-ms-name {
   font-family: var(--sans);
-  font-size: clamp(.85rem, 1.8vw, 1.1rem);
+  font-size: clamp(1rem, 2.2vw, 1.4rem);
   font-weight: 500;
   letter-spacing: .22em;
   text-transform: uppercase;
   white-space: nowrap;
-  color: rgba(255,255,255,.55);
+  color: #fff;
   margin-bottom: .3rem;
   text-shadow: 0 0 20px rgba(0,0,0,.9), 0 0 40px rgba(0,0,0,.6);
 }
@@ -885,9 +883,25 @@ a { color: inherit; }
   font-family: var(--display);
   font-weight: 700;
   text-shadow: 0 0 20px rgba(0,0,0,.9), 0 0 40px rgba(0,0,0,.6);
-  font-size: clamp(1.2rem, 2.8vw, 1.8rem);
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
   white-space: nowrap;
-  color: rgba(255,255,255,.8);
+  color: #fff;
+}
+
+/* Dark milestone text — sun-lit phase (Venus onward) */
+.sj-ms--dark .sj-ms-name {
+  color: #1a1a1a;
+  -webkit-text-stroke: 1px var(--warm);
+  paint-order: stroke fill;
+  text-shadow: none;
+}
+.sj-ms--dark .sj-ms-steps {
+  color: #0a0a0a;
+  -webkit-text-fill-color: #0a0a0a;
+  -webkit-text-stroke: 2px var(--fire);
+  paint-order: stroke fill;
+  text-shadow: none;
+  filter: drop-shadow(0 0 20px rgba(255,107,0,.3)) drop-shadow(0 0 60px rgba(255,107,0,.15));
 }
 
 /* Counter */
@@ -974,13 +988,8 @@ a { color: inherit; }
   transform: translate(-50%, -50%) scale(.5);
   text-align: center;
   opacity: 0;
-  transition: opacity .8s ease, transform .8s var(--ease-out);
   pointer-events: none;
-}
-
-.sj-finale.on {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  will-change: transform, opacity;
 }
 
 .sj-finale-num {

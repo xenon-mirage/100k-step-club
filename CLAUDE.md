@@ -18,12 +18,15 @@ Full project brief, brand voice, tier system, and design references live in the 
 
 ## File Structure
 ```
-index.html        ← Single-page site
-css/style.css     ← All styles
-js/main.js        ← Stars, scroll reveals, space journey, countdown, signup form
-js/lava.js        ← WebGL lava metaball shader (scroll-reactive background)
-js/config.js      ← Supabase public keys (safe for frontend, RLS protects data)
-favicon.svg       ← Site icon
+index.html             ← Single-page site
+css/style.css          ← All styles
+js/main.js             ← Stars, scroll reveals, countdown, signup form
+js/space-journey.js    ← Three.js space journey visualizer (Earth, planets, sun)
+js/lava.js             ← WebGL lava metaball shader (scroll-reactive background)
+js/three.min.js        ← Three.js library (r152)
+js/config.js           ← Supabase public keys (safe for frontend, RLS protects data)
+textures/              ← Earth day + cloud textures (1k mobile, 2k desktop)
+favicon.svg            ← Site icon
 ```
 
 ## Deploy Process
@@ -52,6 +55,14 @@ lsof -ti:8080 | xargs kill -9 2>/dev/null
 ```
 
 **Access:** `http://localhost:8080` in the browser.
+
+**Verifying changes — IMPORTANT:**
+Python's `http.server` aggressively caches CSS and JS files. After editing CSS/JS, always:
+1. Kill and restart the server: `lsof -ti:8080 | xargs kill -9 2>/dev/null; cd /Users/graemenixon/Desktop/100k-step-club && python3 -m http.server 8080`
+2. Hard-refresh the browser (`Cmd+Shift+R`) — a normal reload will serve stale files.
+3. Confirm the new CSS/JS is loaded before debugging (check via DevTools or `document.styleSheets` inspection).
+
+Do this **before** scrolling through to verify visual changes. Don't waste cycles debugging when the browser is running old code.
 
 ## Rules
 1. All copy follows the brand voice guide. No exceptions.
