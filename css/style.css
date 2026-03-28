@@ -701,6 +701,37 @@ a { color: inherit; }
   line-height: 1.6;
 }
 
+.badge-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.badge-img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(255,107,0,.15));
+  transition: transform .3s var(--ease-out);
+}
+
+.badge-img:hover {
+  transform: scale(1.12);
+}
+
+@media (max-width: 640px) {
+  .badge-img {
+    width: 56px;
+    height: 56px;
+  }
+  .badge-row {
+    gap: .8rem;
+  }
+}
+
 
 /* ========================================================
    COLLECTIVE MISSION — INTRO & CLOSE
