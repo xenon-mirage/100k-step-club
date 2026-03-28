@@ -20,45 +20,59 @@
     'float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }',
     'float noise(vec2 p) {',
     '  vec2 i = floor(p); vec2 f = fract(p);',
-    '  f = f * f * (3.0 - 2.0 * f);',
+    '  f = f * f * f * (f * (f * 6.0 - 15.0) + 10.0);',
     '  return mix(mix(hash(i), hash(i + vec2(1.0, 0.0)), f.x), mix(hash(i + vec2(0.0, 1.0)), hash(i + vec2(1.0, 1.0)), f.x), f.y);',
     '}',
     'float fbm(vec2 p) {',
     '  float v = 0.0; float a = 0.5;',
-    '  for (int i = 0; i < 5; i++) { v += a * noise(p); p *= 2.0; a *= 0.5; }',
+    '  for (int i = 0; i < 6; i++) { v += a * noise(p); p *= 2.0; a *= 0.5; }',
     '  return v;',
     '}',
     'void main() {',
     '  vec2 uv = gl_FragCoord.xy / u_res;',
-    '  float t = u_time * 0.15;',
-    '  vec2 q = vec2(fbm(uv * 2.0 + t * 0.3), fbm(uv * 2.0 + vec2(1.7, 9.2) + t * 0.2));',
-    '  vec2 r = vec2(fbm(uv * 2.5 + q * 4.0 + vec2(1.0, 3.0) + t * 0.1), fbm(uv * 2.5 + q * 4.0 + vec2(8.3, 2.8) + t * 0.15));',
-    '  float f = fbm(uv * 1.5 + r * 2.0);',
+    '  float t = u_time * 0.25;',
+    // Warped domain FBM — more turbulent, more layers
+    '  vec2 q = vec2(fbm(uv * 3.0 + t * 0.4), fbm(uv * 3.0 + vec2(1.7, 9.2) + t * 0.3));',
+    '  vec2 r = vec2(fbm(uv * 3.5 + q * 5.0 + vec2(1.0, 3.0) + t * 0.15), fbm(uv * 3.5 + q * 5.0 + vec2(8.3, 2.8) + t * 0.2));',
+    '  float f = fbm(uv * 2.0 + r * 3.0);',
+    // More blobs, bigger radii, faster movement
     '  float blobs = 0.0;',
     '  vec2 aspect = vec2(u_res.x / u_res.y, 1.0);',
-    '  vec2 b1 = vec2(0.3 + sin(t * 0.7) * 0.2, 0.4 + cos(t * 0.5) * 0.2 - u_scroll * 0.3);',
-    '  vec2 b2 = vec2(0.7 + cos(t * 0.6) * 0.2, 0.6 + sin(t * 0.8) * 0.2 - u_scroll * 0.2);',
-    '  vec2 b3 = vec2(0.5 + sin(t * 0.4 + 2.0) * 0.3, 0.3 + cos(t * 0.3) * 0.3 - u_scroll * 0.4);',
-    '  vec2 b4 = vec2(0.2 + cos(t * 0.5 + 1.0) * 0.15, 0.7 + sin(t * 0.6 + 3.0) * 0.15 - u_scroll * 0.15);',
-    '  vec2 b5 = vec2(0.8 + sin(t * 0.3 + 4.0) * 0.15, 0.2 + cos(t * 0.7 + 2.0) * 0.2 - u_scroll * 0.35);',
-    '  blobs += 0.08 / (length((uv - b1) * aspect) + 0.01);',
-    '  blobs += 0.06 / (length((uv - b2) * aspect) + 0.01);',
-    '  blobs += 0.07 / (length((uv - b3) * aspect) + 0.01);',
-    '  blobs += 0.04 / (length((uv - b4) * aspect) + 0.01);',
-    '  blobs += 0.05 / (length((uv - b5) * aspect) + 0.01);',
-    '  float intensity = f * 0.6 + blobs * 0.06;',
-    '  vec3 c1 = vec3(0.02, 0.02, 0.03);',
-    '  vec3 c2 = vec3(0.35, 0.12, 0.02);',
-    '  vec3 c3 = vec3(1.0, 0.42, 0.0);',
-    '  vec3 c4 = vec3(0.98, 0.75, 0.14);',
+    '  vec2 b1 = vec2(0.3 + sin(t * 0.9) * 0.25, 0.4 + cos(t * 0.7) * 0.25 - u_scroll * 0.3);',
+    '  vec2 b2 = vec2(0.7 + cos(t * 0.8) * 0.25, 0.6 + sin(t * 1.0) * 0.2 - u_scroll * 0.2);',
+    '  vec2 b3 = vec2(0.5 + sin(t * 0.6 + 2.0) * 0.35, 0.3 + cos(t * 0.5) * 0.3 - u_scroll * 0.4);',
+    '  vec2 b4 = vec2(0.15 + cos(t * 0.7 + 1.0) * 0.2, 0.7 + sin(t * 0.8 + 3.0) * 0.2 - u_scroll * 0.15);',
+    '  vec2 b5 = vec2(0.85 + sin(t * 0.5 + 4.0) * 0.2, 0.2 + cos(t * 0.9 + 2.0) * 0.25 - u_scroll * 0.35);',
+    '  vec2 b6 = vec2(0.4 + cos(t * 1.1 + 0.5) * 0.3, 0.5 + sin(t * 0.6 + 1.5) * 0.3 - u_scroll * 0.25);',
+    '  vec2 b7 = vec2(0.6 + sin(t * 0.7 + 3.5) * 0.2, 0.8 + cos(t * 0.9 + 0.8) * 0.15 - u_scroll * 0.1);',
+    '  blobs += 0.10 / (length((uv - b1) * aspect) + 0.01);',
+    '  blobs += 0.08 / (length((uv - b2) * aspect) + 0.01);',
+    '  blobs += 0.09 / (length((uv - b3) * aspect) + 0.01);',
+    '  blobs += 0.06 / (length((uv - b4) * aspect) + 0.01);',
+    '  blobs += 0.07 / (length((uv - b5) * aspect) + 0.01);',
+    '  blobs += 0.07 / (length((uv - b6) * aspect) + 0.01);',
+    '  blobs += 0.05 / (length((uv - b7) * aspect) + 0.01);',
+    // Higher intensity than original but not overwhelming
+    '  float intensity = f * 0.65 + blobs * 0.07;',
+    // Neon-hot color ramp: deep black → deep ember → electric orange → hot amber → bright core
+    '  vec3 c1 = vec3(0.02, 0.01, 0.04);',
+    '  vec3 c2 = vec3(0.45, 0.08, 0.02);',
+    '  vec3 c3 = vec3(1.0, 0.38, 0.0);',
+    '  vec3 c4 = vec3(1.0, 0.62, 0.08);',
+    '  vec3 c5 = vec3(1.0, 0.85, 0.45);',
     '  vec3 col = c1;',
-    '  col = mix(col, c2, smoothstep(0.2, 0.5, intensity));',
-    '  col = mix(col, c3, smoothstep(0.45, 0.7, intensity));',
-    '  col = mix(col, c4, smoothstep(0.7, 0.95, intensity));',
-    '  float vignette = 1.0 - length((uv - 0.5) * 1.4);',
-    '  vignette = smoothstep(0.0, 0.7, vignette);',
-    '  col *= vignette * 0.85 + 0.15;',
-    '  col *= mix(0.7, 0.3, u_scroll);',
+    '  col = mix(col, c2, smoothstep(0.18, 0.45, intensity));',
+    '  col = mix(col, c3, smoothstep(0.4, 0.65, intensity));',
+    '  col = mix(col, c4, smoothstep(0.6, 0.82, intensity));',
+    '  col = mix(col, c5, smoothstep(0.85, 1.05, intensity));',
+    // Subtle bloom on the hottest spots
+    '  col += col * col * 0.15;',
+    // Vignette — dark edges, glowing centre
+    '  float vignette = 1.0 - length((uv - 0.5) * 1.25);',
+    '  vignette = smoothstep(0.0, 0.75, vignette);',
+    '  col *= vignette * 0.88 + 0.12;',
+    // Brighter than original (was 0.7), fades with scroll
+    '  col *= mix(0.55, 0.2, u_scroll);',
     '  gl_FragColor = vec4(col, 1.0);',
     '}'
   ].join('\n');
@@ -98,7 +112,7 @@
     var uRes = gl.getUniformLocation(program, 'u_res');
 
     function resize() {
-      var dpr = Math.min(window.devicePixelRatio, isMobile ? 1 : 1.5);
+      var dpr = Math.min(window.devicePixelRatio, isMobile ? 1 : 2);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       canvas.style.width = window.innerWidth + 'px';
