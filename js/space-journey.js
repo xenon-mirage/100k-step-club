@@ -165,19 +165,24 @@
   );
   earth.add(atmosphere);
 
-  /* ── Starfield ── */
-  var starCount = isMobile ? 1200 : 3000;
+  /* ── Starfield — dense Milky Way feel ── */
+  var starCount = isMobile ? 3000 : 8000;
   var starPositions = new Float32Array(starCount * 3);
   var starSizes = new Float32Array(starCount);
   for (var i = 0; i < starCount; i++) {
-    // Distribute in a sphere shell around the scene
     var theta = Math.random() * Math.PI * 2;
     var phi = Math.acos(2 * Math.random() - 1);
-    var r = 400 + Math.random() * 600;
+    var r = 300 + Math.random() * 700;
+    // Create a galactic band — cluster more stars near the equator for a Milky Way effect
+    if (Math.random() < 0.3) {
+      phi = Math.PI * 0.5 + (Math.random() - 0.5) * 0.4; // tight band
+      r = 350 + Math.random() * 500;
+    }
     starPositions[i * 3]     = r * Math.sin(phi) * Math.cos(theta);
     starPositions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
     starPositions[i * 3 + 2] = r * Math.cos(phi);
-    starSizes[i] = 0.5 + Math.random() * 2.0;
+    // Mix of tiny dust stars and bigger bright ones
+    starSizes[i] = Math.random() < 0.85 ? 0.3 + Math.random() * 1.0 : 1.5 + Math.random() * 2.5;
   }
 
   var starGeo = new THREE.BufferGeometry();
@@ -200,8 +205,13 @@
     'void main() {',
     '  float d = length(gl_PointCoord - vec2(0.5));',
     '  if (d > 0.5) discard;',
-    '  float alpha = smoothstep(0.5, 0.1, d);',
-    '  gl_FragColor = vec4(1.0, 1.0, 1.0, alpha * 0.85);',
+    '  float alpha = smoothstep(0.5, 0.05, d);',
+    // Subtle colour variation — warm and cool tinted stars
+    '  float tint = fract(vSize * 7.37);',
+    '  vec3 col = tint < 0.3 ? vec3(0.85, 0.9, 1.0)',   // blue-white
+    '           : tint < 0.6 ? vec3(1.0, 1.0, 0.95)',    // pure white
+    '           : vec3(1.0, 0.92, 0.8);',                 // warm yellow
+    '  gl_FragColor = vec4(col, alpha * 0.9);',
     '}'
   ].join('\n');
 
@@ -638,14 +648,14 @@
       sjNum.textContent = fmt(steps) + ' steps';
     }
 
-    // Milestones — wider fade windows, peak at trigger
+    // Milestones — clean fade in/out, no overlap between consecutive milestones
     for (var i = 0; i < msList.length; i++) {
       var ms = msList[i];
       var trigger = parseFloat(ms.dataset.trigger);
-      var fadeW = parseFloat(ms.dataset.fade) || 0.04;
-      // Asymmetric: fade in quickly, linger longer
-      var fadeIn = smoothstep(trigger - fadeW * 0.5, trigger - fadeW * 0.1, p);
-      var fadeOut = 1 - smoothstep(trigger + fadeW * 0.3, trigger + fadeW * 1.2, p);
+      var fadeW = parseFloat(ms.dataset.fade) || 0.03;
+      // Symmetric: fade in, hold briefly, fade out completely before next
+      var fadeIn = smoothstep(trigger - fadeW * 0.6, trigger - fadeW * 0.1, p);
+      var fadeOut = 1 - smoothstep(trigger + fadeW * 0.2, trigger + fadeW * 0.7, p);
       var msOpacity = fadeIn * fadeOut;
       ms.style.opacity = msOpacity;
       ms.style.transform = 'translate(-50%, -50%)';
@@ -656,7 +666,7 @@
     // Phase 2 (0.91-0.99): exponential zoom — text fills and darkens the screen
     var finaleAppear = smoothstep(0.86, 0.89, p);
     var finaleZoom = smoothstep(0.91, 0.99, p);
-    var finaleScale = lr(0.8, 150, Math.pow(finaleZoom, 3));
+    var finaleScale = lr(0.6, 30, Math.pow(finaleZoom, 3));
     sjFinale.style.opacity = finaleAppear;
     sjFinale.style.transform = 'translate(-50%, -50%) scale(' + finaleScale + ')';
 
@@ -678,16 +688,26 @@
 
   window.addEventListener('resize', onResize);
 
-  /* ── Hide existing stars canvas during space journey ── */
+  /* ── Stars canvas: sky.js handles fade-in during twilight.
+       During space journey the Three.js scene has its own starfield.
+       We dim the 2D stars while the SJ section is in view, then restore after. ── */
   var existingStars = document.getElementById('stars');
   if (existingStars) {
-    var starsObs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        existingStars.style.opacity = entry.isIntersecting ? '0' : '1';
-        existingStars.style.transition = 'opacity 0.8s ease';
-      });
-    }, { threshold: 0.05 });
-    starsObs.observe(sec);
+    // Track whether we've passed the space journey
+    function updateStarsVis() {
+      var rect = sec.getBoundingClientRect();
+      var sjActive = rect.top < window.innerHeight && rect.bottom > 0;
+      if (sjActive) {
+        // Three.js has its own stars — hide 2D canvas
+        existingStars.style.opacity = '0';
+      } else if (rect.bottom <= 0) {
+        // Past the space journey — show full dense starfield
+        existingStars.style.opacity = '1';
+      }
+      // Before space journey: sky.js controls opacity via skyProgress
+    }
+    window.addEventListener('scroll', updateStarsVis, { passive: true });
+    updateStarsVis();
   }
 
   /* ── Start ── */

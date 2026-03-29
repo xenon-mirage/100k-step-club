@@ -1,10 +1,10 @@
 /* ========================================================
    100K STEP CLUB — MAIN JS
-   Stars, scroll reveals, space journey, countdown, signup
+   Star field, scroll reveals, countdown, signup
    ======================================================== */
 
 
-/* ========== STAR FIELD ========== */
+/* ========== STAR FIELD — Dense Milky Way canvas ========== */
 
 (function () {
   var c = document.getElementById('stars');
@@ -20,34 +20,43 @@
 
   function make() {
     stars = [];
-    var n = Math.floor(w * h / 5000);
+    // Very dense star field — Milky Way intensity
+    var n = Math.floor(w * h / 1500);
     for (var i = 0; i < n; i++) {
+      // Milky Way band: cluster 35% of stars in a diagonal band
+      var inBand = Math.random() < 0.35;
+      var bandAngle = 0.2; // slight tilt
       stars.push({
         x: Math.random() * w,
-        y: Math.random() * h,
-        r: Math.random() * 1.1 + .15,
-        a: Math.random() * .45 + .08,
+        y: inBand ? h * 0.4 + (Math.random() - 0.5) * h * 0.25 : Math.random() * h,
+        r: Math.random() < 0.85 ? Math.random() * 0.9 + 0.15 : Math.random() * 1.8 + 0.5,
+        a: Math.random() * 0.7 + 0.12,
         ph: Math.random() * Math.PI * 2,
-        sp: Math.random() * .003 + .001
+        sp: Math.random() * 0.003 + 0.001,
+        // Colour tint: blue-white, white, warm
+        tint: Math.random() < 0.25 ? 0 : Math.random() < 0.6 ? 1 : 2
       });
     }
   }
 
   var t = 0;
+  var tintColors = [
+    [210, 220, 255],  // blue-white
+    [238, 234, 227],  // neutral white
+    [255, 230, 200]   // warm yellow
+  ];
 
   function draw() {
     x.clearRect(0, 0, w, h);
     var sy = scrollY;
-    var mx = document.body.scrollHeight - innerHeight;
-    var sp = Math.min(sy / (mx || 1), 1);
-    var bm = .35 + sp * 1.5;
 
     for (var i = 0; i < stars.length; i++) {
       var p = stars[i];
-      var tw = Math.sin(t * p.sp * 60 + p.ph) * .3 + .7;
+      var tw = Math.sin(t * p.sp * 60 + p.ph) * 0.3 + 0.7;
+      var col = tintColors[p.tint];
       x.beginPath();
-      x.arc(p.x, p.y + sy * -.012, p.r, 0, Math.PI * 2);
-      x.fillStyle = 'rgba(238,234,227,' + Math.min(p.a * tw * bm, 1) + ')';
+      x.arc(p.x, p.y + sy * -0.008, p.r, 0, Math.PI * 2);
+      x.fillStyle = 'rgba(' + col[0] + ',' + col[1] + ',' + col[2] + ',' + Math.min(p.a * tw, 1) + ')';
       x.fill();
     }
 
@@ -60,81 +69,6 @@
   draw();
   addEventListener('resize', function () { resize(); make(); });
 })();
-
-
-/* ========== FLOATING EMBER PARTICLES ========== */
-
-(function () {
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  var canvas = document.createElement('canvas');
-  canvas.id = 'embers';
-  document.body.insertBefore(canvas, document.querySelector('.page'));
-  var ctx = canvas.getContext('2d');
-  var embers = [];
-  var w, h;
-
-  function resize() {
-    w = canvas.width = innerWidth;
-    h = canvas.height = innerHeight;
-  }
-
-  function init() {
-    embers = [];
-    var count = Math.floor(w * h / 25000);
-    for (var i = 0; i < count; i++) {
-      embers.push({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        r: Math.random() * 2 + 0.5,
-        vx: (Math.random() - 0.5) * 0.2,
-        vy: -(Math.random() * 0.4 + 0.1),
-        alpha: Math.random() * 0.35 + 0.08,
-        hue: Math.random() * 30 + 15,
-        phase: Math.random() * Math.PI * 2
-      });
-    }
-  }
-
-  var mob = innerWidth < 640;
-  var frame = 0;
-
-  function draw() {
-    frame++;
-    if (mob && frame % 2 !== 0) { requestAnimationFrame(draw); return; }
-
-    ctx.clearRect(0, 0, w, h);
-    var scrollFraction = scrollY / (document.body.scrollHeight - innerHeight || 1);
-    canvas.style.opacity = Math.min(scrollFraction * 2.5, 0.7);
-
-    for (var i = 0; i < embers.length; i++) {
-      var e = embers[i];
-      e.x += e.vx + Math.sin(Date.now() * 0.0004 + e.phase) * 0.08;
-      e.y += e.vy;
-      if (e.y < -10) { e.y = h + 10; e.x = Math.random() * w; }
-      if (e.x < -10) e.x = w + 10;
-      if (e.x > w + 10) e.x = -10;
-
-      ctx.beginPath();
-      ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,' + Math.floor(107 + e.hue) + ',0,' + e.alpha + ')';
-      ctx.fill();
-    }
-    requestAnimationFrame(draw);
-  }
-
-  resize();
-  init();
-  draw();
-  addEventListener('resize', function () {
-    resize();
-    mob = innerWidth < 640;
-    init();
-  });
-})();
-
-
-/* Ambient glow zones removed — lava shader provides warmth */
 
 
 /* ========== INTERSECTION OBSERVER — SCROLL REVEALS ========== */
@@ -312,6 +246,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   function setLoading(on) {
     submitBtn.classList.toggle('btn--loading', on);
     var span = submitBtn.querySelector('span');
-    if (span) span.textContent = on ? 'Signing up...' : "I'm in";
+    if (span) span.textContent = on ? 'Signing up...' : "Join me";
   }
 })();
