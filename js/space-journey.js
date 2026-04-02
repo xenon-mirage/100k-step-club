@@ -23,6 +23,11 @@
   var sjFinale   = document.getElementById('sjFinale');
   var msList     = sec.querySelectorAll('.sj-ms');
 
+  /* ── Black fade overlay for finale zoom ── */
+  var fadeOverlay = document.createElement('div');
+  fadeOverlay.style.cssText = 'position:absolute;inset:0;z-index:7;background:#000;opacity:0;pointer-events:none';
+  sec.querySelector('.sj-sticky').appendChild(fadeOverlay);
+
   /* ── Constants ── */
   var isMobile = window.innerWidth < 768;
   var dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2);
@@ -669,6 +674,11 @@
     var finaleScale = lr(0.6, 30, Math.pow(finaleZoom, 3));
     sjFinale.style.opacity = finaleAppear;
     sjFinale.style.transform = 'translate(-50%, -50%) scale(' + finaleScale + ')';
+
+    // Fade screen to black during zoom so sun disappears on all orientations
+    var fadeToBlack = smoothstep(0.88, 0.93, p);
+    fadeOverlay.style.opacity = fadeToBlack;
+    sjCanvas.style.opacity = 1 - fadeToBlack;
 
     // Prev check (for potential optimizations later)
     prevP = p;

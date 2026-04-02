@@ -393,14 +393,14 @@ a { color: inherit; }
   font-size: clamp(1rem, 2.5vw, 1.4rem);
   letter-spacing: .3em;
   text-transform: uppercase;
-  color: var(--text);
+  color: #fff;
   opacity: .85;
   margin-top: 1.2rem;
 }
 
 .hero-hook {
   font-size: clamp(1.05rem, 2.5vw, 1.3rem);
-  color: var(--text);
+  color: #fff;
   margin-top: 2.2rem;
   max-width: 440px;
   line-height: 1.8;
@@ -446,7 +446,7 @@ a { color: inherit; }
   font-size: .65rem;
   letter-spacing: .25em;
   text-transform: uppercase;
-  color: var(--text-mid);
+  color: rgba(255,255,255,.6);
   text-align: center;
 }
 

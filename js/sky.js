@@ -66,9 +66,9 @@
 
     // Phase colours — each phase defined by top, mid, horizon
     // Pre-dawn / First Light (s = 0.0)
-    '  vec3 dawn_top = vec3(0.04, 0.086, 0.157);',   // deep navy
-    '  vec3 dawn_mid = vec3(0.42, 0.22, 0.32);',      // warm mauve
-    '  vec3 dawn_hor = vec3(0.96, 0.65, 0.14);',      // golden
+    '  vec3 dawn_top = vec3(0.01, 0.01, 0.015);',      // true black
+    '  vec3 dawn_mid = vec3(0.04, 0.03, 0.01);',      // barely-there ember
+    '  vec3 dawn_hor = vec3(0.95, 0.75, 0.20);',      // sunrise yellow
 
     // Blue sky (s = 0.25)
     '  vec3 blue_top = vec3(0.16, 0.52, 0.82);',      // cerulean
@@ -119,7 +119,8 @@
     // === ATMOSPHERIC NOISE ===
     // Adds subtle texture to prevent flat gradients
     '  float atm = fbm(uv * 3.0 + t * 0.3) * 0.08;',
-    '  sky += atm * (1.0 - p4);', // fade noise out as we go dark
+    '  float dawnFade = smoothstep2(0.0, 0.15, s);',  // suppress noise during dawn
+    '  sky += atm * (1.0 - p4) * mix(0.15, 1.0, dawnFade);',
 
     // === SUN GLOW ===
     '  float sunVis = 1.0 - smoothstep2(0.55, 0.75, s);', // sun invisible after twilight
@@ -128,7 +129,8 @@
 
     // Sun colour shifts from warm gold → orange → red as it sets
     '  vec3 sunCol = mix(vec3(1.0, 0.9, 0.6), vec3(1.0, 0.4, 0.15), smoothstep2(0.2, 0.55, s));',
-    '  sky += sunCol * (glow1 + glow2) * sunVis * 0.35;',
+    '  float glowMask = (1.0 - smoothstep2(0.0, 0.5, y)) * mix(0.4, 1.0, dawnFade);',
+    '  sky += sunCol * (glow1 + glow2) * sunVis * 0.35 * glowMask;',
 
     // === GOD RAYS ===
     // Radial rays from sun position using angular noise
@@ -142,7 +144,7 @@
 
     // Ray colour — warm, desaturates with distance from sun
     '  vec3 rayCol = mix(sunCol, vec3(1.0, 0.95, 0.85), 0.5);',
-    '  sky += rayCol * rays * 0.18;',
+    '  sky += rayCol * rays * 0.18 * glowMask;',
 
     // === TWILIGHT STARS ===
     // Simple shader stars that emerge during twilight
@@ -354,10 +356,8 @@
     var fb = document.createElement('div');
     fb.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;' +
       'background:linear-gradient(to top,' +
-      '#f5a623 0%,' +
-      '#e8788a 20%,' +
-      '#4da6ff 50%,' +
-      '#2d1b4e 80%,' +
+      '#f2bf33 0%,' +
+      '#261405 40%,' +
       '#050507 100%)';
     document.body.prepend(fb);
 
