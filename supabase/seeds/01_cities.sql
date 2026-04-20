@@ -38,6 +38,7 @@ INSERT INTO public.cities (city, country, state, lat, lon) VALUES
   ('Phoenix',        'United States', 'Arizona',              33.45, -112.07),
   ('Little Rock',    'United States', 'Arkansas',             34.75,  -92.29),
   ('San Francisco',  'United States', 'California',           37.77, -122.42),
+  ('Palm Springs',   'United States', 'California',           33.83, -116.55),
   ('Denver',         'United States', 'Colorado',             39.74, -104.99),
   ('Hartford',       'United States', 'Connecticut',          41.76,  -72.67),
   ('Wilmington',     'United States', 'Delaware',             39.74,  -75.55),
