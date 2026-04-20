@@ -1167,9 +1167,13 @@ function buildIndex(data) {
   const cities = new Map();
   const countries = new Map();
 
+  // Cities are keyed by (country, state, city) so same-named cities in
+  // different states (Portland OR vs Portland ME) stay distinct.
+  const cityKey = (row) => row.country + "||" + (row.state || "") + "||" + row.city;
+
   // Start with signup-only cities (unclaimed)
   data.signup_only.forEach(s => {
-    const key = s.country + "||" + s.city;
+    const key = cityKey(s);
     if (!cities.has(key)) {
       cities.set(key, {
         city: s.city, country: s.country, state: s.state || null, lat: s.lat, lon: s.lon,
@@ -1180,7 +1184,7 @@ function buildIndex(data) {
 
   // Add claims (override signup_only)
   data.claims.forEach(c => {
-    const key = c.country + "||" + c.city;
+    const key = cityKey(c);
     if (!cities.has(key)) {
       cities.set(key, {
         city: c.city, country: c.country, state: c.state || null, lat: c.lat, lon: c.lon,
@@ -1334,7 +1338,7 @@ window.loadLeaderboardData = async function () {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/earcut@2.2.4/dist/earcut.min.js"></script>
-<script src="leaderboard-app.js?v=32"></script>
+<script src="leaderboard-app.js?v=33"></script>
 
 </body>
 </html>

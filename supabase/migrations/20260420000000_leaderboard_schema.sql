@@ -25,7 +25,9 @@ CREATE TABLE IF NOT EXISTS public.cities (
   lon        double precision NOT NULL CHECK (lon BETWEEN -180 AND 180),
   created_at timestamptz NOT NULL DEFAULT now(),
   updated_at timestamptz NOT NULL DEFAULT now(),
-  CONSTRAINT cities_country_city_key UNIQUE (country, city),
+  -- NULLS NOT DISTINCT treats two NULL states as equal, so London/UK can't be
+  -- inserted twice, but Portland,OR and Portland,ME co-exist.
+  CONSTRAINT cities_country_state_city_key UNIQUE NULLS NOT DISTINCT (country, state, city),
   CONSTRAINT cities_state_required_for_us_ca CHECK (
     state IS NOT NULL OR country NOT IN ('United States', 'Canada')
   )

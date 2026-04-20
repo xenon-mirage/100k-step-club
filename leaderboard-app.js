@@ -134,6 +134,7 @@
     const cNode = el('div', 'city');
     cNode.dataset.city = ct.city;
     cNode.dataset.country = ct.country;
+    if (ct.state) cNode.dataset.state = ct.state;
 
     const head = el('button', 'city-head');
     head.type = 'button';
@@ -207,7 +208,7 @@
     document.querySelectorAll('.country').forEach(cn => {
       let countryHasTier = false;
       cn.querySelectorAll('.city').forEach(cityN => {
-        const key = cityN.dataset.country + '||' + cityN.dataset.city;
+        const key = cityN.dataset.country + '||' + (cityN.dataset.state || '') + '||' + cityN.dataset.city;
         const ct = currentIndex.cities.get(key);
         const has = ct && ct.claims[tier];
         cityN.classList.toggle('filtered-out', !has);
@@ -276,13 +277,20 @@
   }
 
   /* ---------- Highlight & scroll to a city ---------- */
-  function scrollToCity(country, city) {
-    // Open country
+  function scrollToCity(country, state, city) {
     const countryNode = document.querySelector(`.country[data-country="${CSS.escape(country)}"]`);
     if (!countryNode) return;
     countryNode.classList.add('open');
-    const cityNode = countryNode.querySelector(`.city[data-city="${CSS.escape(city)}"]`);
+    // Scope the city lookup to the right state when present (disambiguates
+    // Portland,OR from Portland,ME — same name, different state).
+    const stateSelector = state ? `[data-state="${CSS.escape(state)}"]` : ':not([data-state])';
+    const cityNode = countryNode.querySelector(`.city[data-city="${CSS.escape(city)}"]${stateSelector}`)
+      || countryNode.querySelector(`.city[data-city="${CSS.escape(city)}"]`);
     if (!cityNode) return;
+    // If the city lives inside a state subdivision, open that first so the
+    // scroll target is actually visible.
+    const subdivNode = cityNode.closest('.subdiv');
+    if (subdivNode) subdivNode.classList.add('open');
     cityNode.classList.add('open', 'highlight');
     setTimeout(() => {
       cityNode.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
@@ -872,7 +880,7 @@
   function onGlobeClick(e) {
     if (!globe.hovered) return;
     const ct = globe.hovered.userData.city;
-    scrollToCity(ct.country, ct.city);
+    scrollToCity(ct.country, ct.state || null, ct.city);
   }
 
   function showTip(m, cx, cy) {
@@ -1014,13 +1022,14 @@
         const highest = tiersHeld[tiersHeld.length - 1];
         const cols = { "10K": "#FBBF24", "25K": "#60A5FA", "50K": "#D4602E", "75K": "#7044B8", "100K": "#EEEAE3" };
         const r = 3 + TIER_PRESTIGE[highest] * 0.8;
+        const stateAttr = ct.state ? ` data-state="${ct.state.replace(/"/g, '&quot;')}"` : '';
         svg.insertAdjacentHTML('beforeend',
           `<circle cx="${x}" cy="${y}" r="${r*2.2}" fill="${cols[highest]}" opacity="0.18"/>
-           <circle cx="${x}" cy="${y}" r="${r}" fill="${cols[highest]}" style="cursor:pointer" data-country="${ct.country}" data-city="${ct.city}"/>`);
+           <circle cx="${x}" cy="${y}" r="${r}" fill="${cols[highest]}" style="cursor:pointer" data-country="${ct.country}"${stateAttr} data-city="${ct.city}"/>`);
       }
     });
     svg.querySelectorAll('circle[data-city]').forEach(c => {
-      c.addEventListener('click', () => scrollToCity(c.dataset.country, c.dataset.city));
+      c.addEventListener('click', () => scrollToCity(c.dataset.country, c.dataset.state || null, c.dataset.city));
     });
   }
 
