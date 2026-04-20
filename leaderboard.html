@@ -1150,8 +1150,12 @@ const TIER_PRESTIGE = { "10K": 1, "25K": 2, "50K": 3, "75K": 4, "100K": 5 };
 // Current state
 let state = Object.assign({}, TWEAK_DEFAULS);
 
-// Derived: what claims are active for current state
+// Derived: what claims are active for current state.
+// When live Supabase data has loaded, bypass seed-preview slicing and return everything.
 function activeData() {
+  if (window.__LIVE_DATA_LOADED) {
+    return { claims: SEED.claims, signup_only: SEED.signup_only };
+  }
   if (state.state === "pre") {
     return { claims: SEED.claims.slice(0, 6), signup_only: SEED.signup_only };
   }
@@ -1302,9 +1306,35 @@ function buildIndex(data) {
 })();
 </script>
 
+<!-- Supabase client for live leaderboard data (falls back to SEED on failure) -->
+<script src="js/config.js"></script>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script>
+window.loadLeaderboardData = async function () {
+  if (typeof SUPABASE_URL === 'undefined' || typeof SUPABASE_ANON_KEY === 'undefined') return null;
+  if (typeof window.supabase === 'undefined' || !window.supabase.createClient) return null;
+  try {
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const [claimsRes, signupRes] = await Promise.all([
+      sb.from('v_leaderboard_claims').select('*'),
+      sb.rpc('get_leaderboard_signup_only')
+    ]);
+    if (claimsRes.error) throw claimsRes.error;
+    if (signupRes.error) throw signupRes.error;
+    return {
+      claims: claimsRes.data || [],
+      signup_only: signupRes.data || []
+    };
+  } catch (e) {
+    console.warn('[leaderboard] live data fetch failed, using seed:', e);
+    return null;
+  }
+};
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/earcut@2.2.4/dist/earcut.min.js"></script>
-<script src="leaderboard-app.js?v=31"></script>
+<script src="leaderboard-app.js?v=32"></script>
 
 </body>
 </html>

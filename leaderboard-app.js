@@ -42,8 +42,11 @@
   /* ---------- Render hero ---------- */
   function renderHero(stats) {
     const strip = document.getElementById('statStrip');
-    const walkers = state.state === 'pre' ? 142 : stats.totalWalkers + 117; // narrative: "142 walkers" verified + signed up in pre
-    const walkerCount = state.state === 'pre' ? stats.totalWalkers + 136 : stats.totalWalkers;
+    const isLive = !!window.__LIVE_DATA_LOADED;
+    // Live data shows real totals. Seed-preview mode pads walker count for narrative.
+    const walkerCount = isLive
+      ? stats.totalWalkers
+      : (state.state === 'pre' ? stats.totalWalkers + 136 : stats.totalWalkers);
     strip.innerHTML =
       '<span class="n">' + stats.claimedCities + '</span> Cities claimed ' +
       '<span class="sep">·</span> ' +
@@ -1152,7 +1155,23 @@
   /* ============================================================
      BOOT
      ============================================================ */
-  function boot() {
+  async function boot() {
+    // Try live Supabase data with a 4s ceiling. Fall back to SEED on any failure.
+    if (typeof window.loadLeaderboardData === 'function') {
+      try {
+        const live = await Promise.race([
+          window.loadLeaderboardData(),
+          new Promise(resolve => setTimeout(() => resolve(null), 4000))
+        ]);
+        if (live && ((live.claims && live.claims.length) || (live.signup_only && live.signup_only.length))) {
+          SEED.claims = live.claims;
+          SEED.signup_only = live.signup_only;
+          window.__LIVE_DATA_LOADED = true;
+        }
+      } catch (e) {
+        console.warn('[leaderboard] live data error, using seed:', e);
+      }
+    }
     renderList();
     initChips();
     initSearch();
