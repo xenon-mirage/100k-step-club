@@ -205,6 +205,33 @@ a { color: inherit; }
 
 .nav > * { pointer-events: auto; }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.nav-link {
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: rgba(238,234,227,.72);
+  text-decoration: none;
+  transition: color .3s var(--ease-out);
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: var(--warm);
+}
+
+@media (max-width: 480px) {
+  .nav-right { gap: .8rem; }
+  .nav-link { font-size: .68rem; letter-spacing: .06em; }
+}
+
 .nav-brand {
   font-family: var(--display);
   font-weight: 800;
