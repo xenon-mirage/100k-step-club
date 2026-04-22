@@ -1478,6 +1478,20 @@ a { color: inherit; }
   padding-right: 2.5rem;
 }
 
+.form-helper {
+  margin-top: .5rem;
+  font-family: var(--sans);
+  font-size: .78rem;
+  /* Fixed alpha — the sky shader dynamically dims --text-mid at the bottom
+     of the page (night phase) which drops helper text near-black. */
+  color: rgba(255, 255, 255, .7);
+  line-height: 1.4;
+}
+
+.form-helper-input {
+  margin-top: .6rem;
+}
+
 .form-error {
   margin-top: 1rem;
   font-size: .9rem;

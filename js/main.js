@@ -182,7 +182,13 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   var errorEl = document.getElementById('form-error');
   var successEl = document.getElementById('form-success');
   var submitBtn = document.getElementById('submit-btn');
+  var countrySel = document.getElementById('country');
+  var citySel = document.getElementById('city');
+  var cityOther = document.getElementById('city-other');
   if (!form) return;
+
+  var OTHER = '__other__';
+  var SUBDIV_COUNTRIES = { 'United States': true, 'Canada': true };
 
   var supabase;
   try {
@@ -192,6 +198,109 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     return;
   }
 
+  // Fetch cities once, build {country -> City[]} map, populate country select.
+  var citiesByCountry = new Map();
+  (async function loadCities() {
+    try {
+      var res = await supabase
+        .from('cities')
+        .select('id, city, country, state')
+        .order('country', { ascending: true })
+        .order('state', { ascending: true, nullsFirst: true })
+        .order('city', { ascending: true });
+      if (res.error) throw res.error;
+      (res.data || []).forEach(function (c) {
+        if (!citiesByCountry.has(c.country)) citiesByCountry.set(c.country, []);
+        citiesByCountry.get(c.country).push(c);
+      });
+      populateCountries();
+    } catch (err) {
+      console.error('Failed to load cities:', err);
+      // Fallback: let users type city free-form if the fetch fails so we
+      // never block a signup on a network hiccup.
+      countrySel.innerHTML = '<option value="" disabled selected>Pick your country</option>';
+      enableCityOtherFallback();
+    }
+  })();
+
+  function populateCountries() {
+    var countries = Array.from(citiesByCountry.keys()).sort(function (a, b) { return a.localeCompare(b); });
+    var frag = document.createDocumentFragment();
+    var placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.textContent = 'Pick your country';
+    frag.appendChild(placeholder);
+    countries.forEach(function (name) {
+      var opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      frag.appendChild(opt);
+    });
+    countrySel.innerHTML = '';
+    countrySel.appendChild(frag);
+  }
+
+  function populateCities(country) {
+    var list = citiesByCountry.get(country) || [];
+    var frag = document.createDocumentFragment();
+    var placeholder = document.createElement('option');
+    placeholder.value = '';
+    placeholder.disabled = true;
+    placeholder.selected = true;
+    placeholder.textContent = 'Pick your city';
+    frag.appendChild(placeholder);
+    list.forEach(function (c) {
+      var opt = document.createElement('option');
+      var label = SUBDIV_COUNTRIES[c.country] && c.state ? c.city + ', ' + c.state : c.city;
+      opt.value = String(c.id);
+      opt.textContent = label;
+      opt.dataset.cityId = String(c.id);
+      opt.dataset.cityName = c.city;
+      frag.appendChild(opt);
+    });
+    var other = document.createElement('option');
+    other.value = OTHER;
+    other.textContent = '— My city isn\u2019t listed';
+    frag.appendChild(other);
+    citySel.innerHTML = '';
+    citySel.appendChild(frag);
+    citySel.disabled = false;
+    hideCityOther();
+  }
+
+  function showCityOther() {
+    cityOther.hidden = false;
+    cityOther.required = true;
+    setTimeout(function () { cityOther.focus(); }, 30);
+  }
+
+  function hideCityOther() {
+    cityOther.hidden = true;
+    cityOther.required = false;
+    cityOther.value = '';
+  }
+
+  function enableCityOtherFallback() {
+    // Used when cities fetch fails — collapse to a free-text city so signups
+    // never break. city_id stays null; signup flows through the legacy
+    // text-match path in get_leaderboard_signup_only().
+    citySel.innerHTML = '<option value="' + OTHER + '" selected>Type your city below</option>';
+    citySel.disabled = true;
+    showCityOther();
+  }
+
+  countrySel.addEventListener('change', function () {
+    if (!countrySel.value) return;
+    populateCities(countrySel.value);
+  });
+
+  citySel.addEventListener('change', function () {
+    if (citySel.value === OTHER) showCityOther();
+    else hideCityOther();
+  });
+
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
     hideError();
@@ -199,20 +308,42 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     var firstName = form.first_name.value.trim();
     var email = form.email.value.trim();
     var tier = form.tier.value;
-    var city = form.city.value.trim();
+    var country = countrySel.value;
+    var cityVal = citySel.value;
+    var isOther = cityVal === OTHER;
     var newsletter = document.getElementById('newsletter').checked;
+
+    var cityId = null;
+    var cityDisplay = '';
+    if (isOther) {
+      cityDisplay = cityOther.value.trim();
+    } else if (cityVal) {
+      var selected = citySel.selectedOptions[0];
+      cityId = selected ? Number(selected.dataset.cityId) : null;
+      cityDisplay = selected ? selected.dataset.cityName : '';
+    }
 
     if (!firstName) return showError('Name is missing.');
     if (!email || !email.includes('@')) return showError("That email didn't work. Try again?");
     if (!tier) return showError('Pick a tier.');
-    if (!city) return showError('Where are you based?');
+    if (!country) return showError('Pick your country.');
+    if (!cityVal) return showError('Pick your city.');
+    if (isOther && !cityDisplay) return showError('Type your city.');
 
     setLoading(true);
 
     try {
       var result = await supabase
         .from('landingpage_signups')
-        .insert([{ name: firstName, email: email, tier: tier, city: city, newsletter_opt_in: newsletter }]);
+        .insert([{
+          name: firstName,
+          email: email,
+          tier: tier,
+          country: country,
+          city: cityDisplay,
+          city_id: cityId,
+          newsletter_opt_in: newsletter
+        }]);
 
       if (result.error) {
         if (result.error.code === '23505') {

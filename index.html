@@ -375,8 +375,18 @@
           </select>
         </div>
         <div class="form-group">
+          <label for="country" class="form-label">Country</label>
+          <select id="country" name="country" class="form-input form-select" required autocomplete="country-name">
+            <option value="" disabled selected>Pick your country</option>
+          </select>
+        </div>
+        <div class="form-group">
           <label for="city" class="form-label">City</label>
-          <input type="text" id="city" name="city" class="form-input" required autocomplete="address-level2">
+          <select id="city" name="city" class="form-input form-select" required disabled autocomplete="off">
+            <option value="" disabled selected>Pick your country first</option>
+          </select>
+          <input type="text" id="city-other" name="city_other" class="form-input form-helper-input" placeholder="Type your city" autocomplete="address-level2" hidden>
+          <p class="form-helper">We use your country and city to show your signup on the Claim Board.</p>
         </div>
         <div class="form-group form-group--checkbox">
           <label class="form-checkbox-label">
@@ -436,9 +446,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/three.min.js"></script>
 <script src="js/config.js"></script>
-<script src="js/sky.js"></script>
+<script src="js/sky.js?v=2"></script>
 <script src="js/sky-elements.js"></script>
-<script src="js/main.js"></script>
+<script src="js/main.js?v=2"></script>
 <script src="js/space-journey.js"></script>
 </body>
 </html>
