@@ -67,8 +67,8 @@
     // Phase colours — each phase defined by top, mid, horizon
     // Pre-dawn / First Light (s = 0.0)
     '  vec3 dawn_top = vec3(0.01, 0.01, 0.015);',      // true black
-    '  vec3 dawn_mid = vec3(0.04, 0.03, 0.01);',      // barely-there ember
-    '  vec3 dawn_hor = vec3(0.95, 0.75, 0.20);',      // sunrise yellow
+    '  vec3 dawn_mid = vec3(0.10, 0.04, 0.015);',     // warm ember (was near-black)
+    '  vec3 dawn_hor = vec3(0.93, 0.45, 0.18);',      // sunrise copper (was yellow 0.95, 0.75, 0.20)
 
     // Blue sky (s = 0.25)
     '  vec3 blue_top = vec3(0.16, 0.52, 0.82);',      // cerulean
@@ -127,8 +127,8 @@
     '  float glow1 = 0.20 / (sunDist + 0.18);',   // wide soft glow
     '  float glow2 = 0.04 / (sunDist + 0.03);',   // tight bright core
 
-    // Sun colour shifts from warm gold → orange → red as it sets
-    '  vec3 sunCol = mix(vec3(1.0, 0.9, 0.6), vec3(1.0, 0.4, 0.15), smoothstep2(0.2, 0.55, s));',
+    // Sun colour shifts from dawn peach → orange → red as it sets
+    '  vec3 sunCol = mix(vec3(1.0, 0.60, 0.30), vec3(1.0, 0.4, 0.15), smoothstep2(0.2, 0.55, s));',
     '  float glowMask = (1.0 - smoothstep2(0.0, 0.5, y)) * mix(0.4, 1.0, dawnFade);',
     '  sky += sunCol * (glow1 + glow2) * sunVis * 0.35 * glowMask;',
 

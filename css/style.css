@@ -198,12 +198,21 @@ a { color: inherit; }
   align-items: center;
   justify-content: space-between;
   padding: 1.2rem 1.5rem;
-  background: linear-gradient(to bottom, var(--nav-bg) 0%, var(--nav-bg-clear) 100%);
-  transition: background 0.4s ease;
   pointer-events: none;
 }
 
-.nav > * { pointer-events: auto; }
+.nav > * {
+  pointer-events: auto;
+  /* Pure white + stronger shadow so nav text stays readable over the
+     sunrise horizon at the top of the hero (no scrim behind it). */
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0,0,0,.7), 0 0 12px rgba(0,0,0,.35);
+}
+
+.nav > * a,
+.nav-brand,
+.nav-board,
+.nav-cta { color: #fff; }
 
 .nav-right {
   display: flex;
@@ -227,9 +236,33 @@ a { color: inherit; }
   color: var(--warm);
 }
 
+.nav-board {
+  font-family: var(--sans);
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .55rem 1.1rem;
+  border-radius: 100px;
+  background: transparent;
+  border: 1px solid rgba(249,115,22,.55);
+  color: #fff;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .25s var(--ease-out), border-color .25s var(--ease-out), color .25s var(--ease-out);
+}
+
+.nav-board:hover {
+  background: var(--ember);
+  border-color: var(--ember);
+  color: #fff;
+}
+
 @media (max-width: 480px) {
   .nav-right { gap: .8rem; }
   .nav-link { font-size: .68rem; letter-spacing: .06em; }
+  .nav-board,
+  .nav-cta { padding: .45rem .85rem; font-size: .66rem; letter-spacing: .06em; }
 }
 
 .nav-brand {
@@ -237,7 +270,7 @@ a { color: inherit; }
   font-weight: 800;
   font-size: 1rem;
   letter-spacing: -.01em;
-  color: var(--text);
+  color: #fff;
   display: flex;
   align-items: center;
   gap: .5rem;
@@ -264,19 +297,20 @@ a { color: inherit; }
   font-weight: 500;
   letter-spacing: .08em;
   text-transform: uppercase;
-  padding: .55rem 1.2rem;
+  padding: .55rem 1.1rem;
   border-radius: 100px;
-  background: var(--nav-cta-bg);
-  border: 1px solid var(--nav-cta-border);
-  color: var(--text);
+  background: transparent;
+  border: 1px solid rgba(249,115,22,.55);
+  color: #fff;
   text-decoration: none;
-  transition: all .3s var(--ease-out);
+  white-space: nowrap;
+  transition: background .25s var(--ease-out), border-color .25s var(--ease-out), color .25s var(--ease-out);
 }
 
 .nav-cta:hover {
-  background: rgba(255,107,0,.12);
-  border-color: rgba(255,107,0,.25);
-  color: var(--warm);
+  background: var(--ember);
+  border-color: var(--ember);
+  color: #fff;
 }
 
 

@@ -16,7 +16,7 @@
   }
   function fmtDate(iso) {
     const d = new Date(iso + 'T00:00:00Z');
-    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
   }
   function el(tag, cls, html) {
     const e = document.createElement(tag);
@@ -620,7 +620,7 @@
     // us-atlas (states) + canadian provinces geojson
     const urls = [
       'https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json', // topojson, US states
-      'https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/canada.geojson' // Canadian provinces
+      '/data/canada-provinces.geojson' // self-hosted (was raw.githubusercontent.com — no CDN, rate-limited)
     ];
     const combined = { type: 'FeatureCollection', features: [] };
     // US states (topojson)

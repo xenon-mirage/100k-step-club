@@ -109,7 +109,7 @@ img { display: block; max-width: 100%; }
 .brand-mark {
   display: inline-flex; align-items: center; justify-content: center;
   width: 28px; height: 28px; border-radius: 7px;
-  background: var(--ember);
+  background: linear-gradient(135deg, #ff6b00, #ff3d00);
   color: #fff; font-size: .62rem; font-weight: 800;
   letter-spacing: 0;
 }
@@ -657,11 +657,17 @@ img { display: block; max-width: 100%; }
   font-size: .62rem;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--text-dim);
+  color: var(--text);
   margin-top: 4px;
   white-space: nowrap;
 }
 .tr-right { min-width: max-content; }
+
+/* Narrow-mobile safety: dates include year now ("Oct 11, 2023"), so tighten
+   letter-spacing + size so the right column doesn't squeeze the holder name. */
+@media (max-width: 420px) {
+  .tr-date { font-size: .58rem; letter-spacing: .08em; }
+}
 
 /* Hidden by chip filter */
 .filtered-out { display: none !important; }
@@ -1338,7 +1344,7 @@ window.loadLeaderboardData = async function () {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/earcut@2.2.4/dist/earcut.min.js"></script>
-<script src="leaderboard-app.js?v=33"></script>
+<script src="leaderboard-app.js?v=34"></script>
 
 </body>
 </html>
