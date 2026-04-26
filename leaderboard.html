@@ -587,6 +587,48 @@ img { display: block; max-width: 100%; }
 .tier-row[data-tier="75K"][data-claimed]::before  { background: var(--t-75); }
 .tier-row[data-tier="100K"][data-claimed]::before { background: var(--t-100); }
 
+/* Section wrapper around each tier — used by applyFilter to show/hide. */
+.tier-section { display: contents; }
+.tier-section[hidden] { display: none; }
+
+/* Leaders-only mode: hide rank-2+ rows. Default view. */
+body.show-leaders-only .tier-row--rank { display: none; }
+
+/* View toggle row above the chipbar. */
+.view-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 4px 0 8px;
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.view-toggle .tw-switch { flex-shrink: 0; }
+
+/* Rank-2+ rows: dimmer, smaller, rank badge on the left. */
+.tier-row--rank {
+  grid-template-columns: 28px 1fr auto;
+  padding: 8px 6px 8px 12px;
+  min-height: 36px;
+  border-top: 1px dashed var(--border-soft);
+  opacity: .78;
+}
+.tier-row--rank::before { display: none; }
+.tier-row--rank .tr-rank {
+  font-family: var(--mono);
+  font-size: .68rem;
+  letter-spacing: .08em;
+  color: var(--text-dim);
+  text-align: center;
+}
+.tier-row--rank .tr-holder { font-size: .82rem; margin-top: 0; color: var(--text); }
+.tier-row--rank .tr-time   { font-size: .92rem; }
+.tier-row--rank .tr-date   { font-size: .72rem; }
+
 .tr-left { padding-left: 10px; }
 .tr-name {
   font-family: var(--display);
@@ -994,6 +1036,12 @@ img { display: block; max-width: 100%; }
       </div>
 
       <div class="right-col">
+        <!-- VIEW TOGGLE: leaders-only (default) vs all attempts -->
+        <div class="view-toggle reveal reveal-delay-3" id="viewToggle">
+          <span class="view-toggle-label">Show all attempts</span>
+          <button class="tw-switch" id="attemptsSwitch" type="button" aria-pressed="false" aria-label="Show all attempts"></button>
+        </div>
+
         <!-- CHIP BAR -->
         <nav class="chipbar reveal reveal-delay-3" id="chipbar" aria-label="Filter by tier">
           <button class="chip active" data-tier="all" type="button">All tiers</button>
@@ -1058,6 +1106,13 @@ img { display: block; max-width: 100%; }
   </div>
 
   <div class="tw-group">
+    <div class="tw-toggle">
+      <span>Show all attempts</span>
+      <button class="tw-switch" id="twAllAttempts" aria-pressed="false"></button>
+    </div>
+  </div>
+
+  <div class="tw-group">
     <div class="tw-label">
       <span>Rotation speed</span>
       <button class="tw-pause" id="twPause" aria-pressed="false" title="Pause rotation">Pause</button>
@@ -1079,6 +1134,7 @@ const TWEAK_DEFAULS = /*EDITMODE-BEGIN*/{
   "globeStyle": "realistic",
   "tierFilter": "all",
   "showSignup": true,
+  "showAllAttempts": false,
   "rotationSpeed": 3,
   "copyVariant": 0
 }/*EDITMODE-END*/;
@@ -1200,10 +1256,19 @@ function buildIndex(data) {
     const cEntry = cities.get(key);
     if (c.state && !cEntry.state) cEntry.state = c.state;
     cEntry.signup_only = false;
-    // For each tier, keep the fastest holder
-    if (!cEntry.claims[c.tier] || c.time_seconds < cEntry.claims[c.tier].time_seconds) {
-      cEntry.claims[c.tier] = c;
-    }
+    // Collect every verified claim per tier; sort pass below puts them in rank order.
+    if (!cEntry.claims[c.tier]) cEntry.claims[c.tier] = [];
+    cEntry.claims[c.tier].push(c);
+  });
+
+  // Sort each tier's claim array by server rank (live data) or time_seconds (seed fallback).
+  cities.forEach(cEntry => {
+    Object.keys(cEntry.claims).forEach(tier => {
+      cEntry.claims[tier].sort((a, b) => {
+        if (a.rank != null && b.rank != null) return a.rank - b.rank;
+        return a.time_seconds - b.time_seconds;
+      });
+    });
   });
 
   // Group by country
@@ -1326,7 +1391,7 @@ window.loadLeaderboardData = async function () {
   try {
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     const [claimsRes, signupRes] = await Promise.all([
-      sb.from('v_leaderboard_claims').select('*'),
+      sb.from('v_city_claims_all').select('*'),
       sb.rpc('get_leaderboard_signup_only')
     ]);
     if (claimsRes.error) throw claimsRes.error;
@@ -1344,7 +1409,7 @@ window.loadLeaderboardData = async function () {
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/earcut@2.2.4/dist/earcut.min.js"></script>
-<script src="leaderboard-app.js?v=34"></script>
+<script src="leaderboard-app.js?v=36"></script>
 
 </body>
 </html>

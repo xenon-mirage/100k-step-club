@@ -33,6 +33,7 @@
         globeStyle: state.globeStyle,
         tierFilter: state.tierFilter,
         showSignup: state.showSignup,
+        showAllAttempts: state.showAllAttempts,
         rotationSpeed: state.rotationSpeed,
         copyVariant: state.copyVariant
       }}, '*');
@@ -158,25 +159,29 @@
 
     const panel = el('div', 'tiers-panel');
     TIER_ORDER.forEach(tier => {
-      const claim = ct.claims[tier];
-      const row = el('div', 'tier-row');
-      row.dataset.tier = tier;
-      if (claim) {
-        row.dataset.claimed = 'true';
-        row.innerHTML = `
+      const arr = ct.claims[tier];
+      const section = el('div', 'tier-section');
+      section.dataset.tier = tier;
+
+      const leaderRow = el('div', 'tier-row');
+      leaderRow.dataset.tier = tier;
+      if (arr && arr.length) {
+        const leader = arr[0];
+        leaderRow.dataset.claimed = 'true';
+        leaderRow.innerHTML = `
           <span></span>
           <div class="tr-left">
             <div class="tr-label">${tier}</div>
             <div class="tr-name">${TIER_NAMES[tier]}</div>
-            <div class="tr-holder">${claim.holder}</div>
+            <div class="tr-holder">${leader.holder}</div>
           </div>
           <div class="tr-right">
-            <div class="tr-time">${fmtTime(claim.time_seconds)}</div>
-            <div class="tr-date">${fmtDate(claim.date)}</div>
+            <div class="tr-time">${fmtTime(leader.time_seconds)}</div>
+            <div class="tr-date">${fmtDate(leader.date)}</div>
           </div>
         `;
       } else {
-        row.innerHTML = `
+        leaderRow.innerHTML = `
           <span></span>
           <div class="tr-left">
             <div class="tr-label">${tier}</div>
@@ -186,7 +191,28 @@
           <div class="tr-right"></div>
         `;
       }
-      panel.appendChild(row);
+      section.appendChild(leaderRow);
+
+      if (arr && arr.length > 1) {
+        arr.slice(1).forEach((claim, idx) => {
+          const rankRow = el('div', 'tier-row tier-row--rank');
+          rankRow.dataset.tier = tier;
+          rankRow.dataset.rank = String(idx + 2);
+          rankRow.innerHTML = `
+            <span class="tr-rank">${idx + 2}</span>
+            <div class="tr-left">
+              <div class="tr-holder">${claim.holder}</div>
+            </div>
+            <div class="tr-right">
+              <div class="tr-time">${fmtTime(claim.time_seconds)}</div>
+              <div class="tr-date">${fmtDate(claim.date)}</div>
+            </div>
+          `;
+          section.appendChild(rankRow);
+        });
+      }
+
+      panel.appendChild(section);
     });
     cNode.appendChild(panel);
     return cNode;
@@ -202,6 +228,7 @@
     if (!tier || tier === 'all') {
       document.querySelectorAll('.tier-row, .city, .country, .subdiv').forEach(n => n.classList.remove('filtered-out'));
       document.querySelectorAll('.tier-row').forEach(r => r.style.display = '');
+      document.querySelectorAll('.tier-section').forEach(s => s.hidden = false);
       return;
     }
 
@@ -213,8 +240,8 @@
         const has = ct && ct.claims[tier];
         cityN.classList.toggle('filtered-out', !has);
         if (has) countryHasTier = true;
-        cityN.querySelectorAll('.tier-row').forEach(r => {
-          r.style.display = r.dataset.tier === tier ? '' : 'none';
+        cityN.querySelectorAll('.tier-section').forEach(s => {
+          s.hidden = (s.dataset.tier !== tier);
         });
       });
       // Filter subdivisions (states/provinces) whose cities are all filtered out
@@ -262,6 +289,29 @@
       cn.style.display = (clearAll || anyMatch) ? '' : 'none';
       if (!clearAll && anyMatch && !cn.classList.contains('open')) cn.classList.add('open');
     });
+  }
+
+  /* ---------- Attempts toggle (leaders-only vs all attempts) ---------- */
+  function initAttemptsToggle() {
+    const headerSwitch = document.getElementById('attemptsSwitch');
+    const tweaksSwitch = document.getElementById('twAllAttempts');
+    const switches = [headerSwitch, tweaksSwitch].filter(Boolean);
+
+    function render() {
+      const on = !!state.showAllAttempts;
+      document.body.classList.toggle('show-leaders-only', !on);
+      switches.forEach(s => {
+        s.classList.toggle('on', on);
+        s.setAttribute('aria-pressed', String(on));
+      });
+    }
+    render();
+
+    switches.forEach(s => s.addEventListener('click', () => {
+      state.showAllAttempts = !state.showAllAttempts;
+      render();
+      persistState();
+    }));
   }
 
   /* ---------- Chip bar ---------- */
@@ -1183,6 +1233,7 @@
     }
     renderList();
     initChips();
+    initAttemptsToggle();
     initSearch();
     initTweaks();
     initGlobe();
