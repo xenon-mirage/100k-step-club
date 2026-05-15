@@ -138,10 +138,10 @@ document.querySelectorAll([
 })();
 
 
-/* ========== COUNTDOWN TO MAY 2, 2026 ========== */
+/* ========== COUNTDOWN TO JUNE 28, 2026 ========== */
 
 (function () {
-  var target = new Date('2026-05-02T00:00:00').getTime();
+  var target = new Date('2026-06-28T00:00:00').getTime();
   var dEl = document.getElementById('cd-d');
   var hEl = document.getElementById('cd-h');
   var mEl = document.getElementById('cd-m');

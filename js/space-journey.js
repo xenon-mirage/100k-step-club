@@ -550,8 +550,10 @@
     earth.visible = earthFade > 0.01;
 
     /* ── Stars ── */
-    // Stars fade in as we leave Earth, wash out near Sun
-    var starOpacity = smoothstep(0.05, 0.20, p) * (1 - smoothstep(0.70, 0.92, p));
+    // Stars fade in as we leave Earth, wash out near Sun, return for the finale
+    var starApproach = smoothstep(0.05, 0.20, p);
+    var starWashOut = smoothstep(0.70, 0.85, p) * (1 - smoothstep(0.88, 0.94, p));
+    var starOpacity = starApproach * (1 - starWashOut);
     starMat.opacity = starOpacity;
     if (!reducedMotion) {
       stars.rotation.y += 0.00005;
@@ -620,7 +622,9 @@
       var sunGrow = smoothstep(0.35, 0.95, p);
       var sunScale = lr(0.8, 200, Math.pow(sunGrow, 2.5));
       sunMesh.scale.set(sunScale, sunScale, 1);
-      sunMat.uniforms.u_intensity.value = lr(0, 2.2, sunAppear);
+      // Fade the sun out during the finale window so stars return behind the text
+      var sunFade = 1 - smoothstep(0.88, 0.94, p);
+      sunMat.uniforms.u_intensity.value = lr(0, 2.2, sunAppear) * sunFade;
       sunMesh.lookAt(camera.position);
     }
 
@@ -666,19 +670,14 @@
       ms.style.transform = 'translate(-50%, -50%)';
     }
 
-    // Finale — scroll-driven zoom that swallows the screen
-    // Phase 1 (0.86-0.91): fade in at readable size
-    // Phase 2 (0.91-0.99): exponential zoom — text fills and darkens the screen
+    // Finale — fade in, hold, fade into the starfield
+    // Phase 1 (0.86-0.89): fade in at readable size
+    // Phase 2 (0.89-0.94): hold while sun fades and stars return
+    // Phase 3 (0.94-0.99): text fades to transparent
     var finaleAppear = smoothstep(0.86, 0.89, p);
-    var finaleZoom = smoothstep(0.91, 0.99, p);
-    var finaleScale = lr(0.6, 30, Math.pow(finaleZoom, 3));
-    sjFinale.style.opacity = finaleAppear;
-    sjFinale.style.transform = 'translate(-50%, -50%) scale(' + finaleScale + ')';
-
-    // Fade screen to black during zoom so sun disappears on all orientations
-    var fadeToBlack = smoothstep(0.88, 0.93, p);
-    fadeOverlay.style.opacity = fadeToBlack;
-    sjCanvas.style.opacity = 1 - fadeToBlack;
+    var finaleFade = 1 - smoothstep(0.94, 0.99, p);
+    sjFinale.style.opacity = finaleAppear * finaleFade;
+    sjFinale.style.transform = 'translate(-50%, -50%)';
 
     // Prev check (for potential optimizations later)
     prevP = p;
