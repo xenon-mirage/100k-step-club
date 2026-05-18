@@ -35,6 +35,7 @@
 
   --tier-g: #FBBF24;
   --tier-b: #60a5fa;
+  --tier-e: #10B981;
   --tier-o: #D4602E;
   --tier-p: #7044B8;
   --tier-w: #eeeae3;
@@ -656,6 +657,7 @@ a { color: inherit; }
 
 .tier-card[data-t="g"]:hover { border-color: rgba(251,191,36,.25); }
 .tier-card[data-t="b"]:hover { border-color: rgba(96,165,250,.25); }
+.tier-card[data-t="e"]:hover { border-color: rgba(16,185,129,.25); }
 .tier-card[data-t="o"]:hover { border-color: rgba(212,96,46,.25); }
 .tier-card[data-t="p"]:hover { border-color: rgba(112,68,184,.25); }
 .tier-card[data-t="w"]:hover { border-color: rgba(238,234,227,.15); }
@@ -675,6 +677,7 @@ a { color: inherit; }
 
 .tier-card[data-t="g"] .tier-badge { color: var(--tier-g); background: rgba(251,191,36,.08); }
 .tier-card[data-t="b"] .tier-badge { color: var(--tier-b); background: rgba(96,165,250,.08); }
+.tier-card[data-t="e"] .tier-badge { color: var(--tier-e); background: rgba(16,185,129,.10); }
 .tier-card[data-t="o"] .tier-badge { color: var(--tier-o); background: rgba(212,96,46,.08); }
 .tier-card[data-t="p"] .tier-badge { color: var(--tier-p); background: rgba(112,68,184,.08); }
 .tier-card[data-t="w"] .tier-badge { color: var(--tier-w); background: rgba(242,240,235,.05); }
@@ -688,6 +691,7 @@ a { color: inherit; }
 
 .tier-card[data-t="g"] h3 { color: var(--tier-g); }
 .tier-card[data-t="b"] h3 { color: var(--tier-b); }
+.tier-card[data-t="e"] h3 { color: var(--tier-e); }
 .tier-card[data-t="o"] h3 { color: var(--tier-o); }
 .tier-card[data-t="p"] h3 { color: var(--tier-p); }
 .tier-card[data-t="w"] h3 { color: var(--tier-w); }
@@ -742,6 +746,7 @@ a { color: inherit; }
 
 [data-t="g"] .tier-bar-fill { background: var(--tier-g); }
 [data-t="b"] .tier-bar-fill { background: var(--tier-b); }
+[data-t="e"] .tier-bar-fill { background: var(--tier-e); }
 [data-t="o"] .tier-bar-fill { background: var(--tier-o); }
 [data-t="p"] .tier-bar-fill { background: var(--tier-p); }
 [data-t="w"] .tier-bar-fill { background: var(--tier-w); }

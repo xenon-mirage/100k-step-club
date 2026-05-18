@@ -28,6 +28,7 @@
 
   --t-10: #FBBF24;
   --t-25: #60A5FA;
+  --t-35: #10B981;
   --t-50: #D4602E;
   --t-75: #7044B8;
   --t-100: #EEEAE3;
@@ -297,6 +298,7 @@ img { display: block; max-width: 100%; }
 }
 .chip[data-tier="10K"]  .chip-dot { background: var(--t-10);  color: var(--t-10); opacity: 1; }
 .chip[data-tier="25K"]  .chip-dot { background: var(--t-25);  color: var(--t-25); opacity: 1; }
+.chip[data-tier="35K"]  .chip-dot { background: var(--t-35);  color: var(--t-35); opacity: 1; }
 .chip[data-tier="50K"]  .chip-dot { background: var(--t-50);  color: var(--t-50); opacity: 1; }
 .chip[data-tier="75K"]  .chip-dot { background: var(--t-75);  color: var(--t-75); opacity: 1; }
 .chip[data-tier="100K"] .chip-dot { background: var(--t-100); color: var(--t-100); opacity: 1; }
@@ -305,6 +307,7 @@ img { display: block; max-width: 100%; }
 .chip.active[data-tier="all"]  { background: var(--ember); border-color: var(--ember); color: #050507; }
 .chip.active[data-tier="10K"]  { background: var(--t-10);  border-color: var(--t-10); }
 .chip.active[data-tier="25K"]  { background: var(--t-25);  border-color: var(--t-25); }
+.chip.active[data-tier="35K"]  { background: var(--t-35);  border-color: var(--t-35); }
 .chip.active[data-tier="50K"]  { background: var(--t-50);  border-color: var(--t-50); color: #fff; }
 .chip.active[data-tier="75K"]  { background: var(--t-75);  border-color: var(--t-75); color: #fff; }
 .chip.active[data-tier="100K"] { background: var(--t-100); border-color: var(--t-100); }
@@ -334,6 +337,7 @@ img { display: block; max-width: 100%; }
 }
 .country[data-tier-color="10K"]::before  { background: var(--t-10);  box-shadow: 0 0 12px rgba(251,191,36,.45); }
 .country[data-tier-color="25K"]::before  { background: var(--t-25);  box-shadow: 0 0 12px rgba(96,165,250,.45); }
+.country[data-tier-color="35K"]::before  { background: var(--t-35);  box-shadow: 0 0 12px rgba(16,185,129,.5); }
 .country[data-tier-color="50K"]::before  { background: var(--t-50);  box-shadow: 0 0 12px rgba(212,96,46,.55); }
 .country[data-tier-color="75K"]::before  { background: var(--t-75);  box-shadow: 0 0 14px rgba(112,68,184,.6); }
 .country[data-tier-color="100K"]::before { background: var(--t-100); box-shadow: 0 0 16px rgba(238,234,227,.6); }
@@ -358,11 +362,13 @@ img { display: block; max-width: 100%; }
 }
 .country[data-tier-color="10K"]  .country-dot { color: var(--t-10);  background: var(--t-10); }
 .country[data-tier-color="25K"]  .country-dot { color: var(--t-25);  background: var(--t-25); }
+.country[data-tier-color="35K"]  .country-dot { color: var(--t-35);  background: var(--t-35); }
 .country[data-tier-color="50K"]  .country-dot { color: var(--t-50);  background: var(--t-50); }
 .country[data-tier-color="75K"]  .country-dot { color: var(--t-75);  background: var(--t-75); }
 .country[data-tier-color="100K"] .country-dot { color: var(--t-100); background: var(--t-100); }
 .country[data-tier-color="10K"]  .country-name { color: var(--t-10); }
 .country[data-tier-color="25K"]  .country-name { color: var(--t-25); }
+.country[data-tier-color="35K"]  .country-name { color: var(--t-35); }
 .country[data-tier-color="50K"]  .country-name { color: var(--t-50); }
 .country[data-tier-color="75K"]  .country-name { color: var(--t-75); }
 .country[data-tier-color="100K"] .country-name { color: var(--t-100); }
@@ -413,6 +419,7 @@ img { display: block; max-width: 100%; }
 }
 .subdiv[data-tier-color="10K"]::before  { background: var(--t-10);  opacity: .7; }
 .subdiv[data-tier-color="25K"]::before  { background: var(--t-25);  opacity: .7; }
+.subdiv[data-tier-color="35K"]::before  { background: var(--t-35);  opacity: .7; }
 .subdiv[data-tier-color="50K"]::before  { background: var(--t-50);  opacity: .7; }
 .subdiv[data-tier-color="75K"]::before  { background: var(--t-75);  opacity: .7; }
 .subdiv[data-tier-color="100K"]::before { background: var(--t-100); opacity: .7; }
@@ -436,6 +443,7 @@ img { display: block; max-width: 100%; }
 }
 .subdiv[data-tier-color="10K"]  .subdiv-dot { color: var(--t-10);  background: var(--t-10); }
 .subdiv[data-tier-color="25K"]  .subdiv-dot { color: var(--t-25);  background: var(--t-25); }
+.subdiv[data-tier-color="35K"]  .subdiv-dot { color: var(--t-35);  background: var(--t-35); }
 .subdiv[data-tier-color="50K"]  .subdiv-dot { color: var(--t-50);  background: var(--t-50); }
 .subdiv[data-tier-color="75K"]  .subdiv-dot { color: var(--t-75);  background: var(--t-75); }
 .subdiv[data-tier-color="100K"] .subdiv-dot { color: var(--t-100); background: var(--t-100); }
@@ -491,6 +499,7 @@ img { display: block; max-width: 100%; }
 .city-dot[data-tier]         { opacity: 1; }
 .city-dot[data-tier="10K"]   { background: var(--t-10);  box-shadow: 0 0 0 2px rgba(5,5,7,.5), 0 0 8px rgba(251,191,36,.55); }
 .city-dot[data-tier="25K"]   { background: var(--t-25);  box-shadow: 0 0 0 2px rgba(5,5,7,.5), 0 0 8px rgba(96,165,250,.55); }
+.city-dot[data-tier="35K"]   { background: var(--t-35);  box-shadow: 0 0 0 2px rgba(5,5,7,.5), 0 0 9px rgba(16,185,129,.6); }
 .city-dot[data-tier="50K"]   { background: var(--t-50);  box-shadow: 0 0 0 2px rgba(5,5,7,.5), 0 0 8px rgba(212,96,46,.6); }
 .city-dot[data-tier="75K"]   { background: var(--t-75);  box-shadow: 0 0 0 2px rgba(5,5,7,.5), 0 0 10px rgba(112,68,184,.65); }
 .city-dot[data-tier="100K"]  { background: var(--t-100); box-shadow: 0 0 0 2px rgba(5,5,7,.5), 0 0 12px rgba(238,234,227,.6); }
@@ -533,11 +542,13 @@ img { display: block; max-width: 100%; }
 .tier-pill .pill-dot { width: 6px; height: 6px; border-radius: 50%; }
 .tier-pill[data-tier="10K"]  { color: var(--t-10);  background: rgba(251,191,36,.10); }
 .tier-pill[data-tier="25K"]  { color: var(--t-25);  background: rgba(96,165,250,.10); }
+.tier-pill[data-tier="35K"]  { color: var(--t-35);  background: rgba(16,185,129,.12); }
 .tier-pill[data-tier="50K"]  { color: var(--t-50);  background: rgba(212,96,46,.12); }
 .tier-pill[data-tier="75K"]  { color: var(--t-75);  background: rgba(112,68,184,.18); }
 .tier-pill[data-tier="100K"] { color: var(--t-100); background: rgba(238,234,227,.08); }
 .tier-pill[data-tier="10K"]  .pill-dot { background: var(--t-10); }
 .tier-pill[data-tier="25K"]  .pill-dot { background: var(--t-25); }
+.tier-pill[data-tier="35K"]  .pill-dot { background: var(--t-35); }
 .tier-pill[data-tier="50K"]  .pill-dot { background: var(--t-50); }
 .tier-pill[data-tier="75K"]  .pill-dot { background: var(--t-75); }
 .tier-pill[data-tier="100K"] .pill-dot { background: var(--t-100); }
@@ -583,6 +594,7 @@ img { display: block; max-width: 100%; }
 }
 .tier-row[data-tier="10K"][data-claimed]::before  { background: var(--t-10); }
 .tier-row[data-tier="25K"][data-claimed]::before  { background: var(--t-25); }
+.tier-row[data-tier="35K"][data-claimed]::before  { background: var(--t-35); }
 .tier-row[data-tier="50K"][data-claimed]::before  { background: var(--t-50); }
 .tier-row[data-tier="75K"][data-claimed]::before  { background: var(--t-75); }
 .tier-row[data-tier="100K"][data-claimed]::before { background: var(--t-100); }
@@ -636,6 +648,7 @@ body.show-leaders-only .tier-row--rank { display: none; }
 }
 .tier-row[data-tier="10K"][data-claimed]  .tr-name { color: var(--t-10); }
 .tier-row[data-tier="25K"][data-claimed]  .tr-name { color: var(--t-25); }
+.tier-row[data-tier="35K"][data-claimed]  .tr-name { color: var(--t-35); }
 .tier-row[data-tier="50K"][data-claimed]  .tr-name { color: var(--t-50); }
 .tier-row[data-tier="75K"][data-claimed]  .tr-name { color: var(--t-75); }
 .tier-row[data-tier="100K"][data-claimed] .tr-name { color: var(--t-100); }
@@ -1047,6 +1060,7 @@ body.show-leaders-only .tier-row--rank { display: none; }
           <button class="chip active" data-tier="all" type="button">All tiers</button>
           <button class="chip" data-tier="10K"  type="button"><span class="chip-dot"></span>First Light</button>
           <button class="chip" data-tier="25K"  type="button"><span class="chip-dot"></span>In The Flow</button>
+          <button class="chip" data-tier="35K"  type="button"><span class="chip-dot"></span>Realizing</button>
           <button class="chip" data-tier="50K"  type="button"><span class="chip-dot"></span>Heating Up</button>
           <button class="chip" data-tier="75K"  type="button"><span class="chip-dot"></span>Enter Night</button>
           <button class="chip" data-tier="100K" type="button"><span class="chip-dot"></span>Beat Midnight</button>
@@ -1092,6 +1106,7 @@ body.show-leaders-only .tier-row--rank { display: none; }
       <button data-val="all" class="on">All</button>
       <button data-val="10K">10K</button>
       <button data-val="25K">25K</button>
+      <button data-val="35K">35K</button>
       <button data-val="50K">50K</button>
       <button data-val="75K">75K</button>
       <button data-val="100K">100K</button>
@@ -1205,9 +1220,9 @@ const HERO_COPY = {
   ]
 };
 
-const TIER_ORDER  = ["10K", "25K", "50K", "75K", "100K"];
-const TIER_NAMES  = { "10K": "First Light", "25K": "In The Flow", "50K": "Heating Up", "75K": "Enter Night", "100K": "Beat Midnight" };
-const TIER_PRESTIGE = { "10K": 1, "25K": 2, "50K": 3, "75K": 4, "100K": 5 };
+const TIER_ORDER  = ["10K", "25K", "35K", "50K", "75K", "100K"];
+const TIER_NAMES  = { "10K": "First Light", "25K": "In The Flow", "35K": "Realizing", "50K": "Heating Up", "75K": "Enter Night", "100K": "Beat Midnight" };
+const TIER_PRESTIGE = { "10K": 1, "25K": 2, "35K": 3, "50K": 4, "75K": 5, "100K": 6 };
 
 // Current state
 let state = Object.assign({}, TWEAK_DEFAULS);

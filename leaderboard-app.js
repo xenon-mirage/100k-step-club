@@ -501,7 +501,7 @@
   }
 
   function dotColorForTier(tier) {
-    const map = { "10K": 0xFBBF24, "25K": 0x60A5FA, "50K": 0xD4602E, "75K": 0x7044B8, "100K": 0xEEEAE3 };
+    const map = { "10K": 0xFBBF24, "25K": 0x60A5FA, "35K": 0x10B981, "50K": 0xD4602E, "75K": 0x7044B8, "100K": 0xEEEAE3 };
     return map[tier] || 0x444444;
   }
 
@@ -943,8 +943,9 @@
       const tier = m.userData.tier;
       // find holder
       const claim = c.claims[tier];
+      const tierHex = { "10K": "#FBBF24", "25K": "#60A5FA", "35K": "#10B981", "50K": "#D4602E", "75K": "#7044B8", "100K": "#EEEAE3" };
       tip.querySelector('.tip-meta').innerHTML =
-        `<span class="pill-inline" style="color: ${tier === '10K' ? '#FBBF24' : tier === '25K' ? '#60A5FA' : tier === '50K' ? '#D4602E' : tier === '75K' ? '#7044B8' : '#EEEAE3'}">${tier}</span>` +
+        `<span class="pill-inline" style="color: ${tierHex[tier] || '#EEEAE3'}">${tier}</span>` +
         `${claim.holder} · ${fmtTime(claim.time_seconds)}`;
     } else {
       tip.querySelector('.tip-meta').textContent = 'Signed up · Unclaimed';
@@ -1070,7 +1071,7 @@
         svg.insertAdjacentHTML('beforeend', `<circle cx="${x}" cy="${y}" r="2.5" fill="#555"/>`);
       } else {
         const highest = tiersHeld[tiersHeld.length - 1];
-        const cols = { "10K": "#FBBF24", "25K": "#60A5FA", "50K": "#D4602E", "75K": "#7044B8", "100K": "#EEEAE3" };
+        const cols = { "10K": "#FBBF24", "25K": "#60A5FA", "35K": "#10B981", "50K": "#D4602E", "75K": "#7044B8", "100K": "#EEEAE3" };
         const r = 3 + TIER_PRESTIGE[highest] * 0.8;
         const stateAttr = ct.state ? ` data-state="${ct.state.replace(/"/g, '&quot;')}"` : '';
         svg.insertAdjacentHTML('beforeend',
