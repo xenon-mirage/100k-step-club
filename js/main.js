@@ -104,7 +104,8 @@ document.querySelectorAll([
     if (!fill) return;
     var targetWidth = parseFloat(fill.dataset.width) || 0;
     var visualWidth;
-    if (targetWidth >= 10) visualWidth = targetWidth;
+    if (targetWidth >= 25) visualWidth = targetWidth;
+    else if (targetWidth >= 1.5) visualWidth = 11 + (targetWidth - 1.5) / 23.5 * 14;
     else if (targetWidth >= 1) visualWidth = 8 + (targetWidth / 10) * 20;
     else if (targetWidth >= 0.01) visualWidth = 3 + (targetWidth / 1) * 5;
     else visualWidth = 1.5;
