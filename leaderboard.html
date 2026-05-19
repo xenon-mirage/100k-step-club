@@ -114,6 +114,14 @@ img { display: block; max-width: 100%; }
   color: #fff; font-size: .62rem; font-weight: 800;
   letter-spacing: 0;
 }
+.topbar-link {
+  margin-left: 14px; padding: .35rem .7rem;
+  color: rgba(238,234,227,.72); text-decoration: none;
+  font-family: var(--display); font-weight: 600; font-size: .85rem;
+  letter-spacing: .01em; border-radius: 8px;
+  transition: color .2s ease, background .2s ease;
+}
+.topbar-link:hover { color: #eeeae3; background: rgba(255,255,255,.04); }
 
 .search-wrap { position: relative; display: flex; align-items: center; }
 .search-btn {
@@ -1007,10 +1015,13 @@ body.show-leaders-only .tier-row--rank { display: none; }
 
   <!-- TOP BAR -->
   <header class="topbar" role="banner">
-    <a href="/" class="brand" aria-label="100K Step Club — home">
-      <span class="brand-mark">100K</span>
-      <span>Step Club</span>
-    </a>
+    <div style="display: inline-flex; align-items: center;">
+      <a href="/" class="brand" aria-label="100K Step Club — home">
+        <span class="brand-mark">100K</span>
+        <span>Step Club</span>
+      </a>
+      <a href="/journey/" class="topbar-link">Journey</a>
+    </div>
     <div class="search-wrap" id="searchWrap">
       <input type="search" class="search-input" id="searchInput" placeholder="Find your city" aria-label="Search cities and countries">
       <button type="button" class="search-btn" id="searchBtn" aria-label="Search">
