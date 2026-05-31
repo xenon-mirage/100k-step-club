@@ -26,7 +26,7 @@ js/lava.js             ← WebGL lava metaball shader (scroll-reactive backgroun
 js/three.min.js        ← Three.js library (r152)
 js/config.js           ← Supabase public keys (safe for frontend, RLS protects data)
 textures/              ← Earth day + cloud textures (1k mobile, 2k desktop)
-favicon.svg            ← Site icon
+assets/                ← Favicons: self-adapting favicon.svg (light/dark), PNG ladder, .ico, site.webmanifest
 supabase/
   functions/
     loops-signup/
