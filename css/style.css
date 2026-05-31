@@ -285,11 +285,18 @@ a { color: inherit; }
   width: 28px;
   height: 28px;
   border-radius: 7px;
-  background: linear-gradient(135deg, var(--fire), var(--fire-hot));
+  background: #050507;
+  border: 1px solid rgba(255,255,255,.12);
   font-size: .7rem;
   font-weight: 800;
-  color: #fff;
   letter-spacing: 0;
+}
+.nav-mark > span {
+  background: linear-gradient(135deg, var(--fire), #fbbf24);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 .nav-cta {

@@ -117,9 +117,14 @@ img { display: block; max-width: 100%; }
 .brand-mark {
   display: inline-flex; align-items: center; justify-content: center;
   width: 28px; height: 28px; border-radius: 7px;
-  background: linear-gradient(135deg, #ff6b00, #ff3d00);
-  color: #fff; font-size: .62rem; font-weight: 800;
+  background: #050507; border: 1px solid rgba(255,255,255,.12);
+  font-size: .62rem; font-weight: 800;
   letter-spacing: 0;
+}
+.brand-mark > span {
+  background: linear-gradient(135deg, #ff6b00, #fbbf24);
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent; color: transparent;
 }
 .topbar-link {
   margin-left: 14px; padding: .35rem .7rem;
@@ -1024,7 +1029,7 @@ body.show-leaders-only .tier-row--rank { display: none; }
   <header class="topbar" role="banner">
     <div style="display: inline-flex; align-items: center;">
       <a href="/" class="brand" aria-label="100K Step Club — home">
-        <span class="brand-mark">100K</span>
+        <span class="brand-mark"><span>100K</span></span>
         <span>Step Club</span>
       </a>
       <a href="/journey/" class="topbar-link">Journey</a>
