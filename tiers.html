@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>The Tiers — 100K Step Club</title>
+  <meta name="description" content="Six tiers from 10K to 100K steps. The distances, the feelings, the rules, and the wall of names who've done it. Pick the one that scares you a little.">
+  <meta property="og:title" content="The Tiers — 100K Step Club">
+  <meta property="og:description" content="Six tiers from 10K to 100K steps. Pick the one that scares you a little.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <meta name="theme-color" content="#050507">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=3">
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<div class="grain"></div>
+<div class="page">
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav">
+    <a href="/" class="nav-brand">
+      <span class="nav-mark"><span>100K</span></span>
+      Step Club
+    </a>
+    <div class="nav-right">
+      <a href="/tiers.html" class="nav-link" aria-current="page">Tiers</a>
+      <a href="/journey/" class="nav-link">Journey</a>
+      <a href="/leaderboard.html" class="nav-link">Claim Board</a>
+      <a href="/sun.html" class="nav-link">To the Sun</a>
+      <button type="button" class="nav-menu-btn" id="nav-menu-btn" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+      <a href="/#signup" class="nav-cta">Sign Up</a>
+    </div>
+  </nav>
+  <div class="nav-menu" id="nav-menu">
+    <a href="/tiers.html" aria-current="page">Tiers</a>
+    <a href="/journey/">Journey</a>
+    <a href="/leaderboard.html">Claim Board</a>
+    <a href="/sun.html">Walk to the Sun</a>
+  </div>
+
+  <!-- ===== TIERS HERO ===== -->
+  <header class="tiers-hero">
+    <p class="eyebrow v">The Tier System</p>
+    <h1 class="section-title v">Six tiers. One midnight.</h1>
+    <p class="tiers-hero-sub">Every tier is the same day at a different intensity. Start where you are. Come back next month for the one above it.</p>
+  </header>
+
+  <!-- ===== TIER BLOCKS ===== -->
+  <section class="section" style="padding-top:1rem" id="ladder">
+
+    <div class="tier-block" data-t="g" id="t10k">
+      <div class="tier-block-head">
+        <img src="img/badge-10k.png" alt="10K First Light badge" class="tier-block-badge" loading="lazy" width="84" height="84">
+        <div>
+          <h2 class="tier-block-title">10K · <span>First Light</span></h2>
+          <p class="tier-block-meta">~8 km (5 mi) &middot; 1.5&ndash;2 hours of walking</p>
+        </div>
+      </div>
+      <p class="tier-feeling">Same distance you walk every day. Completely different when you mean it.</p>
+      <div class="tier-bar"><div class="tier-bar-fill" data-width="62"></div></div>
+      <p class="tier-stat-text"><span>~62% of people on Earth</span><span>~5 billion</span></p>
+      <p class="wall-label">The Wall — verified First Light walkers</p>
+      <div class="wall" data-wall="10K">
+        <a class="wall-chip wall-chip--you" href="/#signup">Your name &rarr;</a>
+      </div>
+    </div>
+
+    <div class="tier-block" data-t="b" id="t25k">
+      <div class="tier-block-head">
+        <img src="img/badge-25k.png" alt="25K In The Flow badge" class="tier-block-badge" loading="lazy" width="84" height="84">
+        <div>
+          <h2 class="tier-block-title">25K · <span>In The Flow</span></h2>
+          <p class="tier-block-meta">~20 km (12 mi) &middot; 4&ndash;5 hours of walking</p>
+        </div>
+      </div>
+      <p class="tier-feeling">Somewhere around hour three, the thing that's been bugging you goes quiet.</p>
+      <div class="tier-bar"><div class="tier-bar-fill" data-width="25"></div></div>
+      <p class="tier-stat-text"><span>~25% of people on Earth</span><span>~2 billion</span></p>
+      <p class="wall-label">The Wall — verified In The Flow walkers</p>
+      <div class="wall" data-wall="25K">
+        <span class="wall-chip"><strong>Graeme</strong> — Rome</span>
+        <a class="wall-chip wall-chip--you" href="/#signup">Your name &rarr;</a>
+      </div>
+    </div>
+
+    <div class="tier-block" data-t="e" id="t35k">
+      <div class="tier-block-head">
+        <img src="img/badge-35k.png" alt="35K Realizing badge" class="tier-block-badge" loading="lazy" width="84" height="84">
+        <div>
+          <h2 class="tier-block-title">35K · <span>Realizing</span></h2>
+          <p class="tier-block-meta">~28 km (17 mi) &middot; 5&ndash;7 hours of walking</p>
+        </div>
+      </div>
+      <p class="tier-feeling">Your watch becomes a calculator. Can you still beat midnight at this pace?</p>
+      <div class="tier-bar"><div class="tier-bar-fill" data-width="10"></div></div>
+      <p class="tier-stat-text"><span>~10% of people on Earth</span><span>~800 million</span></p>
+      <p class="wall-label">The Wall — verified Realizing walkers</p>
+      <div class="wall" data-wall="35K">
+        <span class="wall-empty">Nobody yet. This tier is one month old.</span>
+        <a class="wall-chip wall-chip--you" href="/#signup">Your name &rarr;</a>
+      </div>
+    </div>
+
+    <div class="tier-block" data-t="o" id="t50k">
+      <div class="tier-block-head">
+        <img src="img/badge-50k.png" alt="50K Heating Up badge" class="tier-block-badge" loading="lazy" width="84" height="84">
+        <div>
+          <h2 class="tier-block-title">50K · <span>Heating Up</span></h2>
+          <p class="tier-block-meta">~40 km (25 mi) &middot; 8&ndash;10 hours of walking</p>
+        </div>
+      </div>
+      <p class="tier-feeling">Your body starts negotiating. Your mind gets quieter. The clarity at 40 kilometres is worth every blister.</p>
+      <div class="tier-bar"><div class="tier-bar-fill" data-width="1.5"></div></div>
+      <p class="tier-stat-text"><span>~1.5% of people on Earth</span><span>~120 million</span></p>
+      <p class="wall-label">The Wall — verified Heating Up walkers</p>
+      <div class="wall" data-wall="50K">
+        <span class="wall-chip"><strong>Graeme</strong> — Toronto</span>
+        <span class="wall-chip"><strong>Graeme</strong> — Kyoto</span>
+        <span class="wall-chip"><strong>Graeme</strong> — Taipei</span>
+        <span class="wall-chip"><strong>Graeme</strong> — New York</span>
+        <span class="wall-chip"><strong>Graeme</strong> — Palm Springs</span>
+        <a class="wall-chip wall-chip--you" href="/#signup">Your name &rarr;</a>
+      </div>
+    </div>
+
+    <div class="tier-block" data-t="p" id="t75k">
+      <div class="tier-block-head">
+        <img src="img/badge-75k.png" alt="75K Enter Night badge" class="tier-block-badge" loading="lazy" width="84" height="84">
+        <div>
+          <h2 class="tier-block-title">75K · <span>Enter Night</span></h2>
+          <p class="tier-block-meta">~60 km (37 mi) &middot; 12&ndash;14 hours of walking</p>
+        </div>
+      </div>
+      <p class="tier-feeling">Almost nobody has done this. The ones who have don't forget it.</p>
+      <div class="tier-bar"><div class="tier-bar-fill" data-width="0.08"></div></div>
+      <p class="tier-stat-text"><span>~0.08% of people on Earth</span><span>~6 million</span></p>
+      <p class="wall-label">The Wall — verified Enter Night walkers</p>
+      <div class="wall" data-wall="75K">
+        <span class="wall-chip"><strong>Graeme</strong> — Tokyo</span>
+        <a class="wall-chip wall-chip--you" href="/#signup">Your name &rarr;</a>
+      </div>
+    </div>
+
+    <div class="tier-block" data-t="w" id="t100k">
+      <div class="tier-block-head">
+        <img src="img/badge-100k.png" alt="100K Beat Midnight badge" class="tier-block-badge" loading="lazy" width="84" height="84">
+        <div>
+          <h2 class="tier-block-title">100K · <span>Beat Midnight</span></h2>
+          <p class="tier-block-meta">~80 km (50 mi) &middot; 16&ndash;20 hours of walking</p>
+        </div>
+      </div>
+      <p class="tier-feeling">The rarest club with the simplest entry requirement: don't stop.</p>
+      <div class="tier-bar"><div class="tier-bar-fill" data-width="0.002"></div></div>
+      <p class="tier-stat-text"><span>~0.002% of people on Earth</span><span>~200,000</span></p>
+      <p class="wall-label">The Wall — verified Beat Midnight walkers</p>
+      <div class="wall" data-wall="100K">
+        <span class="wall-chip"><strong>Graeme</strong> — Toronto</span>
+        <span class="wall-chip"><strong>Graeme</strong> — Kyoto</span>
+        <a class="wall-chip wall-chip--you" href="/#signup">Your name &rarr;</a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===== RULES ===== -->
+  <section class="section" id="rules" style="text-align:center">
+    <div class="container">
+      <p class="eyebrow">The Rules</p>
+      <h2 class="section-title">Verification is strict.<br>That's the point.</h2>
+      <ol class="rules-list">
+        <li class="rule-card">
+          <span class="rule-num">01</span>
+          <div>
+            <h3>Screenshot your steps</h3>
+            <p>Strava, Garmin, or Apple Health, showing your step count and the date. That's the whole submission.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-num">02</span>
+          <div>
+            <h3>One day. Finished by midnight.</h3>
+            <p>Steps count from midnight to midnight, local time. Start whenever you want. The deadline doesn't move.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-num">03</span>
+          <div>
+            <h3>Thresholds are exact</h3>
+            <p>99,800 steps is a brilliant Enter Night day, not a Beat Midnight. The difference between 75,000 and 100,000 is not 25,000 steps.</p>
+          </div>
+        </li>
+        <li class="rule-card">
+          <span class="rule-num">04</span>
+          <div>
+            <h3>No treadmills</h3>
+            <p>Real ground only. The world is the venue.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="rules-close">The badge means something because the bar doesn't move.</p>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="section section--quote" style="text-align:center">
+    <div class="container">
+      <p class="eyebrow v">June 28, 2026</p>
+      <h2 class="section-title v">Pick the one that scares you a little.</h2>
+      <a href="/#signup" class="btn btn-p"><span>Sign up for June 28</span></a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="f-links">
+      <a href="https://chat.whatsapp.com/DuDpslY1AtP20JuU4vUl6X?mode=gi_t" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+        WhatsApp
+      </a>
+      <a href="https://substack.com/@100kstepclub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Newsletter
+      </a>
+      <a href="https://instagram.com/100kstepclub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+      <a href="https://x.com/100kstepclub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X
+      </a>
+      <a href="https://www.tiktok.com/@100kstepclub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.7a8.18 8.18 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.13z"/></svg>
+        TikTok
+      </a>
+    </div>
+    <p class="f-motto">100,000 steps. One day. Beat Midnight.</p>
+  </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="js/main.js?v=3"></script>
+</body>
+</html>

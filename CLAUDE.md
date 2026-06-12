@@ -16,17 +16,47 @@ Full project brief, brand voice, tier system, and design references live in the 
 - Hosted on Vercel — auto-deploys from GitHub on push to `main`
 - Mobile-first design
 
+## Site Architecture (v3 — live since 2026-06-12)
+
+Split architecture: **the landing page converts; depth pages serve the converted.**
+One shared nav (pill links + mobile Menu) across every page. Decided 2026-06-11
+(see Graude `_shared/decisions-log.md`); built in `~/Desktop/100k-step-club-v3/`
+(now merged here — that folder is retired, THIS repo is canon).
+
+| Page | Job | Live data (anon key, client-side) |
+|------|-----|-----------------------------------|
+| `index.html` | Convert: what is this → tiers → proof → June 28 signup | Proof stats ← `v_step_totals` + `v_city_claims_all`; form → `landingpage_signups`; dropdowns ← `cities` |
+| `tiers.html` | Tier deep-dive + The Wall (verified names per tier) | Wall ← `v_city_claims_all` |
+| `journey/` | Walk-to-the-Sun live tracker (React via Babel) | Counter ← `v_step_totals`; gallery ← `claims` direct, 60-day window, first-timer flags from full holder history |
+| `leaderboard.html` | Claim Board: globe + list + embedded flat world map | `v_city_claims_all` + `get_leaderboard_signup_only` RPC |
+| `world-map.html` | Flat 2D map (D3, Miller/Equal/Mercator) — standalone + iframed into the Claim Board (`?embed=1`, postMessage settings bridge) | Same views as the Claim Board |
+| `sun.html` | 700vh Three.js space-journey visualization (the old landing-page showpiece) | None (scroll-narrative counter) |
+
+Every people-displaying surface has a **real-data fallback** baked in (snapshot
+2026-06-11) — live fetch always wins; the fallback only shows on network failure.
+Never put fictional names in a fallback.
+
 ## File Structure
 ```
-index.html             ← Single-page site
-css/style.css          ← All styles
-js/main.js             ← Stars, scroll reveals, countdown, signup form
-js/space-journey.js    ← Three.js space journey visualizer (Earth, planets, sun)
-js/lava.js             ← WebGL lava metaball shader (scroll-reactive background)
+index.html             ← Conversion landing page
+tiers.html             ← Tier guide + The Wall
+sun.html               ← Walk-to-the-sun visualization (Three.js)
+world-map.html         ← Flat world map (standalone + iframe embed)
+leaderboard.html       ← Claim Board (globe + list + world-map embed + merged settings)
+leaderboard-app.js     ← Claim Board logic
+journey/               ← Journey to the Sun (React via Babel CDN)
+css/style.css          ← Shared styles (token-driven custom properties)
+css/sun.css            ← sun.html visualizer styles
+map/                   ← World map engine (data.js, world-map.js, world-map.css)
+js/main.js             ← Stars, reveals, countdown, sticky CTA, nav menu, signup form, live stats, tier walls
+js/space-journey.js    ← Three.js space journey (used by sun.html)
 js/three.min.js        ← Three.js library (r152)
 js/config.js           ← Supabase public keys (safe for frontend, RLS protects data)
-textures/              ← Earth day + cloud textures (1k mobile, 2k desktop)
+js/sky.js, js/sky-elements.js, js/lava.js  ← ORPHANED (v2 landing effects, kept for history)
+textures/              ← Earth/cloud/moon textures (1k mobile, 2k desktop)
+img/                   ← Badges (360px web), founder-poster.jpg, friends-1..4.jpg
 assets/                ← Favicons: self-adapting favicon.svg (light/dark), PNG ladder, .ico, site.webmanifest
+serve.py               ← Local no-cache dev server (python3 serve.py [port], default 8080)
 supabase/
   functions/
     loops-signup/
@@ -43,11 +73,11 @@ supabase/
 
 The website repo lives at `~/Desktop/100k-step-club/` but Claude sessions typically start from `~/Desktop/Graude/100K-Step-Club/` for context stacking. The session's working directory is the Graude folder, not the website repo — this used to break python's `http.server` because it calls `os.getcwd()` before parsing the `-d` flag.
 
-**Preferred — use `preview_start`.** The repo has `.claude/launch.json` configured to wrap the server in `bash -c "cd /Users/graemenixon/Desktop/100k-step-club && exec python3 -m http.server 8080"`. The shell `cd` runs before python, so `getcwd` returns the right path and the server serves the right files. `preview_start` also surfaces the page in the IDE's preview panel and unlocks the `mcp__Claude_Preview__*` tools (screenshot, click, snapshot, console logs, eval) for verification.
+**Preferred — use `preview_start`.** The repo has `.claude/launch.json` configured to wrap the server in `bash -c "cd /Users/graemenixon/Desktop/100k-step-club && exec python3 serve.py 8080"`. `serve.py` sends `Cache-Control: no-store` on every response, which kills the stale-CSS/JS problem below at the root. `preview_start` also surfaces the page in the IDE's preview panel and unlocks the `mcp__Claude_Preview__*` tools (screenshot, click, snapshot, console logs, eval) for verification.
 
 **Fallback — direct Bash.** If `preview_start` ever fails or the launch.json gets removed, run:
 ```bash
-cd /Users/graemenixon/Desktop/100k-step-club && python3 -m http.server 8080
+cd /Users/graemenixon/Desktop/100k-step-club && python3 serve.py 8080
 ```
 via Bash with `run_in_background: true`. The `cd` is mandatory.
 
@@ -58,15 +88,14 @@ lsof -ti:8080 | xargs kill -9 2>/dev/null
 
 **Access:** `http://localhost:8080` in the browser, or via `mcp__Claude_Preview__preview_screenshot` in the session.
 
-**Verifying changes — IMPORTANT:**
-Python's `http.server` aggressively caches CSS and JS files. After editing CSS/JS, always:
-1. Kill and restart the server: `lsof -ti:8080 | xargs kill -9 2>/dev/null; cd /Users/graemenixon/Desktop/100k-step-club && python3 -m http.server 8080`
-2. Hard-refresh the browser (`Cmd+Shift+R`) — a normal reload will serve stale files.
-3. Confirm the new CSS/JS is loaded before debugging (check via DevTools or `document.styleSheets` inspection).
-
-Do this **before** scrolling through to verify visual changes. Don't waste cycles debugging when the browser is running old code.
+**Verifying changes:** `serve.py` sends no-store headers, so stale-cache debugging
+is largely a solved problem. If the browser somehow still shows old code (e.g. a
+tab that predates the server restart), one hard refresh (`Cmd+Shift+R`) clears it.
+Confirm the new CSS/JS is loaded before debugging visual issues.
 
 ## Sharing SQL migrations and ad-hoc SQL
+
+> **⚠️ Schema now lives in the dedicated backend repo (as of 2026-05-31).** The shared Supabase DB's migrations + Edge Functions are managed from **`~/Desktop/100k-step-club-backend/`** — the single source of truth, shared by this website and the new mobile app. **Ship schema changes with `supabase db push` from that repo; do NOT paste schema-changing SQL into the Supabase dashboard** (it desyncs the CLI migration ledger — that already bit us once). This repo's `supabase/migrations/` is now **historical** — don't add new migrations here. (The mobile-app plan + the backend-repo setup runbook live in the private hub `~/Desktop/Graude/100K-Step-Club/app/`.) Inline-pasting is still fine for **ad-hoc read / sanity-check queries** (below) — just not schema changes.
 
 When creating any `.sql` file Graeme will run manually in the Supabase SQL editor (migrations, one-off seeds, sanity-check queries), do BOTH:
 

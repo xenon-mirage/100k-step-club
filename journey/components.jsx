@@ -92,35 +92,48 @@ function ScrollProgress() {
   );
 }
 
-function Hud({ currentSteps, percent }) {
+/* Canonical site nav — identical markup + styling to the landing page.
+   The live counter lives in the hero right below, so the bar stays pure nav. */
+function Hud() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const close = () => setMenuOpen(false);
+    window.addEventListener("scroll", close, { passive: true });
+    document.addEventListener("click", close);
+    return () => {
+      window.removeEventListener("scroll", close);
+      document.removeEventListener("click", close);
+    };
+  }, [menuOpen]);
+
   return (
-    <div className="hud">
-      <div className="hud-inner">
-        <a href="/" className="brand"
-           style={{ textDecoration: "none", color: "inherit" }}
-           aria-label="100K Step Club — home">
-          <div className="brand-mark">100K</div>
-          <div className="brand-text">
-            Step Club <span className="sep">/</span>
-            <span className="tab">Journey to the Sun</span>
-          </div>
+    <React.Fragment>
+      <nav className="nav">
+        <a href="/" className="nav-brand" aria-label="100K Step Club — home">
+          <span className="nav-mark"><span>100K</span></span>
+          Step Club
         </a>
-        <div className="hud-stats">
-          <div className="hud-stat">
-            <div className="num">{commaNumber(currentSteps)}</div>
-            <div className="lab">Verified steps</div>
-          </div>
-          <div className="hud-stat">
-            <div className="num">{fmtSmartPct(percent)}</div>
-            <div className="lab">To the Sun</div>
-          </div>
-          <div className="hud-stat">
-            <div className="num">187B</div>
-            <div className="lab">Target</div>
-          </div>
+        <div className="nav-right">
+          <a href="/tiers.html" className="nav-link">Tiers</a>
+          <a href="/journey/" className="nav-link" aria-current="page">Journey</a>
+          <a href="/leaderboard.html" className="nav-link">Claim Board</a>
+          <a href="/sun.html" className="nav-link">To the Sun</a>
+          <button type="button" className="nav-menu-btn"
+                  aria-expanded={menuOpen}
+                  onClick={(e) => { e.stopPropagation(); setMenuOpen(o => !o); }}>
+            Menu
+          </button>
+          <a href="/#signup" className="nav-cta">Sign Up</a>
         </div>
+      </nav>
+      <div className={"nav-menu" + (menuOpen ? " open" : "")}>
+        <a href="/tiers.html">Tiers</a>
+        <a href="/journey/" aria-current="page">Journey</a>
+        <a href="/leaderboard.html">Claim Board</a>
+        <a href="/sun.html">Walk to the Sun</a>
       </div>
-    </div>
+    </React.Fragment>
   );
 }
 
@@ -172,6 +185,10 @@ function Hero({ currentSteps, percent, nextMilestone, nextProgress }) {
                 }}>
           Walk the journey ↓
         </button>
+        <a className="btn btn-secondary" href="/leaderboard.html#world-map"
+           style={{ textDecoration: "none" }}>
+          See a flat world tracker below
+        </a>
       </div>
 
       <div className="hero-arrow">Scroll to travel</div>
@@ -303,7 +320,7 @@ function VerifiedGallery({ verified }) {
     <section className="section">
       <div className="section-head" style={{ width: "100%" }}>
         <div className="eyebrow">Recently verified</div>
-        <h2>This week, these&nbsp;walkers fed the&nbsp;counter</h2>
+        <h2>This month, these&nbsp;walkers fed the&nbsp;counter</h2>
         <p>
           Every verified day, every tier. You can be on this wall — log your next event with
           Strava, Garmin, or Apple Health.

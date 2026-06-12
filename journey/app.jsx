@@ -48,16 +48,38 @@ function useLiveData() {
     if (typeof window === "undefined" || !window.supabase) return;
     if (typeof SUPABASE_URL === "undefined" || typeof SUPABASE_ANON_KEY === "undefined") return;
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // 60-day window (not 30): event days drift across the calendar month —
+    // on June 11 a 30-day window misses May 2 and the gallery goes blank.
+    // Queried client-side against claims; mirrors the v_recent_walkers view.
+    const since = new Date(Date.now() - 60 * 864e5).toISOString().slice(0, 10);
     Promise.all([
       sb.from("v_step_totals").select("*").single(),
-      sb.from("v_recent_walkers").select("*").limit(24),
-    ]).then(([totalsRes, walkersRes]) => {
+      sb.from("claims")
+        .select("holder, tier, steps, date, time_seconds, cities(city, country, state)")
+        .eq("verified", true)
+        .gte("date", since)
+        .order("date", { ascending: false })
+        .limit(24),
+      // Full holder history (holder + date only) so we can flag first-timers:
+      // a walker is "first" if their earliest-ever verified claim falls
+      // inside the 60-day window — i.e. they're new to the club this cycle.
+      sb.from("claims").select("holder, date").eq("verified", true),
+    ]).then(([totalsRes, walkersRes, histRes]) => {
       if (totalsRes.error) console.warn("[journey] v_step_totals:", totalsRes.error.message);
-      if (walkersRes.error) console.warn("[journey] v_recent_walkers:", walkersRes.error.message);
+      if (walkersRes.error) console.warn("[journey] recent claims:", walkersRes.error.message);
+      if (histRes.error) console.warn("[journey] claim history:", histRes.error.message);
       const steps = totalsRes.data && totalsRes.data.total_steps != null
         ? Number(totalsRes.data.total_steps)
         : null;
-      const walkers = (walkersRes.data || []).map(mapWalker);
+      const firstSeen = {};
+      (histRes.data || []).forEach(r => {
+        if (!firstSeen[r.holder] || r.date < firstSeen[r.holder]) firstSeen[r.holder] = r.date;
+      });
+      const walkers = (walkersRes.data || []).map(r => {
+        const m = mapWalker(Object.assign({}, r, r.cities || {}));
+        m.first = firstSeen[r.holder] ? firstSeen[r.holder] >= since : false;
+        return m;
+      });
       setData({ steps, walkers });
     }).catch(err => console.warn("[journey] supabase fetch error:", err));
   }, []);

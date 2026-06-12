@@ -177,25 +177,30 @@ window.MILESTONES = [
 
 // Recent verified walks — placeholder community data.
 // Avatars are colored initials; the gallery treats each as a celebration card.
+// Real verified walks (snapshot 2026-06-11, newest first) — fallback when
+// v_recent_walkers (30-day window) is empty or unreachable.
 window.VERIFIED = [
-  { name: "Maya Okafor",    handle: "@mokafor",    tier: 100, steps: 102_400, where: "Lisbon, PT", date: "May 16, 2026", first: false, streak: 4 },
-  { name: "Jonas Brand",    handle: "@jb_walks",   tier: 100, steps: 100_800, where: "Berlin, DE", date: "May 16, 2026", first: true,  streak: 1 },
-  { name: "Priya Anand",    handle: "@priya.a",    tier: 75,  steps:  76_300, where: "Toronto, CA",date: "May 15, 2026", first: false, streak: 2 },
-  { name: "Tom Lindberg",   handle: "@lindy",      tier: 100, steps: 101_900, where: "Stockholm, SE",date:"May 15, 2026",first: false, streak: 9 },
-  { name: "Ava Mendes",     handle: "@avawalks",   tier: 50,  steps:  52_100, where: "São Paulo, BR",date:"May 14, 2026",first: true,  streak: 1 },
-  { name: "Reuben Park",    handle: "@rparks",     tier: 75,  steps:  78_900, where: "Seoul, KR",  date: "May 14, 2026", first: false, streak: 3 },
-  { name: "Sasha Mirov",    handle: "@s.mirov",    tier: 35,  steps:  38_700, where: "Tallinn, EE",date: "May 14, 2026", first: false, streak: 6 },
-  { name: "Ella Quintero",  handle: "@ellaq",      tier: 100, steps: 100_400, where: "Mexico City, MX",date:"May 13, 2026",first:true, streak: 1 },
-  { name: "Hiro Tanaka",    handle: "@hirosteps",  tier: 50,  steps:  55_500, where: "Osaka, JP",  date: "May 13, 2026", first: false, streak: 12 },
-  { name: "Kofi Boateng",   handle: "@kofiwalks",  tier: 25,  steps:  29_300, where: "Accra, GH",  date: "May 13, 2026", first: false, streak: 2 },
-  { name: "Naomi Stark",    handle: "@n_stark",    tier: 75,  steps:  77_100, where: "Edinburgh, UK",date:"May 12, 2026",first: false, streak: 5 },
-  { name: "Léa Fournier",   handle: "@leaf",       tier: 35,  steps:  40_200, where: "Montréal, CA",date:"May 12, 2026", first: false, streak: 2 },
-  { name: "Dom Russo",      handle: "@domwalks",   tier: 10,  steps:  12_500, where: "Naples, IT", date: "May 12, 2026", first: true,  streak: 1 },
-  { name: "Aiyana Whitehorse",handle:"@aiyanaw",   tier: 100, steps: 104_700, where: "Flagstaff, US",date:"May 11, 2026",first: false, streak: 7 },
-  { name: "Sven Holm",      handle: "@svenh",      tier: 50,  steps:  53_400, where: "Oslo, NO",   date: "May 11, 2026", first: false, streak: 4 },
-  { name: "Ines Cardoso",   handle: "@inezzz",     tier: 25,  steps:  26_800, where: "Porto, PT",  date: "May 11, 2026", first: true,  streak: 1 },
-  { name: "Wren Halloway",  handle: "@wrenh",      tier: 100, steps: 100_100, where: "Dublin, IE", date: "May 10, 2026", first: false, streak: 2 },
-  { name: "Tariq Said",     handle: "@tariqs",     tier: 35,  steps:  37_500, where: "Cairo, EG",  date: "May 10, 2026", first: false, streak: 3 },
+  { name: "Vlad M.", handle: "@vlad", tier: 25, steps: 30910, where: "Vancouver, British Columbia", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Jaclyn L.", handle: "@jaclyn", tier: 10, steps: 17937, where: "Vancouver, British Columbia", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Jason R.", handle: "@jason", tier: 25, steps: 26643, where: "San Francisco, California", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Brendan K.", handle: "@brendan", tier: 10, steps: 12309, where: "Toronto, Ontario", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Zane K.", handle: "@zane", tier: 25, steps: 26554, where: "Vancouver, British Columbia", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Graeme N.", handle: "@graeme", tier: 100, steps: 100540, where: "Toronto, Ontario", date: "May 2, 2026", first: false, streak: 1 },
+  { name: "Milda S.", handle: "@milda", tier: 25, steps: 30261, where: "Pleasanton, California", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Matt O.", handle: "@matt", tier: 25, steps: 30261, where: "Pleasanton, California", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Dylan P.", handle: "@dylan", tier: 35, steps: 35987, where: "Accra, Ghana", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Morgana C.", handle: "@morgana", tier: 25, steps: 33423, where: "Toronto, Ontario", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Nicole L.", handle: "@nicole", tier: 25, steps: 25661, where: "San Francisco, California", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Aqsa M.", handle: "@aqsa", tier: 10, steps: 10520, where: "Toronto, Ontario", date: "May 2, 2026", first: true, streak: 1 },
+  { name: "Graeme N.", handle: "@graeme", tier: 50, steps: 50000, where: "Toronto, Ontario", date: "Apr 18, 2026", first: false, streak: 1 },
+  { name: "Graeme N.", handle: "@graeme", tier: 50, steps: 50000, where: "Palm Springs, California", date: "Dec 23, 2024", first: false, streak: 1 },
+  { name: "Graeme N.", handle: "@graeme", tier: 25, steps: 25000, where: "Rome, Italy", date: "Jun 7, 2024", first: false, streak: 1 },
+  { name: "Graeme N.", handle: "@graeme", tier: 100, steps: 100000, where: "Toronto, Ontario", date: "May 20, 2024", first: false, streak: 1 },
+  { name: "Graeme N.", handle: "@graeme", tier: 50, steps: 50000, where: "Taipei, Taiwan", date: "Nov 10, 2023", first: false, streak: 1 },
+  { name: "Graeme N.", handle: "@graeme", tier: 100, steps: 100000, where: "Kyoto, Japan", date: "Oct 11, 2023", first: false, streak: 1 },
+  { name: "Graeme N.", handle: "@graeme", tier: 50, steps: 50000, where: "New York, New York", date: "Jun 5, 2022", first: false, streak: 1 },
+  { name: "Graeme N.", handle: "@graeme", tier: 75, steps: 75000, where: "Tokyo, Japan", date: "Feb 22, 2020", first: false, streak: 1 },
+  { name: "Graeme N.", handle: "@graeme", tier: 50, steps: 50000, where: "Kyoto, Japan", date: "Oct 14, 2019", first: false, streak: 1 }
 ];
 
 window.TIER_INFO = {

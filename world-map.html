@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+<title>The World — 100K Step Club Claim Board</title>
+<meta name="description" content="Every city lit by the 100K Step Club, mapped across the whole world. Find your walk.">
+<link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+<link rel="shortcut icon" href="/assets/favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+<meta name="theme-color" content="#050507">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="map/world-map.css?v=1">
+</head>
+<body data-dir="day">
+
+<div class="map-stage" data-screen-label="World map">
+  <div class="starfield" aria-hidden="true"></div>
+
+  <div class="map-world">
+    <div class="earth-base"></div>
+    <canvas class="earth-tex" aria-hidden="true"></canvas>
+    <div class="clouds" aria-hidden="true"><canvas class="clouds-canvas"></canvas></div>
+    <div class="earth-tint"></div>
+    <div class="earth-warm"></div>
+    <div class="earth-terminator"></div>
+    <div class="aurora-layer" aria-hidden="true"></div>
+    <svg class="vec" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <div class="dots-layer" aria-hidden="true"></div>
+  <div class="map-vignette" aria-hidden="true"></div>
+  <div class="scrim scrim-top" aria-hidden="true"></div>
+  <div class="scrim scrim-bottom" aria-hidden="true"></div>
+
+  <!-- floating hover card -->
+  <div class="hover-card" role="tooltip"></div>
+
+  <!-- UI chrome -->
+  <div class="chrome">
+    <header class="map-header">
+      <span class="mh-brand">
+        <span class="mh-mark">100K</span>
+        <b>Step Club</b>
+      </span>
+      <h1 class="mh-title">The world, <em>lit up.</em></h1>
+      <p class="mh-sub"></p>
+    </header>
+
+    <div class="search">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" placeholder="Find your city" aria-label="Find your city or country">
+      </div>
+      <div class="search-results"></div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-h">Tier claimed — tap to isolate</div>
+      <button class="tier-chip" data-tier="10K"  style="--c:#FBBF24" type="button"><span class="sw"></span><span class="nm">10K</span><span class="dsc">First Light</span></button>
+      <button class="tier-chip" data-tier="25K"  style="--c:#3B82F6" type="button"><span class="sw"></span><span class="nm">25K</span><span class="dsc">In The Flow</span></button>
+      <button class="tier-chip" data-tier="35K"  style="--c:#10B981" type="button"><span class="sw"></span><span class="nm">35K</span><span class="dsc">Realizing</span></button>
+      <button class="tier-chip" data-tier="50K"  style="--c:#D4602E" type="button"><span class="sw"></span><span class="nm">50K</span><span class="dsc">Heating Up</span></button>
+      <button class="tier-chip" data-tier="75K"  style="--c:#8B5CF6" type="button"><span class="sw"></span><span class="nm">75K</span><span class="dsc">Enter Night</span></button>
+      <button class="tier-chip" data-tier="100K" style="--c:#EEEAE3" type="button"><span class="sw"></span><span class="nm">100K</span><span class="dsc">Beat Midnight</span></button>
+    </div>
+
+    <div class="zoomc">
+      <button class="zbtn gear" data-gear type="button" aria-label="Map settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></button>
+      <button class="zbtn" data-zoom="in" type="button" aria-label="Zoom in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+      <span class="zlevel">1.0×</span>
+      <button class="zbtn" data-zoom="out" type="button" aria-label="Zoom out"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="5" y1="12" x2="19" y2="12"/></svg></button>
+      <button class="zbtn" data-zoom="reset" type="button" aria-label="Reset view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9 9 0 0 0-6.4 2.6L3 8"/><path d="M3 4v4h4"/></svg></button>
+    </div>
+
+    <div class="settings" id="settings" aria-label="Map settings">
+      <div class="set-h">Map settings <button class="set-close" data-setclose aria-label="Close">×</button></div>
+      <div class="set-group">
+        <div class="set-label">Projection</div>
+        <div class="seg" data-set="proj">
+          <button data-val="miller">Miller</button>
+          <button data-val="equirect">Equal</button>
+          <button data-val="mercator">Merc.</button>
+        </div>
+      </div>
+      <div class="set-group">
+        <div class="set-label">Earth</div>
+        <div class="seg" data-set="texture">
+          <button data-val="1">Satellite</button>
+          <button data-val="0">Outlines</button>
+        </div>
+      </div>
+      <div class="set-toggle" data-set="clouds"><span>Clouds</span><button class="tgl" type="button" aria-pressed="true"></button></div>
+      <div class="set-toggle" data-set="aurora"><span>Aurora glow</span><button class="tgl" type="button" aria-pressed="true"></button></div>
+      <div class="set-toggle" data-set="labels"><span>Always show city labels</span><button class="tgl" type="button" aria-pressed="false"></button></div>
+    </div>
+  </div>
+
+  <!-- slide-in detail panel -->
+  <aside class="detail" aria-label="Place detail"></aside>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="loader"><div class="l-dot"></div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-geo-projection@4/dist/d3-geo-projection.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script src="map/data.js?v=2"></script>
+<script src="map/world-map.js?v=1"></script>
+</body>
+</html>

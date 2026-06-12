@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Walk to the Sun — 100K Step Club</title>
+  <meta name="description" content="The 100K Step Club is walking 187 billion steps to the sun. Scroll the whole route — past the Moon, Venus, and Mars, into the fire.">
+  <meta property="og:title" content="Walk to the Sun — 100K Step Club">
+  <meta property="og:description" content="187 billion steps from Earth to the sun, one verified walk at a time. Scroll the route.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <meta name="theme-color" content="#050507">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/sun.css?v=1">
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<div class="grain"></div>
+<div class="page">
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav">
+    <a href="/" class="nav-brand">
+      <span class="nav-mark"><span>100K</span></span>
+      Step Club
+    </a>
+    <div class="nav-right">
+      <a href="/tiers.html" class="nav-link">Tiers</a>
+      <a href="/journey/" class="nav-link">Journey</a>
+      <a href="/leaderboard.html" class="nav-link">Claim Board</a>
+      <a href="/sun.html" class="nav-link" aria-current="page">To the Sun</a>
+      <button type="button" class="nav-menu-btn" id="nav-menu-btn" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+      <a href="/#signup" class="nav-cta">Sign Up</a>
+    </div>
+  </nav>
+  <div class="nav-menu" id="nav-menu">
+    <a href="/tiers.html">Tiers</a>
+    <a href="/journey/">Journey</a>
+    <a href="/leaderboard.html">Claim Board</a>
+    <a href="/sun.html" aria-current="page">Walk to the Sun</a>
+  </div>
+
+  <!-- ===== MISSION INTRO ===== -->
+  <section class="section section--mission-intro" id="mission" style="text-align:center">
+    <div class="container">
+      <p class="eyebrow v">The Collective Mission — Visualized</p>
+      <h1 class="mi-title">Every step counts.<br><span class="gr">We count every step.</span></h1>
+      <p class="mi-sub">We're walking to the sun. Together.</p>
+      <p class="mi-sub"><em>(wait, what?)</em></p>
+      <p class="mi-sub"><strong class="gr">187 billion steps.</strong> 150 million kilometres (93 million miles).</p>
+      <p class="mi-sub">This page is the route. Scroll to fly it — Earth to the fire. Live progress lives on the <a href="/journey/" class="xlink">Journey tracker</a>.</p>
+    </div>
+  </section>
+
+  <!-- ===== SPACE JOURNEY VISUALIZER ===== -->
+  <section class="space-journey" id="sj">
+    <div class="sj-sticky">
+      <canvas id="sjCanvas"></canvas>
+
+      <div class="sj-phase" id="sjPhase"></div>
+
+      <!-- Milestones: Earth close-up -->
+      <div class="sj-ms" data-trigger="0.015" data-fade="0.02">
+        <div class="sj-ms-name">First Steps</div>
+        <div class="sj-ms-steps">10K steps</div>
+      </div>
+      <div class="sj-ms" data-trigger="0.045" data-fade="0.02">
+        <div class="sj-ms-name">The Marathon</div>
+        <div class="sj-ms-steps">50K steps</div>
+      </div>
+      <div class="sj-ms" data-trigger="0.075" data-fade="0.02">
+        <div class="sj-ms-name">The Camino</div>
+        <div class="sj-ms-steps">500K steps</div>
+      </div>
+      <div class="sj-ms" data-trigger="0.105" data-fade="0.02">
+        <div class="sj-ms-name">Route 66</div>
+        <div class="sj-ms-steps">5M steps</div>
+      </div>
+
+      <!-- Milestones: Earth full view -->
+      <div class="sj-ms" data-trigger="0.135" data-fade="0.025">
+        <div class="sj-ms-name">Around the World</div>
+        <div class="sj-ms-steps">50M steps</div>
+      </div>
+      <div class="sj-ms" data-trigger="0.165" data-fade="0.025">
+        <div class="sj-ms-name">Twice Around</div>
+        <div class="sj-ms-steps">100M steps</div>
+      </div>
+
+      <!-- Milestones: Leaving Earth -->
+      <div class="sj-ms" data-trigger="0.20" data-fade="0.03">
+        <div class="sj-ms-name">Satellite Belt</div>
+        <div class="sj-ms-steps">225M steps</div>
+      </div>
+      <div class="sj-ms" data-trigger="0.24" data-fade="0.03">
+        <div class="sj-ms-name">One Light-Second</div>
+        <div class="sj-ms-steps">375M steps</div>
+      </div>
+      <div class="sj-ms sj-ms--planet" data-trigger="0.28" data-fade="0.03">
+        <div class="sj-ms-name">The Moon</div>
+        <div class="sj-ms-steps">480M steps</div>
+      </div>
+
+      <!-- Milestones: Deep space -->
+      <div class="sj-ms" data-trigger="0.34" data-fade="0.04">
+        <div class="sj-ms-name">Deep Space</div>
+        <div class="sj-ms-steps">1B steps</div>
+      </div>
+      <div class="sj-ms" data-trigger="0.41" data-fade="0.04">
+        <div class="sj-ms-name">The James Webb</div>
+        <div class="sj-ms-steps">1.9B steps</div>
+      </div>
+
+      <!-- Milestones: Inner planets -->
+      <div class="sj-ms" data-trigger="0.47" data-fade="0.05">
+        <div class="sj-ms-name">One Light-Minute</div>
+        <div class="sj-ms-steps">22.5B steps</div>
+      </div>
+      <div class="sj-ms sj-ms--planet sj-ms--dark" data-trigger="0.53" data-fade="0.05">
+        <div class="sj-ms-name">Venus</div>
+        <div class="sj-ms-steps">48.75B steps</div>
+      </div>
+      <div class="sj-ms sj-ms--planet sj-ms--dark" data-trigger="0.59" data-fade="0.05">
+        <div class="sj-ms-name">Mars</div>
+        <div class="sj-ms-steps">68.75B steps</div>
+      </div>
+
+      <!-- Milestones: Into the fire -->
+      <div class="sj-ms sj-ms--dark" data-trigger="0.66" data-fade="0.05">
+        <div class="sj-ms-name">Mercury's Orbit</div>
+        <div class="sj-ms-steps">82.5B steps</div>
+      </div>
+      <div class="sj-ms sj-ms--dark" data-trigger="0.72" data-fade="0.05">
+        <div class="sj-ms-name">Halfway to the Sun</div>
+        <div class="sj-ms-steps">93.5B steps</div>
+      </div>
+
+      <!-- Milestones: Final approach -->
+      <div class="sj-ms sj-ms--dark" data-trigger="0.80" data-fade="0.05">
+        <div class="sj-ms-name">The Sunlight Mark</div>
+        <div class="sj-ms-steps">150B steps</div>
+      </div>
+      <div class="sj-ms sj-ms--dark" data-trigger="0.85" data-fade="0.04">
+        <div class="sj-ms-name">The Final Billion</div>
+        <div class="sj-ms-steps">186B steps</div>
+      </div>
+
+      <!-- Finale -->
+      <div class="sj-finale" id="sjFinale">
+        <div class="sj-finale-num">187 Billion</div>
+        <div class="sj-finale-label">steps to the sun</div>
+      </div>
+
+      <div class="sj-counter" id="sjCo">
+        <div class="sj-counter-num" id="sjNum">0 steps</div>
+        <div class="sj-counter-label">Collective Journey</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MISSION CLOSE ===== -->
+  <section class="section section--mission-close">
+    <div class="container" style="text-align:center; max-width:540px">
+      <p class="mi-close-num"><span class="gr-text">148</span> milestones along the way</p>
+      <div class="mi-pills">
+        <span class="mi-pill">The Neighbourhood</span>
+        <span class="mi-arrow">&rarr;</span>
+        <span class="mi-pill">The Suez Canal</span>
+        <span class="mi-arrow">&rarr;</span>
+        <span class="mi-pill">The Tour de France</span>
+        <span class="mi-arrow">&rarr;</span>
+        <span class="mi-pill">The Silk Road</span>
+        <span class="mi-arrow">&rarr;</span>
+        <span class="mi-pill">The Pacific Crossing</span>
+        <span class="mi-arrow">&rarr;</span>
+        <span class="mi-pill">Around the World</span>
+        <span class="mi-arrow">&rarr;</span>
+        <span class="mi-pill">The Moon</span>
+        <span class="mi-arrow">&rarr;</span>
+        <span class="mi-pill">Venus</span>
+        <span class="mi-arrow">&rarr;</span>
+        <span class="mi-pill">Mars</span>
+        <span class="mi-arrow">&rarr;</span>
+        <span class="mi-pill mi-pill--sun">The Sun</span>
+      </div>
+      <p class="mi-close-body">Your walk. Everyone's counter. One destination: the sun.</p>
+      <p class="mi-close-body" style="margin-top:.6rem">Track the club's real position on the <a href="/journey/" class="xlink">Journey page</a>.</p>
+      <div style="margin-top:2.4rem">
+        <a href="/#signup" class="btn btn-p"><span>Add your steps — June 28</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p class="f-motto">100,000 steps. One day. Beat Midnight.</p>
+  </footer>
+
+</div>
+
+<script src="js/three.min.js"></script>
+<script src="js/main.js?v=3"></script>
+<script src="js/space-journey.js"></script>
+</body>
+</html>

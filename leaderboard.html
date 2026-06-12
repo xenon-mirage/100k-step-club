@@ -111,14 +111,14 @@ img { display: block; max-width: 100%; }
 }
 .brand {
   display: inline-flex; align-items: center; gap: .5rem;
-  font-family: var(--display); font-weight: 800; font-size: .95rem;
+  font-family: var(--display); font-weight: 800; font-size: 1rem;
   letter-spacing: -.01em;
 }
 .brand-mark {
   display: inline-flex; align-items: center; justify-content: center;
   width: 28px; height: 28px; border-radius: 7px;
   background: #050507; border: 1px solid rgba(255,255,255,.12);
-  font-size: .62rem; font-weight: 800;
+  font-size: .7rem; font-weight: 800;
   letter-spacing: 0;
 }
 .brand-mark > span {
@@ -127,13 +127,98 @@ img { display: block; max-width: 100%; }
   -webkit-text-fill-color: transparent; color: transparent;
 }
 .topbar-link {
-  margin-left: 14px; padding: .35rem .7rem;
-  color: rgba(238,234,227,.72); text-decoration: none;
-  font-family: var(--display); font-weight: 600; font-size: .85rem;
-  letter-spacing: .01em; border-radius: 8px;
-  transition: color .2s ease, background .2s ease;
+  margin-left: 10px; padding: .5rem .95rem;
+  color: #eeeae3; text-decoration: none;
+  font-family: var(--sans); font-weight: 600; font-size: .7rem;
+  letter-spacing: .07em; text-transform: uppercase; border-radius: 100px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.14);
+  white-space: nowrap;
+  transition: color .25s ease, background .25s ease, border-color .25s ease;
 }
-.topbar-link:hover { color: #eeeae3; background: rgba(255,255,255,.04); }
+.topbar-link:hover { color: #fbbf24; background: rgba(255,107,0,.08); border-color: rgba(251,191,36,.45); }
+.topbar-link[aria-current="page"] { color: #fbbf24; border-color: rgba(251,191,36,.5); background: rgba(251,191,36,.08); }
+
+/* Right-side group — links + CTA + search hug the right edge, same as every other page */
+.topbar-right { display: flex; align-items: center; }
+.topbar-right .search-wrap { margin-left: 10px; }
+
+/* Sign Up — same CTA treatment as every other page */
+.topbar-cta {
+  margin-left: 10px; padding: .55rem 1.1rem;
+  color: #eeeae3; text-decoration: none;
+  font-family: var(--sans); font-weight: 600; font-size: .72rem;
+  letter-spacing: .08em; text-transform: uppercase; border-radius: 100px;
+  background: transparent;
+  border: 1px solid rgba(249,115,22,.55);
+  white-space: nowrap;
+  transition: background .25s ease, border-color .25s ease, color .25s ease;
+}
+.topbar-cta:hover { background: #e85d04; border-color: #e85d04; color: #fff; }
+
+/* Mobile: collapse topbar links into a Menu button (same pattern as the landing nav) */
+.topbar-menu-btn {
+  display: none; margin-left: 10px; padding: .5rem .95rem;
+  color: #eeeae3; font-family: var(--sans); font-weight: 600; font-size: .7rem;
+  letter-spacing: .07em; text-transform: uppercase;
+  border-radius: 100px; background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.14); cursor: pointer;
+  align-items: center; gap: .4rem;
+}
+.topbar-menu-btn::after {
+  content: '';
+  width: 7px; height: 7px;
+  border-right: 1.5px solid #e85d04;
+  border-bottom: 1.5px solid #e85d04;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform .25s ease;
+}
+.topbar-menu-btn[aria-expanded="true"]::after { transform: rotate(225deg) translateY(-1px); }
+.topbar-menu {
+  position: fixed; top: calc(var(--topbar-h) + 6px); left: 16px; z-index: 99;
+  display: none; flex-direction: column; gap: .25rem; min-width: 190px;
+  padding: .55rem; border-radius: 14px;
+  background: rgba(5,5,7,.96); border: 1px solid rgba(255,255,255,.1);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 48px rgba(0,0,0,.6);
+}
+.topbar-menu.open { display: flex; }
+.topbar-menu a {
+  font-family: var(--sans); font-size: .85rem; font-weight: 600;
+  color: #eeeae3; text-decoration: none; padding: .6rem .85rem; border-radius: 9px;
+}
+.topbar-menu a:hover { background: rgba(255,107,0,.1); color: #fbbf24; }
+.topbar-menu a[aria-current="page"] { color: #fbbf24; }
+@media (max-width: 760px) {
+  .topbar-link { display: none; }
+  .topbar-menu-btn { display: inline-flex; }
+}
+
+/* World map section at the bottom of the board */
+.wm-section { padding: 4.5rem 16px 3rem; max-width: 1180px; margin: 0 auto; text-align: center; }
+.wm-section h2 {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 2.6rem); letter-spacing: -.01em; margin-bottom: .5rem;
+}
+.wm-section h2 em {
+  font-style: italic;
+  background: linear-gradient(135deg, #ff6b00, #fbbf24);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.wm-sub { color: var(--text-mid, #a39e94); font-size: .98rem; margin-bottom: 1.6rem; }
+.wm-frame {
+  width: 100%; height: min(86vh, 740px); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px; background: #050507; display: block;
+}
+.wm-jump {
+  display: inline-flex; align-items: center; gap: .4rem;
+  margin-top: 14px; padding: .45rem 1rem; border-radius: 100px;
+  font-family: var(--sans); font-size: .78rem; font-weight: 600;
+  letter-spacing: .05em; color: #eeeae3; text-decoration: none;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.14);
+  transition: color .2s, border-color .2s, background .2s;
+}
+.wm-jump:hover { color: #fbbf24; border-color: rgba(251,191,36,.45); background: rgba(255,107,0,.08); }
 
 .search-wrap { position: relative; display: flex; align-items: center; }
 .search-btn {
@@ -1027,18 +1112,30 @@ body.show-leaders-only .tier-row--rank { display: none; }
 
   <!-- TOP BAR -->
   <header class="topbar" role="banner">
-    <div style="display: inline-flex; align-items: center;">
-      <a href="/" class="brand" aria-label="100K Step Club — home">
-        <span class="brand-mark"><span>100K</span></span>
-        <span>Step Club</span>
-      </a>
+    <a href="/" class="brand" aria-label="100K Step Club — home">
+      <span class="brand-mark"><span>100K</span></span>
+      <span>Step Club</span>
+    </a>
+    <div class="topbar-right">
+      <a href="/tiers.html" class="topbar-link">Tiers</a>
       <a href="/journey/" class="topbar-link">Journey</a>
+      <a href="/leaderboard.html" class="topbar-link" aria-current="page">Claim Board</a>
+      <a href="/sun.html" class="topbar-link">To the Sun</a>
+      <button type="button" class="topbar-menu-btn" id="topbarMenuBtn" aria-expanded="false" aria-controls="topbarMenu">Menu</button>
+      <a href="/#signup" class="topbar-cta">Sign Up</a>
+      <div class="search-wrap" id="searchWrap">
+        <input type="search" class="search-input" id="searchInput" placeholder="Find your city" aria-label="Search cities and countries">
+        <button type="button" class="search-btn" id="searchBtn" aria-label="Search">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+      </div>
     </div>
-    <div class="search-wrap" id="searchWrap">
-      <input type="search" class="search-input" id="searchInput" placeholder="Find your city" aria-label="Search cities and countries">
-      <button type="button" class="search-btn" id="searchBtn" aria-label="Search">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      </button>
+    <div class="topbar-menu" id="topbarMenu">
+      <a href="/tiers.html">Tiers</a>
+      <a href="/journey/">Journey</a>
+      <a href="/leaderboard.html" aria-current="page">Claim Board</a>
+      <a href="/sun.html">Walk to the Sun</a>
+      <a href="#world-map">Flat world tracker ↓</a>
     </div>
   </header>
 
@@ -1048,6 +1145,9 @@ body.show-leaders-only .tier-row--rank { display: none; }
       <p class="stat-strip" id="statStrip"></p>
     </div>
     <h1 class="hero-line reveal reveal-delay-1 v" id="heroLine"></h1>
+    <a class="wm-jump" href="#world-map">See the flat world tracker below
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="5 12 12 19 19 12"/></svg>
+    </a>
   </section>
 
   <!-- Desktop split container starts here at >=1280px -->
@@ -1110,6 +1210,13 @@ body.show-leaders-only .tier-row--rank { display: none; }
     </div>
   </div>
 
+  <!-- WORLD MAP — the flat tracker, same live data as the globe -->
+  <section class="wm-section" id="world-map">
+    <h2>The world, <em>lit up.</em></h2>
+    <p class="wm-sub">The flat tracker. Same verified claims as the globe — drag, zoom, search, tap a country.</p>
+    <iframe class="wm-frame" id="wmFrame" src="/world-map.html?embed=1" title="100K Step Club world map" loading="lazy"></iframe>
+  </section>
+
 </div>
 
 <!-- TWEAKS PANEL -->
@@ -1118,7 +1225,7 @@ body.show-leaders-only .tier-row--rank { display: none; }
     <circle cx="12" cy="12" r="3"></circle>
     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
   </svg>
-  <span class="tw-trigger-label">Press here for globe settings</span>
+  <span class="tw-trigger-label">Press here for map settings</span>
 </button>
 <div id="tweaks" role="dialog" aria-label="Display options">
   <h4>Display <button class="tw-close" id="twClose" aria-label="Close">×</button></h4>
@@ -1161,6 +1268,39 @@ body.show-leaders-only .tier-row--rank { display: none; }
       <button data-val="6">Fastest</button>
     </div>
   </div>
+
+  <!-- World map (flat tracker) settings — drives the embedded map below via postMessage -->
+  <div class="tw-group">
+    <div class="tw-label"><span>World map — projection</span></div>
+    <div class="tw-seg" id="wmProj" style="grid-template-columns: repeat(3, 1fr);">
+      <button data-val="miller" class="on">Miller</button>
+      <button data-val="equirect">Equal</button>
+      <button data-val="mercator">Merc.</button>
+    </div>
+  </div>
+
+  <div class="tw-group">
+    <div class="tw-label"><span>World map — earth</span></div>
+    <div class="tw-seg" id="wmTexture" style="grid-template-columns: repeat(2, 1fr);">
+      <button data-val="1" class="on">Satellite</button>
+      <button data-val="0">Outlines</button>
+    </div>
+  </div>
+
+  <div class="tw-group">
+    <div class="tw-toggle">
+      <span>World map — clouds</span>
+      <button class="tw-switch on" id="wmClouds" aria-pressed="true"></button>
+    </div>
+    <div class="tw-toggle">
+      <span>World map — aurora glow</span>
+      <button class="tw-switch on" id="wmAurora" aria-pressed="true"></button>
+    </div>
+    <div class="tw-toggle">
+      <span>World map — city labels</span>
+      <button class="tw-switch" id="wmLabels" aria-pressed="false"></button>
+    </div>
+  </div>
 </div>
 
 <!-- ============================================================
@@ -1178,54 +1318,36 @@ const TWEAK_DEFAULS = /*EDITMODE-BEGIN*/{
 }/*EDITMODE-END*/;
 
 const SEED = {
+  // Real snapshot of the live database, 2026-06-11. The page still fetches
+  // live data on every load — this is only the offline/slow-network fallback.
   claims: [
-    { city: "Toronto",       country: "Canada",         state: "Ontario",        lat: 43.65, lon: -79.38, tier: "100K", holder: "Graeme",   time_seconds: 68820, date: "2026-04-11" },
-    { city: "Toronto",       country: "Canada",         state: "Ontario",        lat: 43.65, lon: -79.38, tier: "25K",  holder: "Stu",      time_seconds: 15300, date: "2026-05-02" },
-    { city: "Osaka",         country: "Japan",          lat: 34.69, lon: 135.50, tier: "50K",  holder: "Ruben",    time_seconds: 32400, date: "2026-05-02" },
-    { city: "Vancouver",     country: "Canada",         state: "British Columbia", lat: 49.28, lon: -123.12, tier: "25K", holder: "Hannah",   time_seconds: 16200, date: "2026-05-02" },
-    { city: "London",        country: "United Kingdom", lat: 51.51, lon: -0.13,  tier: "10K",  holder: "Oliver",   time_seconds: 5400,  date: "2026-05-02" },
-    { city: "Sydney",        country: "Australia",      lat: -33.87, lon: 151.21, tier: "75K", holder: "Matilda",  time_seconds: 50400, date: "2026-05-02" },
-    { city: "Berlin",        country: "Germany",        lat: 52.52, lon: 13.40,  tier: "100K", holder: "Lukas",    time_seconds: 66600, date: "2026-05-02" },
-    { city: "San Francisco", country: "United States",  state: "California",     lat: 37.77, lon: -122.42, tier: "50K", holder: "Maya",     time_seconds: 31500, date: "2026-05-02" },
-    { city: "New York",      country: "United States",  state: "New York",       lat: 40.71, lon: -74.01, tier: "25K",  holder: "Jordan",   time_seconds: 14700, date: "2026-05-02" },
-    { city: "Chicago",       country: "United States",  state: "Illinois",       lat: 41.88, lon: -87.63, tier: "10K",  holder: "Devon",    time_seconds: 5100,  date: "2026-05-02" },
-    { city: "Paris",         country: "France",         lat: 48.85, lon: 2.35,   tier: "50K",  holder: "Camille",  time_seconds: 33600, date: "2026-05-02" },
-    { city: "Amsterdam",     country: "Netherlands",    lat: 52.37, lon: 4.90,   tier: "75K",  holder: "Finn",     time_seconds: 51300, date: "2026-05-02" },
-    { city: "Stockholm",     country: "Sweden",         lat: 59.33, lon: 18.07,  tier: "25K",  holder: "Astrid",   time_seconds: 15600, date: "2026-05-02" },
-    { city: "Tokyo",         country: "Japan",          lat: 35.68, lon: 139.69, tier: "100K", holder: "Hiro",     time_seconds: 65700, date: "2026-05-02" },
-    { city: "Seoul",         country: "South Korea",    lat: 37.57, lon: 126.98, tier: "25K",  holder: "Min",      time_seconds: 14400, date: "2026-05-02" },
-    { city: "Singapore",     country: "Singapore",      lat: 1.35,  lon: 103.82, tier: "50K",  holder: "Wei",      time_seconds: 32100, date: "2026-05-02" },
-    { city: "Mumbai",        country: "India",          lat: 19.08, lon: 72.88,  tier: "10K",  holder: "Arjun",    time_seconds: 5250,  date: "2026-05-02" },
-    { city: "Cape Town",     country: "South Africa",   lat: -33.92, lon: 18.42, tier: "25K",  holder: "Thandi",   time_seconds: 16500, date: "2026-05-02" },
-    { city: "Melbourne",     country: "Australia",      lat: -37.81, lon: 144.96, tier: "25K", holder: "James",    time_seconds: 15000, date: "2026-05-02" },
-    { city: "Dublin",        country: "Ireland",        lat: 53.35, lon: -6.26,  tier: "25K",  holder: "Aoife",    time_seconds: 15900, date: "2026-05-02" },
-    { city: "Mexico City",   country: "Mexico",         lat: 19.43, lon: -99.13, tier: "25K",  holder: "Sofia",    time_seconds: 15900, date: "2026-05-02" },
-    { city: "Auckland",      country: "New Zealand",    lat: -36.85, lon: 174.76, tier: "50K", holder: "Kate",     time_seconds: 32700, date: "2026-05-02" },
-    { city: "Barcelona",     country: "Spain",          lat: 41.39, lon: 2.17,   tier: "10K",  holder: "Marc",     time_seconds: 5580,  date: "2026-05-02" },
-    { city: "Buenos Aires",  country: "Argentina",      lat: -34.60, lon: -58.38, tier: "10K", holder: "Lucia",    time_seconds: 5700,  date: "2026-05-02" },
-    { city: "Dubai",         country: "UAE",            lat: 25.20, lon: 55.27,  tier: "10K",  holder: "Zayd",     time_seconds: 5850,  date: "2026-05-02" }
+    { city: "Kyoto", country: "Japan", lat: 35.01, lon: 135.77, tier: "50K", holder: "Graeme N.", time_seconds: 66720, date: "2019-10-14" },
+    { city: "Tokyo", country: "Japan", lat: 35.68, lon: 139.69, tier: "75K", holder: "Graeme N.", time_seconds: 86100, date: "2020-02-22" },
+    { city: "New York", country: "United States", state: "New York", lat: 40.71, lon: -74.01, tier: "50K", holder: "Graeme N.", time_seconds: 31980, date: "2022-06-05" },
+    { city: "Kyoto", country: "Japan", lat: 35.01, lon: 135.77, tier: "100K", holder: "Graeme N.", time_seconds: 53580, date: "2023-10-11" },
+    { city: "Taipei", country: "Taiwan", lat: 25.03, lon: 121.57, tier: "50K", holder: "Graeme N.", time_seconds: 31260, date: "2023-11-10" },
+    { city: "Toronto", country: "Canada", state: "Ontario", lat: 43.65, lon: -79.38, tier: "100K", holder: "Graeme N.", time_seconds: 57960, date: "2024-05-20" },
+    { city: "Rome", country: "Italy", lat: 41.9, lon: 12.5, tier: "25K", holder: "Graeme N.", time_seconds: 30060, date: "2024-06-07" },
+    { city: "Palm Springs", country: "United States", state: "California", lat: 33.83, lon: -116.55, tier: "50K", holder: "Graeme N.", time_seconds: 30120, date: "2024-12-23" },
+    { city: "Toronto", country: "Canada", state: "Ontario", lat: 43.65, lon: -79.38, tier: "50K", holder: "Graeme N.", time_seconds: 30420, date: "2026-04-18" },
+    { city: "Toronto", country: "Canada", state: "Ontario", lat: 43.65, lon: -79.38, tier: "10K", holder: "Brendan K.", time_seconds: 4500, date: "2026-05-02" },
+    { city: "Toronto", country: "Canada", state: "Ontario", lat: 43.65, lon: -79.38, tier: "10K", holder: "Aqsa M.", time_seconds: 9000, date: "2026-05-02" },
+    { city: "Vancouver", country: "Canada", state: "British Columbia", lat: 49.28, lon: -123.12, tier: "10K", holder: "Jaclyn L.", time_seconds: 10800, date: "2026-05-02" },
+    { city: "San Francisco", country: "United States", state: "California", lat: 37.77, lon: -122.42, tier: "25K", holder: "Nicole L.", time_seconds: 16740, date: "2026-05-02" },
+    { city: "Vancouver", country: "Canada", state: "British Columbia", lat: 49.28, lon: -123.12, tier: "25K", holder: "Vlad M.", time_seconds: 37800, date: "2026-05-02" },
+    { city: "San Francisco", country: "United States", state: "California", lat: 37.77, lon: -122.42, tier: "25K", holder: "Jason R.", time_seconds: 43260, date: "2026-05-02" },
+    { city: "Vancouver", country: "Canada", state: "British Columbia", lat: 49.28, lon: -123.12, tier: "25K", holder: "Zane K.", time_seconds: 43380, date: "2026-05-02" },
+    { city: "Toronto", country: "Canada", state: "Ontario", lat: 43.65, lon: -79.38, tier: "25K", holder: "Morgana C.", time_seconds: 47820, date: "2026-05-02" },
+    { city: "Pleasanton", country: "United States", state: "California", lat: 37.6624, lon: -121.8747, tier: "25K", holder: "Milda S.", time_seconds: 50460, date: "2026-05-02" },
+    { city: "Pleasanton", country: "United States", state: "California", lat: 37.6624, lon: -121.8747, tier: "25K", holder: "Matt O.", time_seconds: 50520, date: "2026-05-02" },
+    { city: "Accra", country: "Ghana", lat: 5.6, lon: -0.19, tier: "35K", holder: "Dylan P.", time_seconds: 51780, date: "2026-05-02" },
+    { city: "Toronto", country: "Canada", state: "Ontario", lat: 43.65, lon: -79.38, tier: "100K", holder: "Graeme N.", time_seconds: 62040, date: "2026-05-02" }
   ],
   signup_only: [
-    { city: "Calgary",    country: "Canada",         state: "Alberta",         lat: 51.05, lon: -114.07 },
-    { city: "Montreal",   country: "Canada",         state: "Quebec",          lat: 45.50, lon: -73.57 },
-    { city: "Halifax",    country: "Canada",         state: "Nova Scotia",     lat: 44.65, lon: -63.58 },
-    { city: "Edinburgh",  country: "United Kingdom", lat: 55.95, lon: -3.19 },
-    { city: "Manchester", country: "United Kingdom", lat: 53.48, lon: -2.24 },
-    { city: "Austin",     country: "United States",  state: "Texas",           lat: 30.27, lon: -97.74 },
-    { city: "Seattle",    country: "United States",  state: "Washington",      lat: 47.61, lon: -122.33 },
-    { city: "Portland",   country: "United States",  state: "Oregon",          lat: 45.52, lon: -122.68 },
-    { city: "Denver",     country: "United States",  state: "Colorado",        lat: 39.74, lon: -104.99 },
-    { city: "Miami",      country: "United States",  state: "Florida",         lat: 25.76, lon: -80.19 },
-    { city: "Lyon",       country: "France",         lat: 45.76, lon: 4.84 },
-    { city: "Milan",      country: "Italy",          lat: 45.46, lon: 9.19 },
-    { city: "Oslo",       country: "Norway",         lat: 59.91, lon: 10.75 },
-    { city: "Copenhagen", country: "Denmark",        lat: 55.68, lon: 12.57 },
-    { city: "Zurich",     country: "Switzerland",    lat: 47.38, lon: 8.54 },
-    { city: "Bangkok",    country: "Thailand",       lat: 13.76, lon: 100.50 },
-    { city: "Jakarta",    country: "Indonesia",      lat: -6.21, lon: 106.85 },
-    { city: "Lima",       country: "Peru",           lat: -12.05, lon: -77.04 },
-    { city: "São Paulo",  country: "Brazil",         lat: -23.55, lon: -46.63 },
-    { city: "Nairobi",    country: "Kenya",          lat: -1.29, lon: 36.82 }
+    { city: "Calgary", country: "Canada", state: "Alberta", lat: 51.05, lon: -114.07 },
+    { city: "Halifax", country: "Canada", state: "Nova Scotia", lat: 44.65, lon: -63.58 },
+    { city: "London", country: "United Kingdom", lat: 51.51, lon: -0.13 },
+    { city: "Montreal", country: "Canada", state: "Quebec", lat: 45.5, lon: -73.57 }
   ]
 };
 
@@ -1448,6 +1570,75 @@ window.loadLeaderboardData = async function () {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/earcut@2.2.4/dist/earcut.min.js"></script>
 <script src="leaderboard-app.js?v=36"></script>
+
+<script>
+/* ── v3 additions: topbar menu + merged world-map settings bridge ── */
+(function () {
+  // Mobile topbar menu
+  var mBtn = document.getElementById('topbarMenuBtn');
+  var menu = document.getElementById('topbarMenu');
+  if (mBtn && menu) {
+    mBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var open = menu.classList.toggle('open');
+      mBtn.setAttribute('aria-expanded', String(open));
+    });
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('#topbarMenu') && !e.target.closest('#topbarMenuBtn')) menu.classList.remove('open');
+    });
+  }
+
+  // World-map settings bridge — the merged panel drives the embedded map.
+  var frame = document.getElementById('wmFrame');
+  if (!frame) return;
+  function send(key, val) {
+    try { frame.contentWindow.postMessage({ wm: { key: key, val: val } }, '*'); } catch (e) {}
+  }
+  function bindSeg(id, key) {
+    var seg = document.getElementById(id);
+    if (!seg) return;
+    seg.querySelectorAll('button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        seg.querySelectorAll('button').forEach(function (x) { x.classList.toggle('on', x === b); });
+        send(key, key === 'texture' ? (b.dataset.val === '1') : b.dataset.val);
+      });
+    });
+  }
+  function bindSwitch(id, key) {
+    var sw = document.getElementById(id);
+    if (!sw) return;
+    sw.addEventListener('click', function () {
+      var on = sw.classList.toggle('on');
+      sw.setAttribute('aria-pressed', String(on));
+      send(key, on);
+    });
+  }
+  bindSeg('wmProj', 'proj');
+  bindSeg('wmTexture', 'texture');
+  bindSwitch('wmClouds', 'clouds');
+  bindSwitch('wmAurora', 'aurora');
+  bindSwitch('wmLabels', 'labels');
+
+  // Sync panel controls to the map's persisted prefs once it announces itself,
+  // and handle the map's "back to the board" CTA.
+  addEventListener('message', function (e) {
+    if (e.data && e.data.wmNav === 'board') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    var p = e.data && e.data.wmPrefs;
+    if (!p) return;
+    var proj = document.getElementById('wmProj');
+    if (proj) proj.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.dataset.val === p.proj); });
+    var tex = document.getElementById('wmTexture');
+    if (tex) tex.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b.dataset.val === (p.texture ? '1' : '0')); });
+    [['wmClouds', 'clouds'], ['wmAurora', 'aurora'], ['wmLabels', 'labels']].forEach(function (pair) {
+      var sw = document.getElementById(pair[0]);
+      if (sw) { sw.classList.toggle('on', !!p[pair[1]]); sw.setAttribute('aria-pressed', String(!!p[pair[1]])); }
+    });
+  });
+})();
+</script>
 
 </body>
 </html>

@@ -1,7 +1,25 @@
 /* ========================================================
-   100K STEP CLUB — MAIN JS
-   Star field, scroll reveals, countdown, signup
+   100K STEP CLUB — V3 MAIN JS
+   Star field, scroll reveals, countdown, sticky CTA, signup,
+   live tier walls. One file serves index.html + tiers.html
+   (null-guarded). One shared Supabase client per page.
    ======================================================== */
+
+/* ========== SHARED SUPABASE CLIENT ========== */
+
+var SB = (function () {
+  if (typeof window.supabase === 'undefined' || typeof SUPABASE_URL === 'undefined') return null;
+  try {
+    // persistSession off: the marketing site never authenticates, so skip
+    // the auth-token storage (and the GoTrue multiple-instance warnings).
+    return window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+      auth: { persistSession: false, autoRefreshToken: false }
+    });
+  } catch (e) {
+    console.error('Supabase init failed:', e);
+    return null;
+  }
+})();
 
 
 /* ========== STAR FIELD — Dense Milky Way canvas ========== */
@@ -20,12 +38,10 @@
 
   function make() {
     stars = [];
-    // Very dense star field — Milky Way intensity
     var n = Math.floor(w * h / 1500);
     for (var i = 0; i < n; i++) {
       // Milky Way band: cluster 35% of stars in a diagonal band
       var inBand = Math.random() < 0.35;
-      var bandAngle = 0.2; // slight tilt
       stars.push({
         x: Math.random() * w,
         y: inBand ? h * 0.4 + (Math.random() - 0.5) * h * 0.25 : Math.random() * h,
@@ -33,7 +49,6 @@
         a: Math.random() * 0.7 + 0.12,
         ph: Math.random() * Math.PI * 2,
         sp: Math.random() * 0.003 + 0.001,
-        // Colour tint: blue-white, white, warm
         tint: Math.random() < 0.25 ? 0 : Math.random() < 0.6 ? 1 : 2
       });
     }
@@ -83,26 +98,25 @@ var obs = new IntersectionObserver(function (entries) {
 }, { threshold: .1, rootMargin: '0px 0px -40px 0px' });
 
 document.querySelectorAll([
-  '.st-line', '.st-body',
   '.eyebrow', '.section-title', '.section-sub',
-  '.what-grid',
-  '.mi-title', '.mi-sub',
-  '.mi-close-num', '.mi-pills', '.mi-close-body',
-  '.tier-card',
-  '.about-name', '.about-body', '.about-stats', '.about-cities',
+  '.what-lead', '.step-card',
+  '.proof-stats',
+  '.ladder-row',
   '.founder-photo', '.founder-text',
   '.event-date', '.event-year', '.event-desc', '.countdown-row',
-  '.form'
+  '.form',
+  '.club-card',
+  '.tier-block', '.rule-card'
 ].join(',')).forEach(function (el) { obs.observe(el); });
 
 
-/* ========== TIER STAT BAR ANIMATION ========== */
+/* ========== TIER BAR ANIMATION (tiers page) ========== */
+
 (function () {
-  var cards = document.querySelectorAll('.tier-card');
-  cards.forEach(function (card) {
-    var fill = card.querySelector('.tier-bar-fill');
-    if (!fill) return;
+  document.querySelectorAll('.tier-bar-fill').forEach(function (fill) {
+    var block = fill.closest('.tier-block') || fill.parentElement;
     var targetWidth = parseFloat(fill.dataset.width) || 0;
+    // Map tiny percentages to visible widths so 0.002% still draws a sliver
     var visualWidth;
     if (targetWidth >= 25) visualWidth = targetWidth;
     else if (targetWidth >= 1.5) visualWidth = 11 + (targetWidth - 1.5) / 23.5 * 14;
@@ -119,7 +133,7 @@ document.querySelectorAll([
         }, 300);
       }
     }, { threshold: 0.3 });
-    barObs.observe(card);
+    barObs.observe(block);
   });
 })();
 
@@ -160,9 +174,6 @@ document.querySelectorAll([
 })();
 
 
-/* Space journey visualizer moved to js/space-journey.js */
-
-
 /* ========== SMOOTH SCROLL FOR ANCHOR LINKS ========== */
 
 document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -174,6 +185,179 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     }
   });
 });
+
+
+/* ========== STICKY MOBILE CTA ==========
+   Shows after the hero scrolls away, hides while the signup
+   section (or the success state) is on screen. */
+
+(function () {
+  var cta = document.getElementById('sticky-cta');
+  var hero = document.getElementById('hero');
+  var signup = document.getElementById('signup');
+  if (!cta || !hero || !signup) return;
+
+  var pastHero = false;
+  var atSignup = false;
+
+  function update() {
+    cta.classList.toggle('on', pastHero && !atSignup);
+  }
+
+  new IntersectionObserver(function (entries) {
+    pastHero = !entries[0].isIntersecting;
+    update();
+  }, { threshold: 0.15 }).observe(hero);
+
+  new IntersectionObserver(function (entries) {
+    atSignup = entries[0].isIntersecting;
+    update();
+  }, { threshold: 0.05 }).observe(signup);
+})();
+
+
+/* ========== MOBILE NAV MENU ========== */
+
+(function () {
+  var btn = document.getElementById('nav-menu-btn');
+  var menu = document.getElementById('nav-menu');
+  if (!btn || !menu) return;
+
+  function close() {
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+  }
+
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var open = menu.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('#nav-menu') && !e.target.closest('#nav-menu-btn')) close();
+  });
+
+  addEventListener('scroll', close, { passive: true });
+})();
+
+
+/* ========== LIVE PROOF STATS (landing page) ==========
+   Same sources as the rest of the site: v_step_totals powers the
+   Journey counter; v_city_claims_all powers the Claim Board.
+   Static numbers in the HTML are the offline fallback. */
+
+(function () {
+  var stepsEl = document.querySelector('[data-live="steps"]');
+  if (!stepsEl || !SB) return;
+  var walkersEl = document.querySelector('[data-live="walkers"]');
+  var citiesEl = document.querySelector('[data-live="cities"]');
+
+  SB.from('v_step_totals').select('*').single().then(function (res) {
+    if (res.error || !res.data) return;
+    if (res.data.total_steps != null) stepsEl.textContent = Number(res.data.total_steps).toLocaleString('en-US');
+    if (walkersEl && res.data.verified_claims_count != null) walkersEl.textContent = res.data.verified_claims_count;
+  });
+
+  if (citiesEl) {
+    SB.from('v_city_claims_all').select('city, country, state').then(function (res) {
+      if (res.error || !res.data || !res.data.length) return;
+      var seen = new Set();
+      res.data.forEach(function (r) { seen.add(r.country + '||' + (r.state || '') + '||' + r.city); });
+      citiesEl.textContent = seen.size;
+    });
+  }
+})();
+
+
+/* ========== THE WALL — live verified claims (tiers page) ==========
+   Fetches every verified claim from v_city_claims_all (the same view
+   the Claim Board reads) and rebuilds each tier's wall with real names.
+   On any failure the static fallback chips stay. */
+
+(function () {
+  var walls = document.querySelectorAll('.wall[data-wall]');
+  if (!walls.length || !SB) return;
+  var sb = SB;
+
+  var MAX_CHIPS = 30;
+
+  function fmtDuration(secs) {
+    if (!secs && secs !== 0) return '';
+    var h = Math.floor(secs / 3600);
+    var m = Math.round((secs % 3600) / 60);
+    return h + 'h ' + (m < 10 ? '0' : '') + m + 'm';
+  }
+
+  function makeChip(claim) {
+    var chip = document.createElement('span');
+    chip.className = 'wall-chip';
+    var name = document.createElement('strong');
+    name.textContent = claim.holder;
+    chip.appendChild(name);
+    chip.appendChild(document.createTextNode(' — ' + claim.city));
+    var dur = fmtDuration(claim.time_seconds);
+    chip.title = claim.tier + (claim.date ? ' · ' + claim.date : '') + (dur ? ' · ' + dur : '');
+    return chip;
+  }
+
+  function makeYouChip() {
+    var you = document.createElement('a');
+    you.className = 'wall-chip wall-chip--you';
+    you.href = '/#signup';
+    you.innerHTML = 'Your name &rarr;';
+    return you;
+  }
+
+  Promise.race([
+    sb.from('v_city_claims_all').select('holder, city, state, country, tier, time_seconds, date'),
+    new Promise(function (resolve) { setTimeout(function () { resolve(null); }, 4000); })
+  ]).then(function (res) {
+    if (!res || res.error || !res.data || !res.data.length) {
+      if (res && res.error) console.warn('[wall] live fetch failed, keeping static chips:', res.error);
+      return;
+    }
+
+    var byTier = {};
+    res.data.forEach(function (c) {
+      if (!byTier[c.tier]) byTier[c.tier] = [];
+      byTier[c.tier].push(c);
+    });
+
+    walls.forEach(function (wall) {
+      var claims = byTier[wall.dataset.wall] || [];
+      if (!claims.length) return; // leave the static "Nobody yet" line alone
+
+      claims.sort(function (a, b) {
+        if (a.date !== b.date) return a.date < b.date ? -1 : 1;
+        return (a.time_seconds || 0) - (b.time_seconds || 0);
+      });
+
+      // One chip per name+city — it's a wall of names, not a walk log.
+      // Repeat walks live on the Claim Board.
+      var seen = {};
+      claims = claims.filter(function (c) {
+        var key = c.holder + '||' + c.city;
+        if (seen[key]) return false;
+        seen[key] = true;
+        return true;
+      });
+
+      wall.innerHTML = '';
+      claims.slice(0, MAX_CHIPS).forEach(function (c) {
+        wall.appendChild(makeChip(c));
+      });
+      if (claims.length > MAX_CHIPS) {
+        var more = document.createElement('a');
+        more.className = 'wall-chip';
+        more.href = '/leaderboard.html';
+        more.textContent = '+' + (claims.length - MAX_CHIPS) + ' more on the Claim Board';
+        wall.appendChild(more);
+      }
+      wall.appendChild(makeYouChip());
+    });
+  });
+})();
 
 
 /* ========== SUPABASE SIGNUP FORM ========== */
@@ -191,13 +375,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   var OTHER = '__other__';
   var SUBDIV_COUNTRIES = { 'United States': true, 'Canada': true };
 
-  var supabase;
-  try {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-  } catch (e) {
-    console.error('Supabase init failed:', e);
-    return;
-  }
+  var supabase = SB;
+  if (!supabase) return;
 
   // Fetch cities once, build {country -> City[]} map, populate country select.
   var citiesByCountry = new Map();
@@ -263,7 +442,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     });
     var other = document.createElement('option');
     other.value = OTHER;
-    other.textContent = '— My city isn\u2019t listed';
+    other.textContent = '— My city isn’t listed';
     frag.appendChild(other);
     citySel.innerHTML = '';
     citySel.appendChild(frag);

@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>100K Step Club — Beat Midnight</title>
-  <meta name="description" content="Walk 100,000 steps in a single day. The world's first global community built around the hardest walking challenge most people will never finish. Sunday, June 28, 2026.">
+  <meta name="description" content="Walk 100,000 steps in a single day. Six tiers from 10K up. Pick yours, walk it anywhere on Earth, finish by midnight. Next event: Sunday, June 28, 2026.">
   <meta property="og:title" content="100K Step Club — Beat Midnight">
-  <meta property="og:description" content="Walk 100,000 steps in a single day. Join the global community. Sunday, June 28, 2026.">
+  <meta property="og:description" content="Can you walk 100,000 steps before midnight? Pick your tier. Sunday, June 28, 2026.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
@@ -18,8 +18,22 @@
   <meta name="theme-color" content="#050507">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,700&family=DM+Mono:wght@300;400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=3">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "name": "Global 100K Day #2 — 100K Step Club",
+    "startDate": "2026-06-28",
+    "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
+    "eventStatus": "https://schema.org/EventScheduled",
+    "location": { "@type": "VirtualLocation", "url": "https://100kstepclub.com" },
+    "description": "Walk your tier — 10,000 to 100,000 steps — anywhere on Earth, finished before midnight local time.",
+    "isAccessibleForFree": true,
+    "organizer": { "@type": "Organization", "name": "100K Step Club", "url": "https://100kstepclub.com" }
+  }
+  </script>
 </head>
 <body>
 
@@ -29,27 +43,36 @@
 
   <!-- ===== NAV ===== -->
   <nav class="nav">
-    <a href="#" class="nav-brand">
+    <a href="/" class="nav-brand">
       <span class="nav-mark"><span>100K</span></span>
       Step Club
     </a>
     <div class="nav-right">
-      <a href="/journey/" class="nav-board">Journey</a>
-      <a href="/leaderboard.html" class="nav-board">Claim Board</a>
+      <a href="/tiers.html" class="nav-link">Tiers</a>
+      <a href="/journey/" class="nav-link">Journey</a>
+      <a href="/leaderboard.html" class="nav-link">Claim Board</a>
+      <a href="/sun.html" class="nav-link">To the Sun</a>
+      <button type="button" class="nav-menu-btn" id="nav-menu-btn" aria-expanded="false" aria-controls="nav-menu">Menu</button>
       <a href="#signup" class="nav-cta">Sign Up</a>
     </div>
   </nav>
+  <div class="nav-menu" id="nav-menu">
+    <a href="/tiers.html">Tiers</a>
+    <a href="/journey/">Journey</a>
+    <a href="/leaderboard.html">Claim Board</a>
+    <a href="/sun.html">Walk to the Sun</a>
+  </div>
 
   <!-- ===== HERO ===== -->
   <section class="hero" id="hero">
     <div class="hero-glow" aria-hidden="true"></div>
-    <p class="hero-date">Sunday, June 28, 2026 <span>— Next Global 100K Step Challenge</span></p>
+    <p class="hero-date">Sunday, June 28, 2026 <strong>— Global 100K Day&nbsp;#2</strong></p>
 
     <div class="hero-title">
-      <div class="hero-beat">Can you walk 100,000 steps before midnight?</div>
+      <h1 class="hero-beat">Can you walk 100,000 steps before midnight?</h1>
       <p class="hero-tagline">80 kilometres. One day. No shortcuts.</p>
     </div>
-    <p class="hero-hook">The world's first global walking challenge. Pick your distance. Prove you finished. Claim your badge. <em class="gr">Join the club.</em></p>
+    <p class="hero-hook">Pick your distance, 10K to 100K steps. Walk it anywhere on Earth. Prove you finished. <em>Join the club.</em></p>
     <div class="hero-cta-row">
       <a href="#signup" class="btn btn-p"><span>Join me on June 28th</span></a>
     </div>
@@ -60,127 +83,137 @@
   </section>
 
   <!-- ===== WHAT IS THIS ===== -->
-  <section class="section section--what" id="what">
+  <section class="section" id="what">
     <div class="container">
       <p class="eyebrow">The Challenge</p>
       <h2 class="section-title">The simplest hard thing you'll ever do.</h2>
-      <div class="what-grid">
-        <p class="what-lead">The 100K Step Club is a monthly challenge where you can log the most steps you've ever done in a day with a growing global community.</p>
-        <div class="what-details">
-          <p>Walking is a seriously underrated form of focus and self-care. What we need more of in life enjoying the present moment as it unfolds at a walking pace.</p>
-          <p>The date is announced the month before. Join from anywhere — and claim your spot on the <a href="/leaderboard.html">leaderboard</a>.</p>
+      <p class="what-lead">Once a month, the club picks a day. You pick a number (the most steps you've ever done in one day) and you go get it before midnight.</p>
+      <ol class="steps-list">
+        <li class="step-card">
+          <span class="step-num">1</span>
+          <div>
+            <h3>Pick your tier</h3>
+            <p>Six tiers, 10K to 100K steps. Start where you are.</p>
+          </div>
+        </li>
+        <li class="step-card">
+          <span class="step-num">2</span>
+          <div>
+            <h3>Walk it before midnight</h3>
+            <p>Anywhere on Earth. Your city, your route, your pace.</p>
+          </div>
+        </li>
+        <li class="step-card">
+          <span class="step-num">3</span>
+          <div>
+            <h3>Prove it</h3>
+            <p>Screenshot your steps. Claim your badge. Light up your city on the <a href="/leaderboard.html" class="xlink">Claim Board</a>.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== PROOF — MAY 2 RECEIPTS ===== -->
+  <section class="section" id="proof" style="text-align:center">
+    <div class="container">
+      <p class="eyebrow">The Club So Far</p>
+      <h2 class="section-title">The first one already happened.</h2>
+      <div class="proof-stats">
+        <div class="proof-stat">
+          <div class="proof-num" data-live="walkers">21</div>
+          <div class="proof-label">Verified walks</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-num" data-live="cities">11</div>
+          <div class="proof-label">Cities claimed</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-num" data-live="steps">931,006</div>
+          <div class="proof-label">Verified steps</div>
         </div>
       </div>
+      <div class="proof-photos">
+        <img src="img/friends-1.jpg" alt="100K Step Club walkers — poster one" class="proof-photo" loading="lazy" width="720" height="960">
+        <img src="img/friends-4.jpg" alt="100K Step Club walkers — poster four" class="proof-photo" loading="lazy" width="720" height="960">
+        <img src="img/friends-3.jpg" alt="100K Step Club walkers — poster three" class="proof-photo" loading="lazy" width="720" height="960">
+        <img src="img/friends-2.jpg" alt="100K Step Club walkers — poster two" class="proof-photo" loading="lazy" width="720" height="960">
+      </div>
+      <blockquote class="proof-quote">
+        <p class="proof-quote-text">"Honestly we were talking about it — when do you just go out for a big walk? Not to get somewhere, but the walk being the point. It was really fun"</p>
+        <cite class="proof-quote-attr">Morgana C. — 25K, Toronto</cite>
+      </blockquote>
+      <p class="proof-more">Every walk above is a verified claim. <a href="/leaderboard.html" class="xlink">See them all on the Claim Board</a>.</p>
     </div>
   </section>
 
-  <!-- ===== TIER SYSTEM ===== -->
-  <section class="section section--tiers" id="tiers">
+  <!-- ===== TIER LADDER ===== -->
+  <section class="section" id="tiers" style="text-align:center">
     <div class="container">
       <p class="eyebrow">The Progression</p>
-      <h2 class="section-title">You don't have to start at 100K.<br>Earn your way up.</h2>
-      <div class="tiers-grid">
-        <article class="tier-card" data-t="g">
-          <div class="tier-head">
-            <div class="tier-badge">10K</div>
-            <div class="tier-info">
-              <h3>First Light</h3>
-              <p class="tier-feeling">Same distance you walk every day. Completely different when you mean it.</p>
-              <p class="tier-dist">~8 km (5 mi)</p>
-            </div>
+      <h2 class="section-title">You don't have to start at 100K.</h2>
+      <p class="section-sub">Six tiers. Pick the one that scares you a little.</p>
+      <div class="ladder">
+        <a class="ladder-row" data-t="g" href="/tiers.html#t10k">
+          <img src="img/badge-10k.png" alt="10K First Light badge" class="ladder-badge" loading="lazy" width="44" height="44">
+          <div class="ladder-info">
+            <div class="ladder-name">10K · <span>First Light</span></div>
+            <div class="ladder-dist">~8 km (5 mi)</div>
           </div>
-          <div class="tier-stat">
-            <div class="tier-bar"><div class="tier-bar-fill" data-width="62"></div></div>
-            <p class="tier-stat-text"><span class="tier-pct">~62%</span> of people on Earth <span class="tier-num">~5 billion</span></p>
+          <div class="ladder-stat"><b>~62%</b><small>of people on Earth</small></div>
+        </a>
+        <a class="ladder-row" data-t="b" href="/tiers.html#t25k">
+          <img src="img/badge-25k.png" alt="25K In The Flow badge" class="ladder-badge" loading="lazy" width="44" height="44">
+          <div class="ladder-info">
+            <div class="ladder-name">25K · <span>In The Flow</span></div>
+            <div class="ladder-dist">~20 km (12 mi)</div>
           </div>
-        </article>
-        <article class="tier-card" data-t="b">
-          <div class="tier-head">
-            <div class="tier-badge">25K</div>
-            <div class="tier-info">
-              <h3>In The Flow</h3>
-              <p class="tier-feeling">Somewhere around hour three, the thing that's been bugging you goes quiet.</p>
-              <p class="tier-dist">~20 km (12 mi)</p>
-            </div>
+          <div class="ladder-stat"><b>~25%</b><small>of people on Earth</small></div>
+        </a>
+        <a class="ladder-row" data-t="e" href="/tiers.html#t35k">
+          <img src="img/badge-35k.png" alt="35K Realizing badge" class="ladder-badge" loading="lazy" width="44" height="44">
+          <div class="ladder-info">
+            <div class="ladder-name">35K · <span>Realizing</span></div>
+            <div class="ladder-dist">~28 km (17 mi)</div>
           </div>
-          <div class="tier-stat">
-            <div class="tier-bar"><div class="tier-bar-fill" data-width="25"></div></div>
-            <p class="tier-stat-text"><span class="tier-pct">~25%</span> of people on Earth <span class="tier-num">~2 billion</span></p>
+          <div class="ladder-stat"><b>~10%</b><small>of people on Earth</small></div>
+        </a>
+        <a class="ladder-row" data-t="o" href="/tiers.html#t50k">
+          <img src="img/badge-50k.png" alt="50K Heating Up badge" class="ladder-badge" loading="lazy" width="44" height="44">
+          <div class="ladder-info">
+            <div class="ladder-name">50K · <span>Heating Up</span></div>
+            <div class="ladder-dist">~40 km (25 mi)</div>
           </div>
-        </article>
-        <article class="tier-card" data-t="e">
-          <div class="tier-head">
-            <div class="tier-badge">35K</div>
-            <div class="tier-info">
-              <h3>Realizing</h3>
-              <p class="tier-feeling">Your watch becomes a calculator. Can you still beat midnight at this pace?</p>
-              <p class="tier-dist">~28 km (17 mi)</p>
-            </div>
+          <div class="ladder-stat"><b>~1.5%</b><small>of people on Earth</small></div>
+        </a>
+        <a class="ladder-row" data-t="p" href="/tiers.html#t75k">
+          <img src="img/badge-75k.png" alt="75K Enter Night badge" class="ladder-badge" loading="lazy" width="44" height="44">
+          <div class="ladder-info">
+            <div class="ladder-name">75K · <span>Enter Night</span></div>
+            <div class="ladder-dist">~60 km (37 mi)</div>
           </div>
-          <div class="tier-stat">
-            <div class="tier-bar"><div class="tier-bar-fill" data-width="10"></div></div>
-            <p class="tier-stat-text"><span class="tier-pct">~10%</span> of people on Earth <span class="tier-num">~800 million</span></p>
+          <div class="ladder-stat"><b>~0.08%</b><small>of people on Earth</small></div>
+        </a>
+        <a class="ladder-row" data-t="w" href="/tiers.html#t100k">
+          <img src="img/badge-100k.png" alt="100K Beat Midnight badge" class="ladder-badge" loading="lazy" width="44" height="44">
+          <div class="ladder-info">
+            <div class="ladder-name">100K · <span>Beat Midnight</span></div>
+            <div class="ladder-dist">~80 km (50 mi)</div>
           </div>
-        </article>
-        <article class="tier-card" data-t="o">
-          <div class="tier-head">
-            <div class="tier-badge">50K</div>
-            <div class="tier-info">
-              <h3>Heating Up</h3>
-              <p class="tier-feeling">Your body starts negotiating. Your mind gets quieter. The clarity at 40 kilometres is worth every blister.</p>
-              <p class="tier-dist">~40 km (25 mi)</p>
-            </div>
-          </div>
-          <div class="tier-stat">
-            <div class="tier-bar"><div class="tier-bar-fill" data-width="1.5"></div></div>
-            <p class="tier-stat-text"><span class="tier-pct">~1.5%</span> of people on Earth <span class="tier-num">~120 million</span></p>
-          </div>
-        </article>
-        <article class="tier-card" data-t="p">
-          <div class="tier-head">
-            <div class="tier-badge">75K</div>
-            <div class="tier-info">
-              <h3>Enter Night</h3>
-              <p class="tier-feeling">Almost nobody has done this. The ones who have don't forget it.</p>
-              <p class="tier-dist">~60 km (37 mi)</p>
-            </div>
-          </div>
-          <div class="tier-stat">
-            <div class="tier-bar"><div class="tier-bar-fill" data-width="0.08"></div></div>
-            <p class="tier-stat-text"><span class="tier-pct">~0.08%</span> of people on Earth <span class="tier-num">~6 million</span></p>
-          </div>
-        </article>
-        <article class="tier-card" data-t="w">
-          <div class="tier-head">
-            <div class="tier-badge">100K</div>
-            <div class="tier-info">
-              <h3>Beat Midnight</h3>
-              <p class="tier-feeling">The rarest club with the simplest entry requirement: don't stop.</p>
-              <p class="tier-dist">~80 km (50 mi)</p>
-            </div>
-          </div>
-          <div class="tier-stat">
-            <div class="tier-bar"><div class="tier-bar-fill" data-width="0.002"></div></div>
-            <p class="tier-stat-text"><span class="tier-pct">~0.002%</span> of people on Earth <span class="tier-num">~200,000</span></p>
-          </div>
-        </article>
+          <div class="ladder-stat"><b>~0.002%</b><small>of people on Earth</small></div>
+        </a>
       </div>
-      <p class="tiers-cta"><strong>Each verified milestone earns an official badge.<br>Can you collect them all?</strong></p>
-      <div class="badge-row">
-        <img src="img/badge-10k.png" alt="10K First Light badge" class="badge-img">
-        <img src="img/badge-25k.png" alt="25K In The Flow badge" class="badge-img">
-        <img src="img/badge-35k.png" alt="35K Realizing badge" class="badge-img">
-        <img src="img/badge-50k.png" alt="50K Heating Up badge" class="badge-img">
-        <img src="img/badge-75k.png" alt="75K Enter Night badge" class="badge-img">
-        <img src="img/badge-100k.png" alt="100K Beat Midnight badge" class="badge-img">
+      <div class="ladder-cta">
+        <a href="/tiers.html" class="btn btn-s"><span>The full tier guide</span></a>
+        <p class="ladder-cta-note">Badges, rules, and the wall of names.</p>
       </div>
     </div>
   </section>
 
-  <!-- ===== WHO'S BEHIND THIS ===== -->
-  <section class="section section--about" id="who">
+  <!-- ===== FOUNDER ===== -->
+  <section class="section" id="who">
     <div class="container founder-layout">
-      <div class="founder-photo"><img src="img/founder.jpeg" alt="Graeme Nixon, founder of 100K Step Club" loading="lazy"></div>
+      <div class="founder-photo"><img src="img/founder-poster.jpg" alt="Graeme Nixon, founder of the 100K Step Club — poster with verified cities" loading="lazy" width="760" height="1013"></div>
       <div class="founder-text">
         <p class="eyebrow">The Founder</p>
         <h2 class="about-name">I'm <span class="gr">Graeme.</span></h2>
@@ -190,167 +223,17 @@
     </div>
   </section>
 
-  <!-- ===== COLLECTIVE MISSION ===== -->
-  <section class="section section--mission-intro" id="mission">
-    <div class="container" style="text-align:center">
-      <p class="eyebrow">The Collective Mission</p>
-      <h2 class="mi-title">Every step counts.<br><span class="gr">We count every step.</span></h2>
-      <p class="mi-sub">We're walking to the sun. Together.</p>
-      <p class="mi-sub"><em>(wait, what?)</em></p>
-      <p class="mi-sub"><strong class="gr">187 billion steps.</strong> 150 million kilometres (93 million miles).</p>
-      <p class="mi-sub">Pick your tier. Walk. Verify. Your steps hit the counter.</p>
-      <p class="mi-sub">On event days, we tally up the verified steps and inch closer to the sun.</p>
-    </div>
-  </section>
-
-  <!-- ===== SPACE JOURNEY VISUALIZER ===== -->
-  <section class="space-journey" id="sj">
-    <div class="sj-sticky">
-      <canvas id="sjCanvas"></canvas>
-
-      <div class="sj-phase" id="sjPhase"></div>
-
-      <!-- Milestones: Earth close-up — spread out so they never overlap -->
-      <div class="sj-ms" data-trigger="0.015" data-fade="0.02">
-        <div class="sj-ms-name">First Steps</div>
-        <div class="sj-ms-steps">10K steps</div>
-      </div>
-      <div class="sj-ms" data-trigger="0.045" data-fade="0.02">
-        <div class="sj-ms-name">The Marathon</div>
-        <div class="sj-ms-steps">50K steps</div>
-      </div>
-      <div class="sj-ms" data-trigger="0.075" data-fade="0.02">
-        <div class="sj-ms-name">The Camino</div>
-        <div class="sj-ms-steps">500K steps</div>
-      </div>
-      <div class="sj-ms" data-trigger="0.105" data-fade="0.02">
-        <div class="sj-ms-name">Route 66</div>
-        <div class="sj-ms-steps">5M steps</div>
-      </div>
-
-      <!-- Milestones: Earth full view -->
-      <div class="sj-ms" data-trigger="0.135" data-fade="0.025">
-        <div class="sj-ms-name">Around the World</div>
-        <div class="sj-ms-steps">50M steps</div>
-      </div>
-      <div class="sj-ms" data-trigger="0.165" data-fade="0.025">
-        <div class="sj-ms-name">Twice Around</div>
-        <div class="sj-ms-steps">100M steps</div>
-      </div>
-
-      <!-- Milestones: Leaving Earth -->
-      <div class="sj-ms" data-trigger="0.20" data-fade="0.03">
-        <div class="sj-ms-name">Satellite Belt</div>
-        <div class="sj-ms-steps">225M steps</div>
-      </div>
-      <div class="sj-ms" data-trigger="0.24" data-fade="0.03">
-        <div class="sj-ms-name">One Light-Second</div>
-        <div class="sj-ms-steps">375M steps</div>
-      </div>
-      <div class="sj-ms sj-ms--planet" data-trigger="0.28" data-fade="0.03">
-        <div class="sj-ms-name">The Moon</div>
-        <div class="sj-ms-steps">480M steps</div>
-      </div>
-
-      <!-- Milestones: Deep space -->
-      <div class="sj-ms" data-trigger="0.34" data-fade="0.04">
-        <div class="sj-ms-name">Deep Space</div>
-        <div class="sj-ms-steps">1B steps</div>
-      </div>
-      <div class="sj-ms" data-trigger="0.41" data-fade="0.04">
-        <div class="sj-ms-name">The James Webb</div>
-        <div class="sj-ms-steps">1.9B steps</div>
-      </div>
-
-      <!-- Milestones: Inner planets -->
-      <div class="sj-ms" data-trigger="0.47" data-fade="0.05">
-        <div class="sj-ms-name">One Light-Minute</div>
-        <div class="sj-ms-steps">22.5B steps</div>
-      </div>
-      <div class="sj-ms sj-ms--planet sj-ms--dark" data-trigger="0.53" data-fade="0.05">
-        <div class="sj-ms-name">Venus</div>
-        <div class="sj-ms-steps">48.75B steps</div>
-      </div>
-      <div class="sj-ms sj-ms--planet sj-ms--dark" data-trigger="0.59" data-fade="0.05">
-        <div class="sj-ms-name">Mars</div>
-        <div class="sj-ms-steps">68.75B steps</div>
-      </div>
-
-      <!-- Milestones: Into the fire -->
-      <div class="sj-ms sj-ms--dark" data-trigger="0.66" data-fade="0.05">
-        <div class="sj-ms-name">Mercury's Orbit</div>
-        <div class="sj-ms-steps">82.5B steps</div>
-      </div>
-      <div class="sj-ms sj-ms--dark" data-trigger="0.72" data-fade="0.05">
-        <div class="sj-ms-name">Halfway to the Sun</div>
-        <div class="sj-ms-steps">93.5B steps</div>
-      </div>
-
-      <!-- Milestones: Final approach -->
-      <div class="sj-ms sj-ms--dark" data-trigger="0.80" data-fade="0.05">
-        <div class="sj-ms-name">The Sunlight Mark</div>
-        <div class="sj-ms-steps">150B steps</div>
-      </div>
-      <div class="sj-ms sj-ms--dark" data-trigger="0.85" data-fade="0.04">
-        <div class="sj-ms-name">The Final Billion</div>
-        <div class="sj-ms-steps">186B steps</div>
-      </div>
-
-      <!-- Finale -->
-      <div class="sj-finale" id="sjFinale">
-        <div class="sj-finale-num">187 Billion</div>
-        <div class="sj-finale-label">steps to the sun</div>
-      </div>
-
-      <div class="sj-counter" id="sjCo">
-        <div class="sj-counter-num" id="sjNum">0 steps</div>
-        <div class="sj-counter-label">Collective Journey</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===== MISSION CLOSE ===== -->
-  <section class="section section--mission-close">
-    <div class="container" style="text-align:center; max-width:540px">
-      <p class="mi-close-num"><span class="gr-text">74</span> milestones along the way</p>
-      <div class="mi-pills">
-        <span class="mi-pill">The Neighbourhood</span>
-        <span class="mi-arrow">&rarr;</span>
-        <span class="mi-pill">The Suez Canal</span>
-        <span class="mi-arrow">&rarr;</span>
-        <span class="mi-pill">The Tour de France</span>
-        <span class="mi-arrow">&rarr;</span>
-        <span class="mi-pill">The Silk Road</span>
-        <span class="mi-arrow">&rarr;</span>
-        <span class="mi-pill">The Pacific Crossing</span>
-        <span class="mi-arrow">&rarr;</span>
-        <span class="mi-pill">Around the World</span>
-        <span class="mi-arrow">&rarr;</span>
-        <span class="mi-pill">The Moon</span>
-        <span class="mi-arrow">&rarr;</span>
-        <span class="mi-pill">Venus</span>
-        <span class="mi-arrow">&rarr;</span>
-        <span class="mi-pill">Mars</span>
-        <span class="mi-arrow">&rarr;</span>
-        <span class="mi-pill mi-pill--sun">The Sun</span>
-      </div>
-      <p class="mi-close-body">Your walk. Everyone's counter. One destination: the sun.</p>
-    </div>
-  </section>
-
   <!-- ===== JUNE 28 EVENT ===== -->
   <section class="section section--event" id="event">
-    <div class="event-glow" aria-hidden="true"></div>
     <div class="event-inner">
-      <p class="eyebrow">Second Global 100K Day</p>
+      <p class="eyebrow">Global 100K Day #2</p>
       <div class="event-date">
         <span class="event-mo">June</span>
         <span class="event-dy">28</span>
       </div>
       <p class="event-year">2 0 2 6</p>
-      <p class="event-desc">Join me and the community each month as we crown new club members, all across the tiers. One day that changes how you show up to everything after it.</p>
-      <p class="event-desc">On the day of, you can start anytime. The only rule is that you have to finish by midnight.</p>
-      <p class="event-desc"><strong>Beat Midnight.</strong> Become Verified. Help Walk to the Sun.</p>
+      <p class="event-desc">Start anytime on the day. One rule: finish by midnight.</p>
+      <p class="event-desc"><strong>Beat Midnight.</strong> Get verified. Help <a href="/sun.html" class="xlink">walk us to the sun</a>.</p>
       <div class="countdown-row">
         <div class="cd-unit">
           <div class="cd-num" id="cd-d">--</div>
@@ -365,7 +248,6 @@
           <div class="cd-label">Min</div>
         </div>
       </div>
-      <a href="#signup" class="btn btn-p"><span>Join me on June 28th</span></a>
     </div>
   </section>
 
@@ -373,8 +255,8 @@
   <section class="section section--signup" id="signup">
     <div class="container">
       <p class="eyebrow">Join the Club</p>
-      <h2 class="section-title">Sign up for the June 28th Challenge</h2>
-      <p class="section-sub">Pick your tier. See you out there. It will be incredible.</p>
+      <h2 class="section-title">Sign up for June 28</h2>
+      <p class="section-sub">Free. Pick a tier. See you out there.</p>
 
       <form id="signup-form" class="form" novalidate>
         <div class="form-group">
@@ -423,13 +305,69 @@
 
       <div id="form-success" class="form-success" hidden>
         <p class="form-success-msg">You're in. June 28 is going to be interesting.</p>
+        <p class="form-success-ps">PS: the app is in development. You're already first in line.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="section" id="faq" style="text-align:center">
+    <div class="container">
+      <p class="eyebrow">Questions</p>
+      <h2 class="section-title">Fair questions.</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary class="faq-q">Do I really have to walk 100,000 steps?</summary>
+          <p class="faq-a">No. Six tiers, starting at 10K. That's a distance plenty of people cover by accident. 100K is the summit, not the entry fee.</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Where does it happen?</summary>
+          <p class="faq-a">Anywhere on Earth. Your neighbourhood counts. A trail counts. A new city counts. Treadmills don't.</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">How do I prove I did it?</summary>
+          <p class="faq-a">A screenshot from Strava, Garmin, or Apple Health showing your steps and the date. The thresholds are exact: 99,800 steps is a brilliant 75K-tier day, not a 100K. <a href="/tiers.html#rules">Full rules here.</a></p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Does it cost anything?</summary>
+          <p class="faq-a">Signing up is free. Walking is free. The blisters are complimentary.</p>
+        </details>
+        <details class="faq-item">
+          <summary class="faq-q">Is there an app?</summary>
+          <p class="faq-a">In development right now: automatic step sync, friends, and a collective walk to the Moon. Sign up above and you're first in line when the beta opens.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOR THE CLUB ===== -->
+  <section class="section" id="club" style="text-align:center">
+    <div class="container">
+      <p class="eyebrow">For the Club</p>
+      <h2 class="section-title">Already in? Go deeper.</h2>
+      <div class="club-cards">
+        <a class="club-card" href="/journey/">
+          <h3>We're walking to the sun. Together. <em>(wait, what?)</em></h3>
+          <p>187 billion steps, counted one verified walk at a time. Watch the club's live position between here and the sun.</p>
+          <span class="club-link">See the journey &rarr;</span>
+        </a>
+        <a class="club-card" href="/leaderboard.html">
+          <h3>Every city has six spots to claim.</h3>
+          <p>First verified walker takes the city at their tier. Faster times steal it. Yours is probably still open.</p>
+          <span class="club-link">See the Claim Board &rarr;</span>
+        </a>
+        <a class="club-card" href="/sun.html">
+          <h3>Fly the goal on scroll.</h3>
+          <p>Earth to the sun in one long scroll. The Moon <em>(there's an app coming for that)</em> at 480 million steps, Venus, Mars, then the fire. Geek out.</p>
+          <span class="club-link">Watch the walk to the sun &rarr;</span>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- ===== FOUNDER QUOTE ===== -->
-  <section class="section section--quote">
-    <div class="container" style="text-align:center">
+  <section class="section--quote">
+    <div class="container">
       <blockquote class="founder-quote">
         <p class="quote-text">Walking 100,000 steps probably won't change your life. But maybe it will. Why not find out for yourself?</p>
         <cite class="quote-attr">— Graeme</cite>
@@ -466,12 +404,13 @@
 
 </div>
 
+<!-- Sticky mobile CTA -->
+<div class="sticky-cta" id="sticky-cta" aria-hidden="true">
+  <a href="#signup" class="btn btn-p"><span>Join June 28</span></a>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/three.min.js"></script>
 <script src="js/config.js"></script>
-<script src="js/sky.js?v=2"></script>
-<script src="js/sky-elements.js"></script>
-<script src="js/main.js?v=2"></script>
-<script src="js/space-journey.js"></script>
+<script src="js/main.js?v=3"></script>
 </body>
 </html>

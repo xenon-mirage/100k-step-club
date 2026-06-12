@@ -1057,3 +1057,172 @@ body[data-spectacle="med"] .scene-layer.active { opacity: .55; }
     transition-duration: .01ms !important;
   }
 }
+
+/* ==========================================================================
+   v3: canonical site nav — identical to the landing page (values inlined
+   because this stylesheet has its own variable names)
+   ========================================================================== */
+
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(to bottom, rgba(5,5,7,.85), rgba(5,5,7,0));
+}
+
+.nav-brand {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  letter-spacing: -.01em;
+  color: #eeeae3;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  background: #050507;
+  border: 1px solid rgba(255,255,255,.12);
+  font-size: .7rem;
+  font-weight: 800;
+}
+
+.nav-mark > span {
+  background: linear-gradient(135deg, #ff6b00, #fbbf24);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-right { display: flex; align-items: center; gap: 1.1rem; }
+
+.nav-link {
+  font-family: 'DM Sans', sans-serif;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #eeeae3;
+  text-decoration: none;
+  padding: .5rem .95rem;
+  border-radius: 100px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.14);
+  transition: color .25s ease, border-color .25s ease, background .25s ease;
+  white-space: nowrap;
+}
+
+.nav-link:hover {
+  color: #fbbf24;
+  border-color: rgba(251,191,36,.45);
+  background: rgba(255,107,0,.08);
+}
+
+.nav-link[aria-current="page"] {
+  color: #fbbf24;
+  border-color: rgba(251,191,36,.5);
+  background: rgba(251,191,36,.08);
+}
+
+.nav-cta {
+  font-family: 'DM Sans', sans-serif;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  padding: .55rem 1.1rem;
+  border-radius: 100px;
+  background: transparent;
+  border: 1px solid rgba(249,115,22,.55);
+  color: #eeeae3;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .25s ease, border-color .25s ease, color .25s ease;
+}
+
+.nav-cta:hover { background: #e85d04; border-color: #e85d04; color: #fff; }
+
+.nav-menu-btn {
+  display: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: .7rem;
+  font-weight: 600;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #eeeae3;
+  padding: .5rem .95rem;
+  border-radius: 100px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.14);
+  cursor: pointer;
+  align-items: center;
+  gap: .4rem;
+}
+
+.nav-menu-btn::after {
+  content: '';
+  width: 7px; height: 7px;
+  border-right: 1.5px solid #e85d04;
+  border-bottom: 1.5px solid #e85d04;
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform .25s ease;
+}
+
+.nav-menu-btn[aria-expanded="true"]::after { transform: rotate(225deg) translateY(-1px); }
+
+.nav-menu {
+  position: fixed;
+  top: 3.6rem;
+  right: 1rem;
+  z-index: 98;
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  min-width: 200px;
+  padding: .6rem;
+  border-radius: 14px;
+  background: rgba(5,5,7,.96);
+  border: 1px solid rgba(255,255,255,.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 12px 48px rgba(0,0,0,.6);
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity .25s ease, transform .25s ease;
+}
+
+.nav-menu.open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+.nav-menu a {
+  font-family: 'DM Sans', sans-serif;
+  font-size: .85rem;
+  font-weight: 600;
+  color: #eeeae3;
+  text-decoration: none;
+  padding: .65rem .9rem;
+  border-radius: 9px;
+  transition: background .2s, color .2s;
+}
+
+.nav-menu a:hover { background: rgba(255,107,0,.1); color: #fbbf24; }
+.nav-menu a[aria-current="page"] { color: #fbbf24; }
+
+@media (max-width: 560px) {
+  .nav { padding: .9rem 1.2rem; }
+  .nav-link { display: none; }
+  .nav-menu-btn { display: inline-flex; }
+  .nav-cta { padding: .5rem .95rem; font-size: .68rem; }
+}
