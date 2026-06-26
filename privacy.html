@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>Privacy Policy — 100K Step Club</title>
+  <meta name="description" content="What the 100K Step Club app collects, why, where it lives, and the control you have over it. We collect the minimum, your steps stay private to approved friends, and we never sell your data.">
+  <meta property="og:title" content="Privacy Policy — 100K Step Club">
+  <meta property="og:description" content="The minimum we need to run a step-tracking community. Your steps are visible only to friends you approve. We never sell your data.">
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://100kstepclub.com/privacy">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+  <link rel="shortcut icon" href="/assets/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="manifest" href="/assets/site.webmanifest">
+  <meta name="theme-color" content="#050507">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css?v=3">
+  <link rel="stylesheet" href="/css/legal.css?v=1">
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+<div class="grain"></div>
+<div class="page">
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav">
+    <a href="/" class="nav-brand">
+      <span class="nav-mark"><span>100K</span></span>
+      Step Club
+    </a>
+    <div class="nav-right">
+      <a href="/tiers.html" class="nav-link">Tiers</a>
+      <a href="/journey/" class="nav-link">Journey</a>
+      <a href="/leaderboard.html" class="nav-link">Claim Board</a>
+      <a href="/sun.html" class="nav-link">To the Sun</a>
+      <button type="button" class="nav-menu-btn" id="nav-menu-btn" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+      <a href="/#signup" class="nav-cta">Sign Up</a>
+    </div>
+  </nav>
+  <div class="nav-menu" id="nav-menu">
+    <a href="/tiers.html">Tiers</a>
+    <a href="/journey/">Journey</a>
+    <a href="/leaderboard.html">Claim Board</a>
+    <a href="/sun.html">Walk to the Sun</a>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="legal-hero">
+    <p class="eyebrow v">Privacy Policy</p>
+    <h1 class="section-title v">Your data, plainly.</h1>
+    <p class="legal-meta">
+      Effective <span class="flag">[ set on publish ]</span> &middot; 100K Step Club, Toronto, Canada<br>
+      Questions or requests: <a href="mailto:graeme@100kstepclub.com">graeme@100kstepclub.com</a>
+    </p>
+  </header>
+
+  <!-- ===== BODY ===== -->
+  <article class="legal section">
+    <div class="container">
+
+      <p class="legal-lead">This policy explains what the 100K Step Club mobile app collects, why, where it lives, and the control you have over it. Plain version up front: we collect the minimum we need to run a step-tracking community, your daily steps are visible only to friends you approve, and we <strong>never sell your data or use your health data for advertising</strong>.</p>
+
+      <h2>What we collect</h2>
+      <ul>
+        <li><strong>Account identity.</strong> When you sign in with Apple or Google, we receive a unique account identifier and an email address. With Sign in with Apple you may use Apple's private email relay, and we only ever see that relay address.</li>
+        <li><strong>Profile.</strong> A <code>@handle</code> you choose, an optional display name, an optional home city, and whether you want your profile to be discoverable by other members.</li>
+        <li><strong>Daily step totals.</strong> With your permission, we read your <strong>daily step count</strong> from Apple Health (iOS) or Health Connect (Android) — a single number per day. We do <strong>not</strong> read heart rate, location, workouts, or any other health data. Steps are counted <strong>from the day you sign up onward</strong>; we do not import your step history in this version.</li>
+        <li><strong>Your friends.</strong> The follow relationships you create. Seeing a friend's steps requires <strong>mutual approval</strong> — both people accept.</li>
+        <li><strong>Notification settings.</strong> A device push token and your preferences (which tier crossings you want to hear about, and any quiet hours), once notifications ship.</li>
+        <li><strong>Basic technical data.</strong> Standard app and server logs needed to operate and secure the service (for example, error logs).</li>
+      </ul>
+      <p>We do <strong>not</strong> collect precise location, contacts, photos, or advertising identifiers.</p>
+
+      <h2>Why we collect it</h2>
+      <ul>
+        <li>To show you your steps, your tier for the day, and your personal Journey.</li>
+        <li>To let friends you have <strong>mutually approved</strong> see each other's daily steps, and to nudge them when someone crosses a tier.</li>
+        <li>To create your account and keep it secure.</li>
+        <li>Nothing else. We do not build advertising profiles.</li>
+      </ul>
+
+      <h2>Where it lives and who can see it</h2>
+      <ul>
+        <li>Your data is stored in our database, hosted on <strong>Supabase</strong> (Postgres) infrastructure.</li>
+        <li><strong>Your daily steps are private by default.</strong> They are readable only by friends you have mutually approved. This is enforced at the database level (row-level security), not just in the app — the server will not return a stranger's steps even to a direct request.</li>
+        <li>We do not make your steps public, and we do not show them to advertisers.</li>
+      </ul>
+
+      <h2>What we never do</h2>
+      <ul>
+        <li>We never <strong>sell</strong> your personal information or your health data.</li>
+        <li>We never use your <strong>health data for advertising</strong>.</li>
+        <li>We never share your data with third parties except the infrastructure providers that run the service for us (e.g. Supabase for the database; Apple/Google for push delivery), under their own terms, solely to operate the app.</li>
+      </ul>
+
+      <h2>Your choices and controls</h2>
+      <ul>
+        <li><strong>Health permission.</strong> You grant step access through the OS health permission prompt, and you can revoke it any time in your device's Health (iOS) or Health Connect (Android) settings. If you revoke it, new steps stop syncing.</li>
+        <li><strong>Notifications.</strong> You can turn notifications off in the app or in your OS settings.</li>
+        <li><strong>Delete your account.</strong> You can delete your account from within the app. Deleting it removes your profile, your step records, your follow relationships, and your notification settings from our database. (Backups, if any, age out on a routine cycle.)</li>
+      </ul>
+
+      <h2>Data retention</h2>
+      <p>We keep your data while your account is active. When you delete your account, we delete your associated records. Routine operational backups are retained for a short period and then expire.</p>
+
+      <h2>Children</h2>
+      <p>The app is not directed to children under <span class="flag">[ 13 / 16 — confirm ]</span>, and we do not knowingly collect their data.</p>
+
+      <h2>International note</h2>
+      <p>We are based in Canada and our infrastructure may process data in <span class="flag">[ region — confirm Supabase project region ]</span>. By using the app you understand your data may be processed there.</p>
+
+      <h2>Changes to this policy</h2>
+      <p>If we change what we collect or how we use it, we will update this page and its effective date, and — for material changes — let you know in the app.</p>
+
+      <h2>Contact</h2>
+      <p>Questions or requests (including data access or deletion): <a href="mailto:graeme@100kstepclub.com">graeme@100kstepclub.com</a>.</p>
+
+      <p style="margin-top:1.6rem;color:var(--text-dim);font-size:.95rem;">See also the <a href="/terms">Terms of Service</a>.</p>
+
+      <div class="legal-signoff">
+        <p class="chars">stay chars,</p>
+        <p>Graeme</p>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="f-links">
+      <a href="https://chat.whatsapp.com/DuDpslY1AtP20JuU4vUl6X?mode=gi_t" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413"/></svg>
+        WhatsApp
+      </a>
+      <a href="https://substack.com/@100kstepclub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        Newsletter
+      </a>
+      <a href="https://instagram.com/100kstepclub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+      <a href="https://x.com/100kstepclub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X
+      </a>
+      <a href="https://www.tiktok.com/@100kstepclub" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.7a8.18 8.18 0 0 0 4.76 1.52v-3.4a4.85 4.85 0 0 1-1-.13z"/></svg>
+        TikTok
+      </a>
+    </div>
+    <p class="f-motto">100,000 steps. One day. Beat Midnight.</p>
+    <div class="f-legal">
+      <a href="/privacy" aria-current="page">Privacy</a>
+      <span class="f-sep" aria-hidden="true">&middot;</span>
+      <a href="/terms">Terms</a>
+    </div>
+  </footer>
+
+</div>
+
+<script src="/js/main.js?v=3"></script>
+</body>
+</html>

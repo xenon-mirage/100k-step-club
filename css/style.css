@@ -1440,6 +1440,30 @@ a { color: inherit; }
   color: var(--text-dim);
 }
 
+/* Legal links — privacy + terms. Lives in the shared sheet so it
+   renders on every page's footer, not just the support pages. */
+.f-legal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.3rem;
+}
+
+.f-legal a {
+  font-family: var(--sans);
+  font-size: .72rem;
+  letter-spacing: .05em;
+  color: var(--text-dim);
+  text-decoration: none;
+  transition: color .3s;
+}
+
+.f-legal a:hover,
+.f-legal a[aria-current="page"] { color: var(--text-mid); }
+
+.f-sep { color: var(--text-dim); opacity: .45; font-size: .72rem; }
+
 /* ========================================================
    TIERS PAGE
    ======================================================== */

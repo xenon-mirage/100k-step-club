@@ -1,0 +1,270 @@
+/* ========================================================
+   100K STEP CLUB — LEGAL / SUPPORT PAGES
+   Long-form prose (privacy, terms) + the auth-confirm
+   landing, all on the brand shell. Loaded after style.css.
+
+   Legal text is visible by default — no scroll-reveal
+   gating on a wall of legal copy (accessibility + no-JS).
+   ======================================================== */
+
+/* ----- Page header ----- */
+
+.legal-hero {
+  padding: 8.5rem 1.5rem 1.25rem;
+  text-align: center;
+}
+
+.legal-hero .section-title {
+  font-size: clamp(2.2rem, 7vw, 3.6rem);
+  margin-bottom: 1.1rem;
+}
+
+.legal-meta {
+  font-family: var(--mono);
+  font-size: .8rem;
+  color: var(--text-dim);
+  line-height: 1.8;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.legal-meta a {
+  color: var(--text-mid);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: color .25s, border-color .25s;
+}
+
+.legal-meta a:hover { color: var(--text); border-color: rgba(255,107,0,.4); }
+
+/* ----- Article body ----- */
+
+.legal.section { padding-top: 1.5rem; }
+
+.legal .container { max-width: 720px; }
+
+.legal-lead {
+  font-family: var(--display);
+  font-size: clamp(1.05rem, 2.4vw, 1.22rem);
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--text);
+  margin-bottom: 2.4rem;
+  padding-bottom: 2.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.legal-lead strong { font-weight: 700; }
+
+.legal h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 3.2vw, 1.55rem);
+  letter-spacing: -.01em;
+  line-height: 1.25;
+  color: var(--text);
+  margin: 2.8rem 0 1rem;
+}
+
+.legal h2:first-of-type { margin-top: 0; }
+
+/* Numbered section index (terms) — ember mono, mirrors .rule-num */
+.legal-h-num {
+  font-family: var(--mono);
+  font-weight: 500;
+  font-size: .8em;
+  color: var(--ember);
+  margin-right: .55rem;
+}
+
+.legal h3 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+  margin: 1.8rem 0 .55rem;
+}
+
+.legal p {
+  color: var(--text-mid);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1.1rem;
+}
+
+.legal p strong,
+.legal li strong { color: var(--text); font-weight: 600; }
+
+.legal a:not(.flag):not(.btn) {
+  color: var(--fire);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,107,0,.3);
+  transition: color .25s, border-color .25s;
+}
+
+.legal a:not(.flag):not(.btn):hover { color: var(--fire-mid); border-color: rgba(255,171,64,.5); }
+
+/* Lists — ember dot bullets (privacy), mono counters (terms sub-lists) */
+.legal ul {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+}
+
+.legal li {
+  position: relative;
+  padding-left: 1.5rem;
+  color: var(--text-mid);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.legal li::before {
+  content: '';
+  position: absolute;
+  left: .2rem;
+  top: .68rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ember);
+}
+
+.legal-signoff {
+  margin-top: 3.2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.legal-signoff p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.legal-signoff .chars {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 600;
+  color: var(--text);
+}
+
+/* ----- Review flags — the [bracketed] blanks Graeme fills ----- */
+/* Amber dashed chip. Mirrors the design system's .ph placeholder
+   language so unfilled blanks are impossible to miss in review. */
+.flag {
+  font-family: var(--mono);
+  font-size: .9em;
+  color: var(--warm);
+  background: rgba(251,191,36,.07);
+  border: 1px dashed rgba(251,191,36,.5);
+  border-radius: 5px;
+  padding: .06em .42em;
+  white-space: nowrap;
+}
+
+/* ========================================================
+   AUTH CONFIRM — /auth/confirm
+   Supabase email-change / redirect landing. Centred status
+   card; JS swaps loading → success | expired.
+   ======================================================== */
+
+.confirm-wrap {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.5rem 3rem;
+  position: relative;
+}
+
+/* Same amber atmosphere as the home hero */
+.confirm-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(120vw, 720px);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(255,107,0,.1) 0%, rgba(255,61,0,.04) 40%, transparent 70%);
+  pointer-events: none;
+}
+
+.confirm-card {
+  position: relative;
+  z-index: 1;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+}
+
+.confirm-state[hidden] { display: none; }
+
+.confirm-mark {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+}
+
+.confirm-mark svg { width: 30px; height: 30px; }
+
+.confirm-mark--ok {
+  border-color: rgba(255,107,0,.45);
+  box-shadow: 0 0 28px rgba(255,107,0,.18);
+  color: var(--fire-mid);
+}
+
+.confirm-mark--err { color: var(--text-dim); }
+
+.confirm-mark--load {
+  color: var(--text-dim);
+  animation: confirmSpin 1.1s linear infinite;
+}
+
+.confirm-title {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  letter-spacing: -.01em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.confirm-title.gr {
+  background: linear-gradient(135deg, var(--fire), var(--warm));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.confirm-sub {
+  color: var(--text-mid);
+  font-size: 1.02rem;
+  line-height: 1.75;
+  max-width: 380px;
+  margin: 0 auto 1.8rem;
+}
+
+.confirm-sub strong { color: var(--text); font-weight: 600; }
+
+.confirm-app-line {
+  font-family: var(--sans);
+  font-size: .9rem;
+  color: var(--text-dim);
+  margin-top: 1.6rem;
+}
+
+@keyframes confirmSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ----- Footer legal links (lives here AND mirrored into style.css scope
+   for pages that don't load legal.css — see note in style.css) ----- */
