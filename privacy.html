@@ -56,7 +56,7 @@
     <p class="eyebrow v">Privacy Policy</p>
     <h1 class="section-title v">Your data, plainly.</h1>
     <p class="legal-meta">
-      Effective <span class="flag">[ set on publish ]</span> &middot; 100K Step Club, Toronto, Canada<br>
+      Effective July 11, 2026 &middot; 100K Step Club, Toronto, Canada<br>
       Questions or requests: <a href="mailto:graeme@100kstepclub.com">graeme@100kstepclub.com</a>
     </p>
   </header>
@@ -70,13 +70,13 @@
       <h2>What we collect</h2>
       <ul>
         <li><strong>Account identity.</strong> When you sign in with Apple or Google, we receive a unique account identifier and an email address. With Sign in with Apple you may use Apple's private email relay, and we only ever see that relay address.</li>
-        <li><strong>Profile.</strong> A <code>@handle</code> you choose, an optional display name, an optional home city, and whether you want your profile to be discoverable by other members.</li>
+        <li><strong>Profile.</strong> A <code>@handle</code> you choose, an optional display name, an optional profile photo, an optional home city, and whether you want your profile to be discoverable by other members. Profile photos are stored at a public URL so they can load for other members; do not upload a photo you want to keep private.</li>
         <li><strong>Daily step totals.</strong> With your permission, we read your <strong>daily step count</strong> from Apple Health (iOS) or Health Connect (Android) — a single number per day. We do <strong>not</strong> read heart rate, location, workouts, or any other health data. Steps are counted <strong>from the day you sign up onward</strong>; we do not import your step history in this version.</li>
         <li><strong>Your friends.</strong> The follow relationships you create. Seeing a friend's steps requires <strong>mutual approval</strong> — both people accept.</li>
-        <li><strong>Notification settings.</strong> A device push token and your preferences (which tier crossings you want to hear about, and any quiet hours), once notifications ship.</li>
-        <li><strong>Basic technical data.</strong> Standard app and server logs needed to operate and secure the service (for example, error logs).</li>
+        <li><strong>Notification settings.</strong> If you opt in, a device push token and your preferences (which tier crossings you want to hear about, quiet hours, and timezone).</li>
+        <li><strong>Basic technical data.</strong> Standard app and server logs needed to operate, diagnose, and secure the service (for example, an app version, incident code, error name, and limited error details). We do not intentionally include step totals, friend lists, profile details, or authentication tokens in crash reports.</li>
       </ul>
-      <p>We do <strong>not</strong> collect precise location, contacts, photos, or advertising identifiers.</p>
+      <p>We do <strong>not</strong> collect precise location, contacts, routes, heart rate, workouts, microphone recordings, or advertising identifiers.</p>
 
       <h2>Why we collect it</h2>
       <ul>
@@ -88,7 +88,7 @@
 
       <h2>Where it lives and who can see it</h2>
       <ul>
-        <li>Your data is stored in our database, hosted on <strong>Supabase</strong> (Postgres) infrastructure.</li>
+        <li>Your data is stored in our database, hosted on <strong>Supabase</strong> (Postgres) infrastructure in <strong>East US (North Virginia), United States</strong>.</li>
         <li><strong>Your daily steps are private by default.</strong> They are readable only by friends you have mutually approved. This is enforced at the database level (row-level security), not just in the app — the server will not return a stranger's steps even to a direct request.</li>
         <li>We do not make your steps public, and we do not show them to advertisers.</li>
       </ul>
@@ -104,17 +104,18 @@
       <ul>
         <li><strong>Health permission.</strong> You grant step access through the OS health permission prompt, and you can revoke it any time in your device's Health (iOS) or Health Connect (Android) settings. If you revoke it, new steps stop syncing.</li>
         <li><strong>Notifications.</strong> You can turn notifications off in the app or in your OS settings.</li>
-        <li><strong>Delete your account.</strong> You can delete your account from within the app. Deleting it removes your profile, your step records, your follow relationships, and your notification settings from our database. (Backups, if any, age out on a routine cycle.)</li>
+        <li><strong>Profile and discovery.</strong> You can change your display name, profile photo, and whether other members can find your handle. You can remove friends and block or report members.</li>
+        <li><strong>Delete your account.</strong> You can delete your account from within the app. Deleting it removes your profile, profile photo, step records, follow relationships, blocks/reports associated with your account, push tokens, and notification settings from active systems. If you cannot access the app, use the <a href="/delete-account">web deletion request</a>.</li>
       </ul>
 
       <h2>Data retention</h2>
-      <p>We keep your data while your account is active. When you delete your account, we delete your associated records. Routine operational backups are retained for a short period and then expire.</p>
+      <p>We keep your data while your account is active. When you delete your account, we remove associated records from active systems. Limited copies may remain temporarily in encrypted operational backups until they expire under our provider's routine retention cycle; they are not used for ordinary product access and are restored only for disaster recovery.</p>
 
       <h2>Children</h2>
-      <p>The app is not directed to children under <span class="flag">[ 13 / 16 — confirm ]</span>, and we do not knowingly collect their data.</p>
+      <p>The app is for adults aged 18 and older. We do not knowingly collect personal information from children.</p>
 
       <h2>International note</h2>
-      <p>We are based in Canada and our infrastructure may process data in <span class="flag">[ region — confirm Supabase project region ]</span>. By using the app you understand your data may be processed there.</p>
+      <p>We are based in Canada. Our primary database is processed in East US (North Virginia), United States, and service providers may process limited operational data in other regions under their terms. By using the app you understand that your data may be transferred outside Canada.</p>
 
       <h2>Changes to this policy</h2>
       <p>If we change what we collect or how we use it, we will update this page and its effective date, and — for material changes — let you know in the app.</p>
