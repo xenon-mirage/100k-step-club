@@ -56,7 +56,8 @@
     <p class="eyebrow v">Privacy Policy</p>
     <h1 class="section-title v">Your data, plainly.</h1>
     <p class="legal-meta">
-      Effective July 11, 2026 &middot; 100K Step Club, Toronto, Canada<br>
+      Effective August 9, 2026 &middot; 100K Step Club, Toronto, Canada<br>
+      Product disclosure draft &mdash; pending legal review before publication.<br>
       Questions or requests: <a href="mailto:graeme@100kstepclub.com">graeme@100kstepclub.com</a>
     </p>
   </header>
@@ -65,15 +66,19 @@
   <article class="legal section">
     <div class="container">
 
-      <p class="legal-lead">This policy explains what the 100K Step Club mobile app collects, why, where it lives, and the control you have over it. Plain version up front: we collect the minimum we need to run a step-tracking community, your daily steps are visible only to friends you approve, and we <strong>never sell your data or use your health data for advertising</strong>.</p>
+      <p class="legal-lead">This policy explains what the 100K Step Club mobile app and website collect, why, where it lives, and the control you have over it. Plain version up front: we collect the minimum we need to run a step-tracking community, your daily steps are visible only to friends you mutually approve, and we <strong>never sell your data or use your health data for advertising</strong>.</p>
 
       <h2>What we collect</h2>
       <ul>
         <li><strong>Account identity.</strong> When you sign in with Apple or Google, we receive a unique account identifier and an email address. With Sign in with Apple you may use Apple's private email relay, and we only ever see that relay address.</li>
-        <li><strong>Profile.</strong> A <code>@handle</code> you choose, an optional display name, an optional profile photo, an optional home city, and whether you want your profile to be discoverable by other members. Profile photos are stored at a public URL so they can load for other members; do not upload a photo you want to keep private.</li>
-        <li><strong>Daily step totals.</strong> With your permission, we read your <strong>daily step count</strong> from Apple Health (iOS) or Health Connect (Android) — a single number per day. We do <strong>not</strong> read heart rate, location, workouts, or any other health data. Steps are counted <strong>from the day you sign up onward</strong>; we do not import your step history in this version.</li>
-        <li><strong>Your friends.</strong> The follow relationships you create. Seeing a friend's steps requires <strong>mutual approval</strong> — both people accept.</li>
-        <li><strong>Notification settings.</strong> If you opt in, a device push token and your preferences (which tier crossings you want to hear about, quiet hours, and timezone).</li>
+        <li><strong>Profile.</strong> A <code>@handle</code> you choose, an optional display name, an optional profile photo, an optional home city, and whether you want your profile to be discoverable by other members. Profile photos are stored at a public URL so they can load for other members; do not upload a photo you want to keep private. Other members receive only your account ID, handle, display name, and profile-photo URL when you appear in search or have a relationship with them. They do not receive your base profile row, home city, discovery setting, or profile timestamps.</li>
+        <li><strong>Daily step totals.</strong> With your permission, we read your <strong>daily step count</strong> from Apple Health (iOS) or Health Connect (Android) — a single number per day. We do <strong>not</strong> read heart rate, precise location, routes, workouts, or any other health data. We sync from the exact moment you finish joining through today, so the first day excludes steps taken before you joined. Some Android health providers may limit history access, in which case the app syncs the available recent period and tells you that coverage is incomplete.</li>
+        <li><strong>Coarsened step snapshots.</strong> When the app syncs, the server may store the current daily total in a 15-minute time bucket to draw the current-day friend race. The server derives the account, time, date, and total from the authoritative daily record; the app cannot submit a free-form trail. These snapshots are deleted after eight elapsed days.</li>
+        <li><strong>Your friends.</strong> The follow relationships you create. Seeing a friend's steps requires <strong>mutual approval</strong> — both people accept. Friends receive your current-day total and coarsened current-day race trail, not your base daily-step history.</li>
+        <li><strong>Cheers and safety actions.</strong> We store the one-tap cheers you send or receive, blocks you create, and reports you submit. A report can include the reason and up to 1,000 characters of detail.</li>
+        <li><strong>Notification settings and device registration.</strong> If you opt in, we store a device push token, platform, timezone, registration timestamps, and your preferences (which tier crossings you want to hear about and quiet hours). A data export includes device metadata but replaces the push token itself with <code>[REDACTED]</code>.</li>
+        <li><strong>Website signup.</strong> If you join through this website, we collect the first name, email, tier, country, city, and optional newsletter consent you submit. Country and city support the signup view on the Claim Board. The newsletter box is optional and is not pre-selected; only an exact opt-in sends your email to <strong>Loops</strong> for the newsletter signup event.</li>
+        <li><strong>Website abuse prevention.</strong> The signup form uses <strong>Cloudflare Turnstile</strong>. Cloudflare processes the verification token and network/device signals, including the request IP address, to distinguish people from automated abuse. Our signup service sends the request IP to Turnstile for verification, but does not store the raw IP. It stores only daily rotating keyed hashes of the IP and email for rate limiting, and deletes those rate records after 48 hours.</li>
         <li><strong>Basic technical data.</strong> Standard app and server logs needed to operate, diagnose, and secure the service (for example, an app version, incident code, error name, and limited error details). We do not intentionally include step totals, friend lists, profile details, or authentication tokens in crash reports.</li>
       </ul>
       <p>We do <strong>not</strong> collect precise location, contacts, routes, heart rate, workouts, microphone recordings, or advertising identifiers.</p>
@@ -81,7 +86,9 @@
       <h2>Why we collect it</h2>
       <ul>
         <li>To show you your steps, your tier for the day, and your personal Journey.</li>
-        <li>To let friends you have <strong>mutually approved</strong> see each other's daily steps, and to nudge them when someone crosses a tier.</li>
+        <li>To let friends you have <strong>mutually approved</strong> see each other's current-day steps, and to nudge them when someone crosses a tier.</li>
+        <li>To show the current-day friend race, deliver cheers, and operate block/report safety tools.</li>
+        <li>To register website participants, show participating cities, deliver an opted-in newsletter signup, and prevent automated signup abuse.</li>
         <li>To create your account and keep it secure.</li>
         <li>Nothing else. We do not build advertising profiles.</li>
       </ul>
@@ -89,7 +96,7 @@
       <h2>Where it lives and who can see it</h2>
       <ul>
         <li>Your data is stored in our database, hosted on <strong>Supabase</strong> (Postgres) infrastructure in <strong>East US (North Virginia), United States</strong>.</li>
-        <li><strong>Your daily steps are private by default.</strong> They are readable only by friends you have mutually approved. This is enforced at the database level (row-level security), not just in the app — the server will not return a stranger's steps even to a direct request.</li>
+        <li><strong>Your base step records and base profile row are self-only.</strong> Mutually approved, unblocked friends receive only the narrow current-day step total, coarsened race trail, and four identity fields the social surfaces require. This is enforced in the database, not just hidden in the app; a direct request for a stranger's base rows returns nothing.</li>
         <li>We do not make your steps public, and we do not show them to advertisers.</li>
       </ul>
 
@@ -97,7 +104,7 @@
       <ul>
         <li>We never <strong>sell</strong> your personal information or your health data.</li>
         <li>We never use your <strong>health data for advertising</strong>.</li>
-        <li>We never share your data with third parties except the infrastructure providers that run the service for us (e.g. Supabase for the database; Apple/Google for push delivery), under their own terms, solely to operate the app.</li>
+        <li>We never share your data with third parties except the infrastructure providers that run the service for us — including Supabase for database and server functions, Expo plus Apple/Google for push delivery, Cloudflare for website abuse prevention, and Loops for email only when you opt in — under their own terms and solely to operate these features.</li>
       </ul>
 
       <h2>Your choices and controls</h2>
@@ -105,11 +112,15 @@
         <li><strong>Health permission.</strong> You grant step access through the OS health permission prompt, and you can revoke it any time in your device's Health (iOS) or Health Connect (Android) settings. If you revoke it, new steps stop syncing.</li>
         <li><strong>Notifications.</strong> You can turn notifications off in the app or in your OS settings.</li>
         <li><strong>Profile and discovery.</strong> You can change your display name, profile photo, and whether other members can find your handle. You can remove friends and block or report members.</li>
-        <li><strong>Delete your account.</strong> You can delete your account from within the app. Deleting it removes your profile, profile photo, step records, follow relationships, blocks/reports associated with your account, push tokens, and notification settings from active systems. If you cannot access the app, use the <a href="/delete-account">web deletion request</a>.</li>
+        <li><strong>Website newsletter consent.</strong> Joining the event does not require newsletter consent. Leave the box unchecked if you do not want the newsletter, or use the unsubscribe link in an email after opting in.</li>
+        <li><strong>Access and portability.</strong> You can use <strong>Export my data</strong> in app Settings to create a JSON copy of the account and app data tied to your signed-in account. The server identifies you from your authenticated session; the app cannot request another member's export. Contact us about a separate website signup record.</li>
+        <li><strong>Delete your account.</strong> You can delete your account from within the app. Deleting it removes your account, profile, profile photo, step records and snapshots, follow relationships, cheers, blocks, push tokens, and notification settings from active product systems. Reports are removed from normal member-facing systems, but restricted pseudonymized moderation evidence may remain for the safety period described below. If you cannot access the app, use the <a href="/delete-account">web deletion request</a>.</li>
       </ul>
 
       <h2>Data retention</h2>
-      <p>We keep your data while your account is active. When you delete your account, we remove associated records from active systems. Limited copies may remain temporarily in encrypted operational backups until they expire under our provider's routine retention cycle; they are not used for ordinary product access and are restored only for disaster recovery.</p>
+      <p>We keep daily totals and other account data while your account is active. Coarsened step snapshots are deleted after eight elapsed days by a daily server-side retention job. Daily rotating website rate-limit hashes are deleted after 48 hours. We keep a website signup while it is needed to manage club participation and related communications; contact us to request access or deletion.</p>
+      <p>When you delete your account, we remove associated records from active product systems. To investigate abuse, protect members, and defend against repeat malicious activity, we may retain a restricted moderation-evidence copy of a report for no more than <strong>24 months from the report date</strong>. Account identifiers in that evidence are replaced with one-way pseudonyms; the evidence is not available through the app or normal client API. Report text may still contain information the reporter typed, so access is restricted and the same 24-month maximum applies. The server deletes evidence when that period expires.</p>
+      <p>Limited copies may remain temporarily in encrypted operational backups until they expire under our provider's routine retention cycle; they are not used for ordinary product access and are restored only for disaster recovery.</p>
 
       <h2>Children</h2>
       <p>The app is for adults aged 18 and older. We do not knowingly collect personal information from children.</p>

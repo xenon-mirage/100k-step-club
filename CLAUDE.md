@@ -3,10 +3,10 @@
 ## What This Repo Is
 The public website for 100K Step Club, deployed at [100kstepclub.com](https://100kstepclub.com).
 
-## Context (from Graude)
-Full project brief, brand voice, tier system, and design references live in the Graude knowledge base:
-- Project brief: `@~/Desktop/Graude/100K-Step-Club/CLAUDE.md`
-- Brand voice: `@~/Desktop/Graude/100K-Step-Club/brand-voice.md`
+## Context (from Sophie)
+Full project brief, brand voice, tier system, and design references live in the private Sophie repository:
+- Project brief: `@/Users/graemenixon/Developer/sophie/100K-Step-Club/CLAUDE.md`
+- Brand voice: `@/Users/graemenixon/Developer/sophie/100K-Step-Club/brand-voice.md`
 - Design system: Google Drive → Design System/100K-Design-System-v1.html
 
 ## Tech Stack
@@ -25,7 +25,7 @@ One shared nav (pill links + mobile Menu) across every page. Decided 2026-06-11
 
 | Page | Job | Live data (anon key, client-side) |
 |------|-----|-----------------------------------|
-| `index.html` | Convert: what is this → tiers → proof → June 28 signup | Proof stats ← `v_step_totals` + `v_city_claims_all`; form → `landingpage_signups`; dropdowns ← `cities` |
+| `index.html` | Convert: what is this → tiers → proof → September 26 signup | Proof stats ← `v_step_totals` + `v_city_claims_all`; form → Turnstile-verified `website-signup` Edge endpoint; dropdowns ← `cities` |
 | `tiers.html` | Tier deep-dive + The Wall (verified names per tier) | Wall ← `v_city_claims_all` |
 | `journey/` | Walk-to-the-Sun live tracker (React via Babel) | Counter ← `v_step_totals`; gallery ← `claims` direct, 60-day window, first-timer flags from full holder history |
 | `leaderboard.html` | Claim Board: globe + list + embedded flat world map | `v_city_claims_all` + `get_leaderboard_signup_only` RPC |
@@ -71,7 +71,7 @@ supabase/
 
 ## Dev Server & Preview
 
-The website repo lives at `~/Desktop/100k-step-club/` but Claude sessions typically start from `~/Desktop/Graude/100K-Step-Club/` for context stacking. The session's working directory is the Graude folder, not the website repo — this used to break python's `http.server` because it calls `os.getcwd()` before parsing the `-d` flag.
+The website repo lives at `~/Desktop/100k-step-club/`, while the planning context lives at `/Users/graemenixon/Developer/sophie/100K-Step-Club/`. A session may start from that context folder rather than the website repo — this used to break python's `http.server` because it calls `os.getcwd()` before parsing the `-d` flag.
 
 **Preferred — use `preview_start`.** The repo has `.claude/launch.json` configured to wrap the server in `bash -c "cd /Users/graemenixon/Desktop/100k-step-club && exec python3 serve.py 8080"`. `serve.py` sends `Cache-Control: no-store` on every response, which kills the stale-CSS/JS problem below at the root. `preview_start` also surfaces the page in the IDE's preview panel and unlocks the `mcp__Claude_Preview__*` tools (screenshot, click, snapshot, console logs, eval) for verification.
 
@@ -95,7 +95,7 @@ Confirm the new CSS/JS is loaded before debugging visual issues.
 
 ## Sharing SQL migrations and ad-hoc SQL
 
-> **⚠️ Schema now lives in the dedicated backend repo (as of 2026-05-31).** The shared Supabase DB's migrations + Edge Functions are managed from **`~/Desktop/100k-step-club-backend/`** — the single source of truth, shared by this website and the new mobile app. **Ship schema changes with `supabase db push` from that repo; do NOT paste schema-changing SQL into the Supabase dashboard** (it desyncs the CLI migration ledger — that already bit us once). This repo's `supabase/migrations/` is now **historical** — don't add new migrations here. (The mobile-app plan + the backend-repo setup runbook live in the private hub `~/Desktop/Graude/100K-Step-Club/app/`.) Inline-pasting is still fine for **ad-hoc read / sanity-check queries** (below) — just not schema changes.
+> **⚠️ Schema now lives in the dedicated backend repo (as of 2026-05-31).** The shared Supabase DB's migrations + Edge Functions are managed from **`~/Desktop/100k-step-club-backend/`** — the single source of truth, shared by this website and the new mobile app. **Ship schema changes with `supabase db push` from that repo; do NOT paste schema-changing SQL into the Supabase dashboard** (it desyncs the CLI migration ledger — that already bit us once). This repo's `supabase/migrations/` is now **historical** — don't add new migrations here. (The mobile-app plan + the backend-repo setup runbook live in the private hub at `/Users/graemenixon/Developer/sophie/100K-Step-Club/app/`.) Inline-pasting is still fine for **ad-hoc read / sanity-check queries** (below) — just not schema changes.
 
 When creating any `.sql` file Graeme will run manually in the Supabase SQL editor (migrations, one-off seeds, sanity-check queries), do BOTH:
 

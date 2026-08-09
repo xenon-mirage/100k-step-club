@@ -153,10 +153,10 @@ document.querySelectorAll([
 })();
 
 
-/* ========== COUNTDOWN TO JUNE 28, 2026 ========== */
+/* ========== COUNTDOWN TO SEPTEMBER 26, 2026 ========== */
 
 (function () {
-  var target = new Date('2026-06-28T00:00:00').getTime();
+  var target = new Date('2026-09-26T00:00:00').getTime();
   var dEl = document.getElementById('cd-d');
   var hEl = document.getElementById('cd-h');
   var mEl = document.getElementById('cd-m');
@@ -360,7 +360,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
 })();
 
 
-/* ========== SUPABASE SIGNUP FORM ========== */
+/* ========== TURNSTILE-VERIFIED SIGNUP FORM ========== */
 
 (function () {
   var form = document.getElementById('signup-form');
@@ -370,13 +370,27 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   var countrySel = document.getElementById('country');
   var citySel = document.getElementById('city');
   var cityOther = document.getElementById('city-other');
+  var turnstileStatus = document.getElementById('turnstile-status');
+  var turnstileWidget = document.getElementById('turnstile-widget');
   if (!form) return;
 
   var OTHER = '__other__';
   var SUBDIV_COUNTRIES = { 'United States': true, 'Canada': true };
 
   var supabase = SB;
-  if (!supabase) return;
+  var loading = false;
+  var turnstileToken = '';
+  var turnstileWidgetId = null;
+  var verificationUnavailable = false;
+
+  setLoading(false);
+  initializeTurnstile();
+
+  if (!supabase) {
+    enableCountryOtherFallback();
+    setVerificationUnavailable();
+    return;
+  }
 
   // Fetch cities once, build {country -> City[]} map, populate country select.
   var citiesByCountry = new Map();
@@ -395,11 +409,9 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
       });
       populateCountries();
     } catch (err) {
-      console.error('Failed to load cities:', err);
-      // Fallback: let users type city free-form if the fetch fails so we
-      // never block a signup on a network hiccup.
-      countrySel.innerHTML = '<option value="" disabled selected>Pick your country</option>';
-      enableCityOtherFallback();
+      console.error('City list unavailable');
+      // Preserve a fully usable free-text country/city path when the catalogue is down.
+      enableCountryOtherFallback();
     }
   })();
 
@@ -471,6 +483,93 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     showCityOther();
   }
 
+  function enableCountryOtherFallback() {
+    var replacement = document.createElement('input');
+    replacement.type = 'text';
+    replacement.id = 'country';
+    replacement.name = 'country';
+    replacement.className = 'form-input';
+    replacement.placeholder = 'Type your country';
+    replacement.autocomplete = 'country-name';
+    replacement.required = true;
+    countrySel.replaceWith(replacement);
+    countrySel = replacement;
+    enableCityOtherFallback();
+  }
+
+  function initializeTurnstile() {
+    if (typeof SignupAPI === 'undefined' || typeof TURNSTILE_SITE_KEY === 'undefined' ||
+      !SignupAPI.isConfiguredSiteKey(TURNSTILE_SITE_KEY)) {
+      setVerificationUnavailable();
+      return;
+    }
+
+    var checks = 0;
+    var readyTimer = setInterval(function () {
+      checks += 1;
+      if (window.turnstile && typeof window.turnstile.render === 'function') {
+        clearInterval(readyTimer);
+        try {
+          turnstileWidgetId = window.turnstile.render(turnstileWidget, {
+            sitekey: TURNSTILE_SITE_KEY,
+            action: 'website_signup',
+            theme: 'dark',
+            callback: function (token) {
+              turnstileToken = token;
+              verificationUnavailable = false;
+              turnstileStatus.textContent = 'Secure verification complete.';
+              hideError();
+              updateSubmitState();
+            },
+            'expired-callback': function () {
+              turnstileToken = '';
+              turnstileStatus.textContent = 'Verification expired. Please check the box again.';
+              updateSubmitState();
+            },
+            'error-callback': function () {
+              turnstileToken = '';
+              turnstileStatus.textContent = 'Verification could not load. Please try again.';
+              updateSubmitState();
+              return true;
+            },
+            'unsupported-callback': function () {
+              turnstileToken = '';
+              turnstileStatus.textContent = 'This browser cannot run secure verification.';
+              updateSubmitState();
+            }
+          });
+          turnstileStatus.textContent = 'Complete the security check to join.';
+        } catch (_err) {
+          setVerificationUnavailable();
+        }
+        return;
+      }
+      if (checks >= 100) {
+        clearInterval(readyTimer);
+        setVerificationUnavailable();
+      }
+    }, 100);
+  }
+
+  function setVerificationUnavailable() {
+    verificationUnavailable = true;
+    turnstileToken = '';
+    if (turnstileStatus) {
+      turnstileStatus.textContent = 'Signups are briefly unavailable. Please try again soon.';
+    }
+    updateSubmitState();
+  }
+
+  function resetVerification() {
+    turnstileToken = '';
+    if (turnstileWidgetId !== null && window.turnstile &&
+      typeof window.turnstile.reset === 'function') {
+      window.turnstile.reset(turnstileWidgetId);
+      turnstileStatus.textContent = 'Complete the security check to try again.';
+    }
+    updateSubmitState();
+  }
+
   countrySel.addEventListener('change', function () {
     if (!countrySel.value) return;
     populateCities(countrySel.value);
@@ -509,29 +608,34 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     if (!country) return showError('Pick your country.');
     if (!cityVal) return showError('Pick your city.');
     if (isOther && !cityDisplay) return showError('Type your city.');
+    if (verificationUnavailable) return showError('Signups are briefly unavailable. Please try again soon.');
+    if (!turnstileToken) return showError('Complete the security check first.');
 
     setLoading(true);
 
     try {
-      var result = await supabase
-        .from('landingpage_signups')
-        .insert([{
-          name: firstName,
-          email: email,
-          tier: tier,
-          country: country,
-          city: cityDisplay,
-          city_id: cityId,
-          newsletter_opt_in: newsletter
-        }]);
+      var result = await SignupAPI.submit(fetch, {
+        supabaseUrl: SUPABASE_URL,
+        anonKey: SUPABASE_ANON_KEY
+      }, SignupAPI.buildPayload({
+        name: firstName,
+        email: email,
+        tier: tier,
+        country: country,
+        city: cityDisplay,
+        cityId: cityId,
+        newsletterOptIn: newsletter
+      }, turnstileToken));
 
-      if (result.error) {
-        if (result.error.code === '23505') {
-          showError("You're already in. Check your inbox.");
+      if (!result.ok) {
+        if (result.reason === 'rate_limited') {
+          showError('A few too many tries. Take a breath and try again in 15 minutes.');
+        } else if (result.reason === 'verification') {
+          showError('That security check expired. Please try it again.');
         } else {
-          showError('Something went wrong. Try again?');
-          console.error('Supabase error:', result.error);
+          showError('Signups are briefly unavailable. Please try again soon.');
         }
+        resetVerification();
         setLoading(false);
         return;
       }
@@ -539,8 +643,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
       form.hidden = true;
       successEl.hidden = false;
     } catch (err) {
-      showError('Connection failed. Check your internet and try again.');
-      console.error('Network error:', err);
+      showError('Signups are briefly unavailable. Please try again soon.');
+      resetVerification();
       setLoading(false);
     }
   });
@@ -555,8 +659,14 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
   }
 
   function setLoading(on) {
+    loading = on;
     submitBtn.classList.toggle('btn--loading', on);
     var span = submitBtn.querySelector('span');
     if (span) span.textContent = on ? 'Signing up...' : "Join me";
+    updateSubmitState();
+  }
+
+  function updateSubmitState() {
+    submitBtn.disabled = loading || verificationUnavailable || !turnstileToken;
   }
 })();

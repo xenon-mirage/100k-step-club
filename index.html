@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>100K Step Club — Beat Midnight</title>
-  <meta name="description" content="Walk 100,000 steps in a single day. Six tiers from 10K up. Pick yours, walk it anywhere on Earth, finish by midnight. Next event: Sunday, June 28, 2026.">
+  <meta name="description" content="Walk 100,000 steps in a single day. Six tiers from 10K up. Pick yours, walk it anywhere on Earth, finish by midnight. Next event: Saturday, September 26, 2026.">
   <meta property="og:title" content="100K Step Club — Beat Midnight">
-  <meta property="og:description" content="Can you walk 100,000 steps before midnight? Pick your tier. Sunday, June 28, 2026.">
+  <meta property="og:description" content="Can you walk 100,000 steps before midnight? Pick your tier. Saturday, September 26, 2026.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
@@ -24,8 +24,8 @@
   {
     "@context": "https://schema.org",
     "@type": "Event",
-    "name": "Global 100K Day #2 — 100K Step Club",
-    "startDate": "2026-06-28",
+    "name": "Global 100K Day — 100K Step Club",
+    "startDate": "2026-09-26",
     "eventAttendanceMode": "https://schema.org/MixedEventAttendanceMode",
     "eventStatus": "https://schema.org/EventScheduled",
     "location": { "@type": "VirtualLocation", "url": "https://100kstepclub.com" },
@@ -66,7 +66,7 @@
   <!-- ===== HERO ===== -->
   <section class="hero" id="hero">
     <div class="hero-glow" aria-hidden="true"></div>
-    <p class="hero-date">Sunday, June 28, 2026 <strong>— Global 100K Day&nbsp;#2</strong></p>
+    <p class="hero-date">Saturday, September 26, 2026 <strong>— Global 100K Day</strong></p>
 
     <div class="hero-title">
       <h1 class="hero-beat">Can you walk 100,000 steps before midnight?</h1>
@@ -74,7 +74,7 @@
     </div>
     <p class="hero-hook">Pick your distance, 10K to 100K steps. Walk it anywhere on Earth. Prove you finished. <em>Join the club.</em></p>
     <div class="hero-cta-row">
-      <a href="#signup" class="btn btn-p"><span>Join me on June 28th</span></a>
+      <a href="#signup" class="btn btn-p"><span>Join me on September 26</span></a>
     </div>
     <div class="scroll-cue" aria-hidden="true">
       <span>Scroll</span>
@@ -223,13 +223,13 @@
     </div>
   </section>
 
-  <!-- ===== JUNE 28 EVENT ===== -->
+  <!-- ===== SEPTEMBER 26 EVENT ===== -->
   <section class="section section--event" id="event">
     <div class="event-inner">
-      <p class="eyebrow">Global 100K Day #2</p>
+      <p class="eyebrow">Global 100K Day</p>
       <div class="event-date">
-        <span class="event-mo">June</span>
-        <span class="event-dy">28</span>
+        <span class="event-mo">September</span>
+        <span class="event-dy">26</span>
       </div>
       <p class="event-year">2 0 2 6</p>
       <p class="event-desc">Start anytime on the day. One rule: finish by midnight.</p>
@@ -255,7 +255,7 @@
   <section class="section section--signup" id="signup">
     <div class="container">
       <p class="eyebrow">Join the Club</p>
-      <h2 class="section-title">Sign up for June 28</h2>
+      <h2 class="section-title">Sign up for September 26</h2>
       <p class="section-sub">Free. Pick a tier. See you out there.</p>
 
       <form id="signup-form" class="form" novalidate>
@@ -299,12 +299,16 @@
             <span>Send me the weekly newsletter</span>
           </label>
         </div>
-        <button type="submit" class="btn btn-p btn--full" id="submit-btn"><span>Join me</span></button>
+        <div class="form-group">
+          <div id="turnstile-widget" aria-label="Security verification"></div>
+          <p class="form-helper" id="turnstile-status" aria-live="polite">Loading secure verification&hellip;</p>
+        </div>
+        <button type="submit" class="btn btn-p btn--full" id="submit-btn" disabled><span>Join me</span></button>
         <p class="form-error" id="form-error" role="alert" hidden></p>
       </form>
 
       <div id="form-success" class="form-success" hidden>
-        <p class="form-success-msg">You're in. June 28 is going to be interesting.</p>
+        <p class="form-success-msg">You're in. September 26 is going to be interesting.</p>
         <p class="form-success-ps">PS: the app is in development. You're already first in line.</p>
       </div>
     </div>
@@ -419,11 +423,13 @@
 
 <!-- Sticky mobile CTA -->
 <div class="sticky-cta" id="sticky-cta" aria-hidden="true">
-  <a href="#signup" class="btn btn-p"><span>Join June 28</span></a>
+  <a href="#signup" class="btn btn-p"><span>Join September 26</span></a>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <script src="js/config.js"></script>
-<script src="js/main.js?v=3"></script>
+<script src="js/signup-api.js?v=1"></script>
+<script src="js/main.js?v=4"></script>
 </body>
 </html>
