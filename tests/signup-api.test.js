@@ -107,7 +107,7 @@ test('submission refuses missing public endpoint configuration before fetch', as
   assert.equal(fetches, 0);
 });
 
-test('browser signup has no direct table-write fallback and a configured public site key', function () {
+test('browser signup has no direct table-write fallback and starts fail closed', function () {
   const main = fs.readFileSync(path.join(ROOT, 'js/main.js'), 'utf8');
   const index = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
   const config = fs.readFileSync(path.join(ROOT, 'js/config.js'), 'utf8');
@@ -115,8 +115,6 @@ test('browser signup has no direct table-write fallback and a configured public 
   assert.match(main, /SignupAPI\.submit\(fetch/);
   assert.match(index, /id="submit-btn" disabled/);
   assert.match(index, /challenges\.cloudflare\.com\/turnstile\/v0\/api\.js\?render=explicit/);
-  const siteKeyMatch = config.match(/const TURNSTILE_SITE_KEY = '([^']+)'/);
-  assert.ok(siteKeyMatch);
-  assert.equal(SignupAPI.isConfiguredSiteKey(siteKeyMatch[1]), true);
+  assert.match(config, /REPLACE_WITH_TURNSTILE_SITE_KEY/);
   assert.doesNotMatch(config, /TURNSTILE_SECRET_KEY|SIGNUP_RATE_LIMIT_HMAC_SECRET/);
 });
