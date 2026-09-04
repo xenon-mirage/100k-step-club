@@ -25,7 +25,7 @@ One shared nav (pill links + mobile Menu) across every page. Decided 2026-06-11
 
 | Page | Job | Live data (anon key, client-side) |
 |------|-----|-----------------------------------|
-| `index.html` | Convert: what is this → tiers → proof → September 26 signup | Proof stats ← `v_step_totals` + `v_city_claims_all`; form → Turnstile-verified `website-signup` Edge endpoint; dropdowns ← `cities` |
+| `index.html` | Convert: what is this → tiers → proof → September 28 signup | Proof stats ← `v_step_totals` + `v_city_claims_all`; form → Turnstile-verified `website-signup` Edge endpoint; dropdowns ← `cities` |
 | `tiers.html` | Tier deep-dive + The Wall (verified names per tier) | Wall ← `v_city_claims_all` |
 | `journey/` | Walk-to-the-Sun live tracker (React via Babel) | Counter ← `v_step_totals`; gallery ← `claims` direct, 60-day window, first-timer flags from full holder history |
 | `leaderboard.html` | Claim Board: globe + list + embedded flat world map | `v_city_claims_all` + `get_leaderboard_signup_only` RPC |
