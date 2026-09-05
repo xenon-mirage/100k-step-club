@@ -20,6 +20,7 @@ test('landing metadata, schema, hero, and countdown share the locked event date'
   const main = read('js/main.js');
   assert.match(index, new RegExp(EVENT_COPY));
   assert.match(index, /"startDate": "2026-09-28"/);
+  assert.match(index, /class="event-dy">28<\/span>/, 'the split, large visual day must match the event');
   assert.match(main, /new Date\('2026-09-28T00:00:00'\)/);
   assert.doesNotMatch(index, /Global 100K Day(?:&nbsp;|\s)*#\d+/i);
 });

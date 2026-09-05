@@ -30,6 +30,8 @@ var SB = (function () {
   var x = c.getContext('2d');
   var stars = [];
   var w, h;
+  var reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  var frame = null;
 
   function resize() {
     w = c.width = innerWidth;
@@ -63,7 +65,7 @@ var SB = (function () {
 
   function draw() {
     x.clearRect(0, 0, w, h);
-    var sy = scrollY;
+    var sy = reducedMotion.matches ? 0 : scrollY;
 
     for (var i = 0; i < stars.length; i++) {
       var p = stars[i];
@@ -76,13 +78,20 @@ var SB = (function () {
     }
 
     t++;
-    requestAnimationFrame(draw);
+    frame = !reducedMotion.matches && !document.hidden ? requestAnimationFrame(draw) : null;
   }
 
   resize();
   make();
   draw();
-  addEventListener('resize', function () { resize(); make(); });
+  function redraw() {
+    if (frame !== null) cancelAnimationFrame(frame);
+    frame = null;
+    draw();
+  }
+  addEventListener('resize', function () { resize(); make(); redraw(); });
+  reducedMotion.addEventListener('change', redraw);
+  document.addEventListener('visibilitychange', redraw);
 })();
 
 
@@ -181,7 +190,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     var target = document.querySelector(this.getAttribute('href'));
     if (target) {
       e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
     }
   });
 });
@@ -602,12 +611,12 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
       cityDisplay = selected ? selected.dataset.cityName : '';
     }
 
-    if (!firstName) return showError('Name is missing.');
-    if (!email || !email.includes('@')) return showError("That email didn't work. Try again?");
-    if (!tier) return showError('Pick a tier.');
-    if (!country) return showError('Pick your country.');
-    if (!cityVal) return showError('Pick your city.');
-    if (isOther && !cityDisplay) return showError('Type your city.');
+    if (!firstName) return showError('Name is missing.', form.first_name);
+    if (!email || !email.includes('@')) return showError("That email didn't work. Try again?", form.email);
+    if (!tier) return showError('Pick a tier.', form.tier);
+    if (!country) return showError('Pick your country.', countrySel);
+    if (!cityVal) return showError('Pick your city.', citySel);
+    if (isOther && !cityDisplay) return showError('Type your city.', cityOther);
     if (verificationUnavailable) return showError('Signups are briefly unavailable. Please try again soon.');
     if (!turnstileToken) return showError('Complete the security check first.');
 
@@ -642,6 +651,7 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
 
       form.hidden = true;
       successEl.hidden = false;
+      successEl.focus();
     } catch (err) {
       showError('Signups are briefly unavailable. Please try again soon.');
       resetVerification();
@@ -649,13 +659,25 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     }
   });
 
-  function showError(msg) {
+  function showError(msg, field) {
     errorEl.textContent = msg;
     errorEl.hidden = false;
+    if (field) {
+      field.setAttribute('aria-invalid', 'true');
+      var describedBy = field.getAttribute('aria-describedby') || '';
+      if (!describedBy.split(/\s+/).includes('form-error')) field.setAttribute('aria-describedby', (describedBy + ' form-error').trim());
+      field.focus();
+    }
   }
 
   function hideError() {
     errorEl.hidden = true;
+    form.querySelectorAll('[aria-invalid="true"]').forEach(function (field) {
+      field.removeAttribute('aria-invalid');
+      var describedBy = (field.getAttribute('aria-describedby') || '').split(/\s+/).filter(function (id) { return id && id !== 'form-error'; }).join(' ');
+      if (describedBy) field.setAttribute('aria-describedby', describedBy);
+      else field.removeAttribute('aria-describedby');
+    });
   }
 
   function setLoading(on) {
