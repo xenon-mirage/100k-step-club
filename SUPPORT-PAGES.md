@@ -1,5 +1,9 @@
 # Support Pages — build log
 
+## Current preparation — September 6, 2026
+
+The historical draft notes below are retained as build history. Current source at d130d37 had already resolved the effective date, adult audience, database region, app Settings route, and clean-URL routing. This isolated release work updates the event to **Saturday, September 26, 2026**, and reconciles privacy/deletion copy with private photo review, sender-local fire calendars, retained per-account device preferences, version 3 exports, and restricted report-handling notes. These new source changes are prepared for approval, not deployed. Publish the new review/export claims only with the corresponding backend migrations and verified operations. Live operation and physical device checks remain release gates; old checkmarks below are historical evidence only.
+
 Privacy, Terms, and the email-confirmation landing page. Built to look native to the live
 site (same shell, nav, tokens, footer). **Committed locally only — never pushed. Graeme reviews + ships.**
 

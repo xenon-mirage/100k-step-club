@@ -56,7 +56,7 @@
     <p class="eyebrow v">Privacy Policy</p>
     <h1 class="section-title v">Your data, plainly.</h1>
     <p class="legal-meta">
-      Updated September 5, 2026 &middot; 100K Step Club, Toronto, Canada<br>
+      Updated September 6, 2026 &middot; 100K Step Club, Toronto, Canada<br>
       Questions or requests: <a href="mailto:graeme@100kstepclub.com">graeme@100kstepclub.com</a>
     </p>
   </header>
@@ -70,27 +70,29 @@
       <h2>What we collect</h2>
       <ul>
         <li><strong>Account identity.</strong> When you sign in with Apple or Google, we receive a unique account identifier and an email address. With Sign in with Apple you may use Apple's private email relay, and we only ever see that relay address.</li>
-        <li><strong>Profile.</strong> A <code>@handle</code> and display name you choose, an optional profile photo, an optional home city, and whether you want your profile to be discoverable by other members. Profile photos are stored at a public URL so they can load for other members; do not upload a photo you want to keep private. Other members receive only your account ID, handle, display name, and profile-photo URL when you appear in search or have a relationship with them. They do not receive your base profile row, home city, discovery setting, or profile timestamps.</li>
+        <li><strong>Google sign-in information.</strong> Google's sign-in component declares processing of account details, including a phone number where held by Google, general location, account and device identifiers, and other sign-in or usage information for sign-in functionality and service analytics. Google also describes using an IP address to estimate general location for fraud prevention. We do not ask you to enter a phone number or give Google your Health step records. See <a href="https://developers.google.com/identity/sign-in/ios/app-privacy">Google's sign-in privacy information</a>.</li>
+        <li><strong>Profile.</strong> A <code>@handle</code> and display name you choose, an optional profile photo, an optional home city, and whether you want your profile to be discoverable by other members. New photos are held privately for human safety review before publication. A replacement leaves your current photo in place until approved. Published photos use a public URL so they can load for other members; choose a photo you are happy to share. Other members receive only your account ID, handle, display name, and profile-photo URL when you appear in search or have a relationship with them. They do not receive your base profile row, home city, discovery setting, or profile timestamps.</li>
         <li><strong>Daily step totals.</strong> With your permission, we read your <strong>daily step count</strong> from Apple Health (iOS) or Health Connect (Android) — a single number per day. We do <strong>not</strong> read heart rate, precise location, routes, workouts, or any other health data. We sync from the exact moment you finish joining through today, so the first day excludes steps taken before you joined. Some Android health providers may limit history access, in which case the app syncs the available recent period and tells you that coverage is incomplete.</li>
         <li><strong>Coarsened step snapshots.</strong> When the app syncs, the server may store the current daily total in a 15-minute time bucket to draw the current-day friend race. The server derives the account, time, date, and total from the authoritative daily record; the app cannot submit a free-form trail. These snapshots are deleted after eight elapsed days.</li>
         <li><strong>Your friends.</strong> Seeing each other's step information requires <strong>mutual approval</strong> and neither person may have blocked the other. Accepted Crew receives your current-day total and coarsened current-day trail, recorded calendar-month step total, and lifetime badge counts by tier. Crew cannot read your base daily-step history. Pending requests do not expose steps, tiers, rankings, freshness, badges or Event targets.</li>
         <li><strong>Event plans.</strong> Your target and preparation checklist are stored on your device. If you explicitly share an Event target, the server stores that intention and makes it available to accepted, unblocked Crew. Turning target sharing off removes that visible intention; it does not change the step information shared through your Crew connection. A target is not proof of participation or website registration.</li>
-        <li><strong>Cheers and safety actions.</strong> We store the one-tap cheers you send or receive, blocks you create, and reports you submit. A report can include the reason and up to 1,000 characters of detail.</li>
+        <li><strong>Fire and safety actions.</strong> We store the one-tap fire you send or receive, its server timestamp, your sending timezone and daily reset boundary, blocks you create, and reports you submit. Your timezone sets the daily sending limit; changing it may delay the next reset to prevent repeated sends. A report can include the reason and up to 1,000 characters of detail. We keep restricted records of review decisions and actions to handle reports.</li>
+        <li><strong>Preferences on your device.</strong> Your Crew race selection and records of fire already shown are stored separately for each account on your device. They survive ordinary sign-out so your selection remains and old fire does not replay when you return. Removing your account clears these records on that device. The Crew filter changes only your view, not your friendships or access to step information.</li>
         <li><strong>Notification settings and device registration.</strong> If you opt in, we store a device push token, platform, timezone, registration timestamps, and your preferences (which tier crossings you want to hear about and quiet hours). A data export includes device metadata but replaces the push token itself with <code>[REDACTED]</code>.</li>
         <li><strong>Website signup.</strong> If you join through this website, we collect the first name, email, tier, country, city, and optional newsletter consent you submit. Country and city support the signup view on the Claim Board. The newsletter box is optional and is not pre-selected; only an exact opt-in sends your email to <strong>Loops</strong> for the newsletter signup event.</li>
         <li><strong>Website abuse prevention.</strong> The signup form uses <strong>Cloudflare Turnstile</strong>. Cloudflare processes the verification token and network/device signals, including the request IP address, to distinguish people from automated abuse. Our signup service sends the request IP to Turnstile for verification, but does not store the raw IP. It stores only daily rotating keyed hashes of the IP and email for rate limiting, and deletes those rate records after 48 hours.</li>
         <li><strong>Basic technical data.</strong> Standard app and server logs needed to operate, diagnose, and secure the service (for example, an app version, incident code, error name, and limited error details). We do not intentionally include step totals, friend lists, profile details, or authentication tokens in crash reports.</li>
       </ul>
-      <p>We do <strong>not</strong> collect precise location, contacts, routes, heart rate, workouts, microphone recordings, or advertising identifiers.</p>
+      <p>We do <strong>not</strong> read your phone's address book, precise location, routes, heart rate, workouts, microphone recordings, or advertising identifiers. Your accepted Crew connections are the relationship information described above.</p>
 
       <h2>Why we collect it</h2>
       <ul>
         <li>To show you your steps, your tier for the day, and your personal Journey.</li>
         <li>To let friends you have <strong>mutually approved</strong> see each other's current-day steps, and to nudge them when someone crosses a tier.</li>
-        <li>To show the current-day friend race, deliver cheers, and operate block/report safety tools.</li>
+        <li>To show the current-day friend race, deliver fire, review profile content, and operate block/report safety tools.</li>
         <li>To register website participants, show participating cities, deliver an opted-in newsletter signup, and prevent automated signup abuse.</li>
         <li>To create your account and keep it secure.</li>
-        <li>Nothing else. We do not build advertising profiles.</li>
+        <li>To diagnose service problems, including the sign-in provider's operational analytics described above. We do not build advertising profiles or use Health records for analytics unrelated to the app's step features.</li>
       </ul>
 
       <h2>Where it lives and who can see it</h2>
@@ -104,7 +106,7 @@
       <ul>
         <li>We never <strong>sell</strong> your personal information or your health data.</li>
         <li>We never use your <strong>health data for advertising</strong>.</li>
-        <li>We never share your data with third parties except the infrastructure providers that run the service for us — including Supabase for database and server functions, Expo plus Apple/Google for push delivery, Cloudflare for website abuse prevention, and Loops for email only when you opt in — under their own terms and solely to operate these features.</li>
+        <li>We use service providers to run these features: Supabase for database and server functions, Apple and Google for sign-in, Expo plus Apple/Google for push delivery, Cloudflare for website abuse prevention, and Loops for email only when you opt in. Their processing is subject to their own terms, including the sign-in information described above. We do not send Health step records to advertising services.</li>
       </ul>
 
       <h2>Your choices and controls</h2>
@@ -113,13 +115,14 @@
         <li><strong>Notifications.</strong> You can turn notifications off in the app or in your OS settings.</li>
         <li><strong>Profile and discovery.</strong> You can change your display name, profile photo, and whether other members can find your handle. You can remove friends and block or report members.</li>
         <li><strong>Website newsletter consent.</strong> Joining the event does not require newsletter consent. Leave the box unchecked if you do not want the newsletter, or use the unsubscribe link in an email after opting in.</li>
-        <li><strong>Access and portability.</strong> You can use <strong>Export my data</strong> in app Settings to create a JSON copy of the account and app data tied to your signed-in account. The server identifies you from your authenticated session; the app cannot request another member's export. Contact us about a separate website signup record.</li>
+        <li><strong>Access and portability.</strong> You can use <strong>Export my data</strong> in app Settings to create a JSON copy of the account and app data tied to your signed-in account, including photo-review status, any private photo still awaiting review, and your fire calendar. It does not include another person's private records or internal reviewer notes. Device-only preferences stay on that device. The server identifies you from your authenticated session; the app cannot request another member's export. Contact us about a separate website signup record.</li>
         <li><strong>Delete your account.</strong> Account removal is in You → Settings → Remove my account. If in-app removal is temporarily unavailable or you cannot access the app, use the <a href="/delete-account">web deletion request</a>. Completed deletion removes your account, profile, profile photo, step records and snapshots, follow relationships, cheers, blocks, push tokens, and notification settings from active product systems. Reports are removed from normal member-facing systems, but restricted pseudonymized moderation evidence may remain for the safety period described below.</li>
       </ul>
 
       <h2>Data retention</h2>
+      <p>A private photo candidate is removed from the review queue when approved, rejected, cancelled, or expired. Its private image bytes are erased at that point; approval publishes the reviewed image at your profile-photo URL. Unreviewed candidates expire after seven days, processed by a daily job. Review status, image identity and timestamps remain while your account is active. Account deletion removes private candidates and their review records along with your published photo.</p>
       <p>We keep daily totals and other account data while your account is active. Coarsened step snapshots are deleted after eight elapsed days by a daily server-side retention job. Daily rotating website rate-limit hashes are deleted after 48 hours. We keep a website signup while it is needed to manage club participation and related communications; contact us to request access or deletion.</p>
-      <p>When you delete your account, we remove associated records from active product systems. To investigate abuse, protect members, and defend against repeat malicious activity, we may retain a restricted moderation-evidence copy of a report for no more than <strong>24 months from the report date</strong>. Account identifiers in that evidence are replaced with one-way pseudonyms; the evidence is not available through the app or normal client API. Report text may still contain information the reporter typed, so access is restricted and the same 24-month maximum applies. The server deletes evidence when that period expires.</p>
+      <p>When you delete your account, we remove associated records from active product systems. To investigate abuse, protect members, and defend against repeat malicious activity, we may retain a restricted moderation-evidence copy of a report and its handling notes for no more than <strong>24 months from the report date</strong>. Account identifiers in that evidence are replaced with one-way pseudonyms; the evidence is not available through the app or normal client API. Report text may still contain information the reporter typed, so access is restricted and the same 24-month maximum applies. The server deletes evidence and handling notes when that period expires.</p>
       <p>Limited copies may remain temporarily in encrypted operational backups until they expire under our provider's routine retention cycle; they are not used for ordinary product access and are restored only for disaster recovery.</p>
 
       <h2>Children</h2>
@@ -178,6 +181,6 @@
 
 </div>
 
-<script src="/js/main.js?v=3"></script>
+<script src="/js/main.js?v=20260926"></script>
 </body>
 </html>
