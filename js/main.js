@@ -156,7 +156,7 @@ document.querySelectorAll([
 /* ========== COUNTDOWN TO SEPTEMBER 28, 2026 ========== */
 
 (function () {
-  var target = new Date('2026-09-28T00:00:00').getTime();
+  var target = new Date('2026-09-26T00:00:00').getTime();
   var dEl = document.getElementById('cd-d');
   var hEl = document.getElementById('cd-h');
   var mEl = document.getElementById('cd-m');
