@@ -11,8 +11,8 @@ function read(file) {
   return fs.readFileSync(path.join(ROOT, file), 'utf8');
 }
 
-test('next event date is really a Monday', function () {
-  assert.equal(new Date(EVENT_DATE + 'T12:00:00Z').getUTCDay(), 1);
+test('next event date is really a Saturday', function () {
+  assert.equal(new Date(EVENT_DATE + 'T12:00:00Z').getUTCDay(), 6);
 });
 
 test('landing metadata, schema, hero, and countdown share the locked event date', function () {
