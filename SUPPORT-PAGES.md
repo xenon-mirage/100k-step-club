@@ -2,6 +2,8 @@
 
 ## Current preparation — September 6, 2026
 
+> **Date update — September 22, 2026:** the next official event is now **Saturday, October 3, 2026**. Every live surface (landing metadata, schema, hero, countdown, signup, tier/sun CTAs, Claim Board copy, support page) carries October 3; the September 26 references below are historical.
+
 The historical draft notes below are retained as build history. Current source at d130d37 had already resolved the effective date, adult audience, database region, app Settings route, and clean-URL routing. This isolated release work updates the event to **Saturday, September 26, 2026**, and reconciles privacy/deletion copy with private photo review, sender-local fire calendars, retained per-account device preferences, version 3 exports, and restricted report-handling notes. These new source changes are prepared for approval, not deployed. Publish the new review/export claims only with the corresponding backend migrations and verified operations. Live operation and physical device checks remain release gates; old checkmarks below are historical evidence only.
 
 Privacy, Terms, and the email-confirmation landing page. Built to look native to the live
