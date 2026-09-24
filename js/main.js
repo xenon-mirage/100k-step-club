@@ -162,10 +162,10 @@ document.querySelectorAll([
 })();
 
 
-/* ========== COUNTDOWN TO SEPTEMBER 26, 2026 ========== */
+/* ========== COUNTDOWN TO OCTOBER 3, 2026 ========== */
 
 (function () {
-  var target = new Date('2026-09-26T00:00:00').getTime();
+  var target = new Date('2026-10-03T00:00:00').getTime();
   var dEl = document.getElementById('cd-d');
   var hEl = document.getElementById('cd-h');
   var mEl = document.getElementById('cd-m');
