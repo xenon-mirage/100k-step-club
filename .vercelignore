@@ -1,0 +1,8 @@
+# Keep repo-internal files off the public site. Vercel serves the repo root as static files.
+/CLAUDE.md
+/README.md
+/SUPPORT-PAGES.md
+/serve.py
+/supabase/
+/tests/
+/.claude/
